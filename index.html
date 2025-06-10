@@ -285,7 +285,7 @@
             color: var(--text-color);
             font-size: 0.95em;
         }
-           .add-reminder-form #newReminderInput::placeholder {
+        .add-reminder-form #newReminderInput::placeholder {
             color: var(--text-light);
             opacity: 0.8;
         }
@@ -325,23 +325,33 @@
         }
         .todo-card .task-due-date {
             font-size: 0.85em;
-            color: var(--text-light);
+            color: var(--text-light); /* Default color for due date */
             margin-left: auto; /* Push to the right */
             padding: 2px 5px;
             border-radius: 4px;
             background-color: var(--input-bg);
             border: 1px solid var(--widget-border-color);
             cursor: pointer;
+            flex-shrink: 0; /* Prevents it from shrinking too much */
         }
+        /* --- NEW CSS RULE FOR OVERDUE DATES --- */
         .todo-card .task-due-date.overdue {
+            color: white; /* Text color for overdue */
+            background-color: var(--danger-color); /* Red background for overdue */
+            font-weight: bold;
+        }
+        /* --- Keep the previous .overdue for display only if needed or combine --- */
+        /* .todo-card .task-due-date.overdue {
             color: white;
             background-color: var(--danger-color);
             font-weight: bold;
-        }
+        } */
+
+
         .todo-card .task-due-date[contenteditable="true"] {
-             outline: 1px solid var(--accent-color);
-             box-shadow: 0 0 0 2px var(--accent-color-translucent);
-             background-color: var(--widget-bg);
+            outline: 1px solid var(--accent-color);
+            box-shadow: 0 0 0 2px var(--accent-color-translucent);
+            background-color: var(--widget-bg);
         }
 
 
@@ -732,7 +742,176 @@
                 if (sel) { sel.removeAllRanges(); sel.addRange(range); }
             }
 
+            // --- HELPER: FORMAT DATE FOR DISPLAY ---
+            function formatDisplayDate(dateString) {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                // Adjust for time zone offset to ensure the date is correctly interpreted as local day
+                const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+                const dateAdjusted = new Date(date.getTime() + userTimezoneOffset);
+
+                return dateAdjusted.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+            }
+
+            // --- HELPER: UPDATE DUE DATE DISPLAY AND COLOR ---
+            function updateDueDateDisplayAndStatus(taskElement, dueDateValue) {
+                const dueDateSpan = taskElement.querySelector('.task-due-date');
+                if (!dueDateSpan) return;
+
+                if (dueDateValue) {
+                    const today = new Date();
+                    // Set time to 00:00:00 for accurate day-only comparison
+                    today.setHours(0, 0, 0, 0);
+
+                    const dueDate = new Date(dueDateValue);
+                    dueDate.setHours(0, 0, 0, 0); // Normalize due date to start of day
+
+                    dueDateSpan.textContent = formatDisplayDate(dueDateValue); // Always display the date
+
+                    if (dueDate < today) {
+                        dueDateSpan.classList.add('overdue');
+                    } else {
+                        dueDateSpan.classList.remove('overdue');
+                    }
+                } else {
+                    dueDateSpan.textContent = 'Set Due Date'; // Prompt to set date if empty
+                    dueDateSpan.classList.remove('overdue');
+                }
+            }
+
+
             // --- TODO CARD FUNCTIONALITY ---
+            function createTaskElement(taskText, taskId, isCompleted = false, dueDate = '') {
+                const li = document.createElement('li');
+                li.setAttribute('data-task-id', taskId);
+                li.innerHTML = `
+                    <input type="checkbox" class="task-checkbox" ${isCompleted ? 'checked' : ''}>
+                    <span class="task-label" contenteditable="true">${taskText}</span>
+                    <span class="task-due-date" title="Click to edit due date"></span>
+                    <button class="delete-task-btn" title="Delete Task">×</button>
+                `;
+
+                const taskLabel = li.querySelector('.task-label');
+                const checkbox = li.querySelector('.task-checkbox');
+                const deleteBtn = li.querySelector('.delete-task-btn');
+                const dueDateSpan = li.querySelector('.task-due-date');
+
+                // Initial status for task label
+                if (isCompleted) {
+                    taskLabel.classList.add('completed');
+                }
+
+                // Initial display of due date and its color
+                updateDueDateDisplayAndStatus(li, dueDate);
+
+                // --- Event Listeners for the new task element ---
+                checkbox.addEventListener('change', () => {
+                    taskLabel.classList.toggle('completed', checkbox.checked);
+                    li.closest('.todo-card').dataset.tasksCompleted = Array.from(li.closest('.task-list').children).filter(t => t.querySelector('.task-checkbox').checked).length;
+                    updateProgress(li.closest('.todo-card'));
+                });
+
+                taskLabel.addEventListener('focus', () => selectElementContents(taskLabel));
+
+                taskLabel.addEventListener('blur', () => {
+                    // Save changes to local storage or backend
+                    console.log(`Task ${taskId} text updated to: ${taskLabel.textContent}`);
+                });
+
+                deleteBtn.addEventListener('click', () => {
+                    const confirmDelete = confirm('Are you sure you want to delete this task?');
+                    if (confirmDelete) {
+                        li.remove();
+                        const card = li.closest('.todo-card');
+                        updateProgress(card);
+                        // Save changes to local storage or backend
+                        console.log(`Task ${taskId} deleted.`);
+                    }
+                });
+
+                // --- Date Picker Logic for task-due-date span ---
+                dueDateSpan.addEventListener('click', () => {
+                    const currentDueDate = dueDateSpan.dataset.dueDate || ''; // Get current date from data attribute
+                    const dateInput = document.createElement('input');
+                    dateInput.type = 'date';
+                    dateInput.value = currentDueDate; // Set initial value
+                    dateInput.classList.add('task-due-date-picker'); // Add a class for styling if needed
+
+                    // Replace span with input
+                    dueDateSpan.style.display = 'none';
+                    dueDateSpan.parentNode.insertBefore(dateInput, dueDateSpan.nextSibling); // Insert after span
+
+                    dateInput.focus();
+
+                    // When date is selected or input loses focus
+                    dateInput.addEventListener('change', () => {
+                        const newDateValue = dateInput.value;
+                        dueDateSpan.dataset.dueDate = newDateValue; // Store the date in a data attribute
+                        updateDueDateDisplayAndStatus(li, newDateValue); // Update display and color
+                        dateInput.remove();
+                        dueDateSpan.style.display = 'block';
+                        // Save new due date to local storage/backend for this task
+                        console.log(`Task ${taskId} due date updated to: ${newDateValue}`);
+                    });
+
+                    dateInput.addEventListener('blur', () => {
+                        if (!dateInput.value) { // If user clears date or closes without selection
+                             dueDateSpan.dataset.dueDate = '';
+                             updateDueDateDisplayAndStatus(li, ''); // Clear and update
+                        }
+                        dateInput.remove();
+                        dueDateSpan.style.display = 'block';
+                    });
+                });
+
+                // Set initial due date for data attribute to persist
+                li.setAttribute('data-due-date', dueDate);
+
+                return li;
+            }
+
+            function updateProgress(cardElement) {
+                const taskList = cardElement.querySelector('.task-list');
+                const totalTasks = taskList.children.length;
+                const completedTasks = Array.from(taskList.children).filter(task =>
+                    task.querySelector('.task-checkbox').checked
+                ).length;
+
+                const progressBar = cardElement.querySelector('.progress-bar');
+                const progressLabel = cardElement.querySelector('.progress-label');
+
+                if (totalTasks === 0) {
+                    progressBar.style.width = '0%';
+                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-1)';
+                    progressBar.classList.remove('full');
+                    progressLabel.textContent = 'No tasks yet!';
+                } else {
+                    const progressPercentage = (completedTasks / totalTasks) * 100;
+                    progressBar.style.width = `${progressPercentage}%`;
+                    progressBar.textContent = `${Math.round(progressPercentage)}%`;
+
+                    if (progressPercentage === 100) {
+                        progressBar.style.backgroundColor = 'var(--progress-bar-fill-complete)';
+                        progressBar.classList.add('full');
+                        progressLabel.textContent = 'All tasks completed!';
+                        showConfetti(); // Trigger confetti when 100%
+                    } else if (progressPercentage > 0) {
+                        progressBar.style.backgroundColor = 'var(--progress-bar-fill-2)';
+                        progressBar.classList.remove('full');
+                        progressLabel.textContent = `${completedTasks} of ${totalTasks} tasks done`;
+                    } else {
+                        progressBar.style.backgroundColor = 'var(--progress-bar-fill-1)';
+                        progressBar.classList.remove('full');
+                        progressLabel.textContent = `0 of ${totalTasks} tasks done`;
+                    }
+                }
+            }
+
+
             function createTodoCard() {
                 cardIdCounter++;
                 const cardId = `todoCard-${cardIdCounter}`;
@@ -748,210 +927,119 @@
                     <button class="add-task-btn">+ Add New Task</button>
                     <div class="progress-item">
                         <div class="progress-bar-container"><div class="progress-bar"></div></div>
-                        <p class="progress-label">0% Complete</p>
-                    </div>`;
-                if (widgetsContainer) {
-                    widgetsContainer.appendChild(cardElement);
-                    addTaskToTodoCard(cardElement, "New Task");
-                    updateProgressForCard(cardElement);
-                    const cardTitleText = cardElement.querySelector('.card-title-text');
-                    if (cardTitleText) {
-                        cardTitleText.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); cardTitleText.blur();}});
-                    }
+                        <div class="progress-label">No tasks yet!</div>
+                    </div>
+                `;
 
-                    // Add event listener for adding new tasks
-                    const addTaskBtn = cardElement.querySelector('.add-task-btn');
-                    addTaskBtn.addEventListener('click', () => addTaskToTodoCard(cardElement, "New Task"));
-
-                    // Add event listener for closing the card
-                    const closeCardBtn = cardElement.querySelector('.close-card-btn');
-                    closeCardBtn.addEventListener('click', () => cardElement.remove());
-
-                    // Event listeners for task interactions (checkbox, text edit, date edit)
-                    const taskList = cardElement.querySelector('.task-list');
-                    taskList.addEventListener('change', (e) => {
-                        if (e.target.type === 'checkbox' && e.target.classList.contains('task-checkbox')) {
-                            e.target.closest('li').querySelector('.task-label').classList.toggle('completed', e.target.checked);
-                            updateProgressForCard(cardElement);
-                        }
-                    });
-
-                    taskList.addEventListener('input', (e) => {
-                        if (e.target.classList.contains('task-label')) {
-                             // No specific action needed on input for now, but good to have
-                        }
-                    });
-
-                    taskList.addEventListener('focusout', (e) => {
-                        if (e.target.classList.contains('task-label') && e.target.textContent.trim() === '') {
-                            // If task label is empty, remove the task
-                            e.target.closest('li').remove();
-                            updateProgressForCard(cardElement);
-                        }
-                        if (e.target.classList.contains('task-due-date')) {
-                            // Validate and format date on focusout
-                            const dateInput = e.target;
-                            const dateValue = dateInput.textContent.trim();
-                            if (dateValue) {
-                                const parsedDate = new Date(dateValue);
-                                if (isNaN(parsedDate)) {
-                                    dateInput.textContent = ''; // Clear if invalid
-                                } else {
-                                    // Format to YYYY-MM-DD
-                                    dateInput.textContent = parsedDate.toISOString().split('T')[0];
-                                }
-                            }
-                            checkDueDate(dateInput.closest('li')); // Re-check due date class
-                        }
-                    });
-
-                    taskList.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' && (e.target.classList.contains('task-label') || e.target.classList.contains('task-due-date'))) {
-                            e.preventDefault();
-                            e.target.blur(); // Exit contenteditable
-                        }
-                    });
-                }
-            }
-
-            function addTaskToTodoCard(cardElement, taskText, dueDate = '') {
-                globalTaskCounter++;
                 const taskList = cardElement.querySelector('.task-list');
-                const listItem = document.createElement('li');
-                listItem.dataset.taskId = `task-${globalTaskCounter}`;
-                listItem.innerHTML = `
-                    <input type="checkbox" class="task-checkbox">
-                    <span class="task-label" contenteditable="true">${taskText}</span>
-                    <span class="task-due-date" contenteditable="true" title="Click to edit due date">${dueDate}</span>
-                    <button class="delete-task-btn close-btn" title="Delete Task">×</button>`;
-                taskList.appendChild(listItem);
+                const addTaskBtn = cardElement.querySelector('.add-task-btn');
+                const cardTitleText = cardElement.querySelector('.card-title-text');
+                const closeCardBtn = cardElement.querySelector('.close-card-btn');
 
-                const deleteButton = listItem.querySelector('.delete-task-btn');
-                deleteButton.addEventListener('click', () => {
-                    listItem.remove();
-                    updateProgressForCard(cardElement);
+                cardTitleText.addEventListener('focus', () => selectElementContents(cardTitleText));
+                cardTitleText.addEventListener('blur', () => {
+                    // Save changes to local storage or backend
+                    console.log(`Card ${cardId} title updated to: ${cardTitleText.textContent}`);
                 });
 
-                const taskLabel = listItem.querySelector('.task-label');
-                taskLabel.addEventListener('click', () => selectElementContents(taskLabel));
+                addTaskBtn.addEventListener('click', () => {
+                    globalTaskCounter++;
+                    const newTask = createTaskElement(`New Task ${globalTaskCounter}`, `task-${globalTaskCounter}`);
+                    taskList.appendChild(newTask);
+                    updateProgress(cardElement);
+                    // Focus and select the new task label for immediate editing
+                    const newTaskLabel = newTask.querySelector('.task-label');
+                    if (newTaskLabel) {
+                        newTaskLabel.focus();
+                        selectElementContents(newTaskLabel);
+                    }
+                });
 
-                const dueDateSpan = listItem.querySelector('.task-due-date');
-                dueDateSpan.addEventListener('click', () => selectElementContents(dueDateSpan));
-                dueDateSpan.addEventListener('blur', () => checkDueDate(listItem)); // Check on blur
+                closeCardBtn.addEventListener('click', () => {
+                    const confirmDelete = confirm('Are you sure you want to delete this TODO list?');
+                    if (confirmDelete) {
+                        cardElement.remove();
+                        console.log(`TODO Card ${cardId} deleted.`);
+                    }
+                });
 
-                checkDueDate(listItem); // Initial check
-                updateProgressForCard(cardElement); // Update progress after adding task
+                widgetsContainer.appendChild(cardElement);
+                updateProgress(cardElement); // Initialize progress bar
+                return cardElement;
             }
 
-            function updateProgressForCard(cardElement) {
-                const checkboxes = cardElement.querySelectorAll('.task-checkbox');
-                const completedCheckboxes = cardElement.querySelectorAll('.task-checkbox:checked');
-                const progressBar = cardElement.querySelector('.progress-bar');
-                const progressLabel = cardElement.querySelector('.progress-label');
-
-                if (checkboxes.length === 0) {
-                    progressBar.style.width = '0%';
-                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-1)';
-                    progressLabel.textContent = 'No tasks yet.';
-                    progressBar.classList.remove('full');
-                    return;
-                }
-
-                const percentage = (completedCheckboxes.length / checkboxes.length) * 100;
-                progressBar.style.width = `${percentage}%`;
-                progressLabel.textContent = `${Math.round(percentage)}% Complete`;
-
-                if (percentage === 100) {
-                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-complete)';
-                    progressBar.classList.add('full');
-                    triggerConfetti();
-                } else if (percentage > 50) {
-                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-2)';
-                    progressBar.classList.remove('full');
-                } else {
-                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-1)';
-                    progressBar.classList.remove('full');
-                }
+            const newPageBtn = document.getElementById('newPageBtn');
+            if (newPageBtn) {
+                newPageBtn.addEventListener('click', createTodoCard);
             }
 
-            function checkDueDate(taskListItem) {
-                const dueDateSpan = taskListItem.querySelector('.task-due-date');
-                const checkbox = taskListItem.querySelector('.task-checkbox');
-                const dueDateString = dueDateSpan.textContent.trim();
+            // Create an initial card on load
+            createTodoCard();
 
-                if (!dueDateString || checkbox.checked) {
-                    dueDateSpan.classList.remove('overdue');
-                    return;
+
+            // --- CONFETTI EFFECT ---
+            function showConfetti() {
+                const confettiContainer = document.getElementById('confetti-container');
+                if (!confettiContainer) return;
+
+                const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'];
+                const numPieces = 50;
+
+                for (let i = 0; i < numPieces; i++) {
+                    const piece = document.createElement('div');
+                    piece.classList.add('confetti-piece');
+                    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    piece.style.left = `${Math.random() * 100}vw`;
+                    piece.style.animationDelay = `${Math.random() * 0.5}s`;
+                    piece.style.transform = `rotate(${Math.random() * 360}deg)`; // Initial random rotation
+                    confettiContainer.appendChild(piece);
                 }
 
-                const today = new Date();
-                today.setHours(0, 0, 0, 0); // Normalize today's date to midnight
-
-                const taskDueDate = new Date(dueDateString);
-                taskDueDate.setHours(0, 0, 0, 0); // Normalize task due date to midnight
-
-                if (taskDueDate < today) {
-                    dueDateSpan.classList.add('overdue');
-                } else {
-                    dueDateSpan.classList.remove('overdue');
-                }
+                setTimeout(() => {
+                    confettiContainer.innerHTML = ''; // Clear confetti after animation
+                }, 3000);
             }
 
-
-            // --- REMINDER WIDGET FUNCTIONALITY ---
+            // --- REMINDERS WIDGET FUNCTIONALITY ---
             const remindersList = document.getElementById('remindersList');
             const newReminderInput = document.getElementById('newReminderInput');
             const addReminderBtn = document.getElementById('addReminderBtn');
 
             function addReminder(text, isCompleted = false) {
-                if (text === null || text.trim() === "") return;
-
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
+                const li = document.createElement('li');
+                li.innerHTML = `
                     <input type="checkbox" class="reminder-checkbox" ${isCompleted ? 'checked' : ''}>
-                    <span class="reminder-text ${isCompleted ? 'completed' : ''}" contenteditable="true">${text}</span>
-                    <button class="delete-reminder-btn" title="Delete Reminder">×</button>
+                    <span class="reminder-text" contenteditable="true">${text}</span>
+                    <button class="delete-reminder-btn">×</button>
                 `;
-                remindersList.appendChild(listItem);
+                const checkbox = li.querySelector('.reminder-checkbox');
+                const reminderText = li.querySelector('.reminder-text');
+                const deleteBtn = li.querySelector('.delete-reminder-btn');
 
-                const checkbox = listItem.querySelector('.reminder-checkbox');
-                const reminderTextSpan = listItem.querySelector('.reminder-text');
-                const deleteButton = listItem.querySelector('.delete-reminder-btn');
+                if (isCompleted) {
+                    reminderText.classList.add('completed');
+                }
 
                 checkbox.addEventListener('change', () => {
-                    reminderTextSpan.classList.toggle('completed', checkbox.checked);
+                    reminderText.classList.toggle('completed', checkbox.checked);
                     saveReminders();
                 });
-
-                reminderTextSpan.addEventListener('click', () => selectElementContents(reminderTextSpan));
-                reminderTextSpan.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        reminderTextSpan.blur();
-                        saveReminders();
-                    }
-                });
-                reminderTextSpan.addEventListener('focusout', () => {
-                    if (reminderTextSpan.textContent.trim() === '') {
-                        listItem.remove();
-                    }
+                reminderText.addEventListener('focus', () => selectElementContents(reminderText));
+                reminderText.addEventListener('blur', saveReminders);
+                deleteBtn.addEventListener('click', () => {
+                    li.remove();
                     saveReminders();
                 });
-
-                deleteButton.addEventListener('click', () => {
-                    listItem.remove();
-                    saveReminders();
-                });
-
+                remindersList.appendChild(li);
                 saveReminders();
             }
 
             function saveReminders() {
                 const reminders = [];
-                remindersList.querySelectorAll('li').forEach(listItem => {
+                remindersList.querySelectorAll('li').forEach(li => {
                     reminders.push({
-                        text: listItem.querySelector('.reminder-text').textContent,
-                        completed: listItem.querySelector('.reminder-checkbox').checked
+                        text: li.querySelector('.reminder-text').textContent,
+                        completed: li.querySelector('.reminder-checkbox').checked
                     });
                 });
                 localStorage.setItem('reminders', JSON.stringify(reminders));
@@ -959,203 +1047,154 @@
 
             function loadReminders() {
                 const reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-                reminders.forEach(reminder => addReminder(reminder.text, reminder.completed));
+                reminders.forEach(r => addReminder(r.text, r.completed));
             }
 
-            addReminderBtn.addEventListener('click', () => {
-                const text = newReminderInput.value;
-                if (text) {
-                    addReminder(text);
-                    newReminderInput.value = '';
-                }
-            });
-            newReminderInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    addReminderBtn.click();
-                }
-            });
+            if (addReminderBtn) {
+                addReminderBtn.addEventListener('click', () => {
+                    const text = newReminderInput.value.trim();
+                    if (text) {
+                        addReminder(text);
+                        newReminderInput.value = '';
+                    }
+                });
+                newReminderInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        addReminderBtn.click();
+                    }
+                });
+                loadReminders();
+            }
 
-            // --- MOOD LOGGING ---
+            // --- MOOD LOGGING FUNCTIONALITY ---
+            const moodTrackerLaunchers = document.querySelectorAll('.mood-emoji-trigger');
             const moodLoggingModal = document.getElementById('moodLoggingModal');
             const modalSelectedMoodEmoji = document.getElementById('modalSelectedMoodEmoji');
             const moodNoteInput = document.getElementById('moodNoteInput');
             const saveMoodLogBtn = document.getElementById('saveMoodLogBtn');
             const cancelMoodLogBtn = document.getElementById('cancelMoodLogBtn');
-            const moodEmojiTriggers = document.querySelectorAll('.mood-emoji-trigger');
-            let selectedMoodEmoji = '';
-
-            moodEmojiTriggers.forEach(trigger => {
-                trigger.addEventListener('click', () => {
-                    selectedMoodEmoji = trigger.dataset.emoji;
-                    modalSelectedMoodEmoji.textContent = selectedMoodEmoji;
-                    moodLoggingModal.style.display = 'flex';
-                    moodNoteInput.value = ''; // Clear previous note
-                    moodNoteInput.focus();
-                });
-            });
-
-            saveMoodLogBtn.addEventListener('click', () => {
-                const note = moodNoteInput.value.trim();
-                const timestamp = new Date().toLocaleString();
-                addMoodLogEntry(selectedMoodEmoji, note, timestamp);
-                moodLoggingModal.style.display = 'none';
-            });
-
-            cancelMoodLogBtn.addEventListener('click', () => {
-                moodLoggingModal.style.display = 'none';
-            });
-
             const moodLogListSummary = document.getElementById('moodLogListSummary');
-            const emptyLogMessageSummary = moodLogListSummary.querySelector('.empty-log-message');
-
-            function addMoodLogEntry(emoji, note, timestamp, isFullLog = false) {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-                    <span class="log-emoji">${emoji}</span>
-                    <div class="log-details">
-                        <p class="log-note">${note}</p>
-                        <span class="log-timestamp">${timestamp}</span>
-                    </div>
-                `;
-                moodLogListSummary.prepend(listItem); // Add to summary
-                if (moodLogListSummary.children.length > 5) {
-                    moodLogListSummary.removeChild(moodLogListSummary.lastChild); // Keep only 5 recent
-                }
-
-                if (emptyLogMessageSummary) {
-                    emptyLogMessageSummary.style.display = 'none';
-                }
-
-                if (!isFullLog) { // Avoid saving again when loading full log
-                    saveMoodLogs();
-                }
-            }
-
-            function saveMoodLogs() {
-                const moodLogs = [];
-                // Only save the actual entries, not the "empty message"
-                document.querySelectorAll('#moodLogListSummary li').forEach(item => {
-                    const emoji = item.querySelector('.log-emoji').textContent;
-                    const note = item.querySelector('.log-note').textContent;
-                    const timestamp = item.querySelector('.log-timestamp').textContent;
-                    moodLogs.push({ emoji, note, timestamp });
-                });
-
-                // Get existing full log and add new entry
-                let fullMoodLogs = JSON.parse(localStorage.getItem('fullMoodLogs') || '[]');
-                // Check if the latest summary entry is already in the full log
-                const latestSummaryLog = moodLogs[0];
-                if (latestSummaryLog && (!fullMoodLogs.length || JSON.stringify(latestSummaryLog) !== JSON.stringify(fullMoodLogs[0]))) {
-                    fullMoodLogs.unshift(latestSummaryLog); // Add new entry to the top of full log
-                }
-                localStorage.setItem('fullMoodLogs', JSON.stringify(fullMoodLogs));
-                updateMoodLogSummaryDisplay();
-            }
-
-            function updateMoodLogSummaryDisplay() {
-                const storedMoodLogs = JSON.parse(localStorage.getItem('fullMoodLogs') || '[]');
-                moodLogListSummary.innerHTML = ''; // Clear existing summary
-                if (storedMoodLogs.length === 0) {
-                    moodLogListSummary.innerHTML = `<p class="empty-log-message">No moods logged yet. Click an emoji below to start!</p>`;
-                } else {
-                    storedMoodLogs.slice(0, 5).forEach(log => {
-                        addMoodLogEntry(log.emoji, log.note, log.timestamp, true); // Use true to prevent re-saving
-                    });
-                }
-            }
-            updateMoodLogSummaryDisplay(); // Initial load
-
-            // --- FULL MOOD LOG VIEW MODAL ---
-            const fullMoodLogViewModal = document.getElementById('fullMoodLogViewModal');
             const viewMoodLogTabBtn = document.getElementById('viewMoodLogTabBtn');
+            const fullMoodLogViewModal = document.getElementById('fullMoodLogViewModal');
             const closeFullLogViewBtn = document.getElementById('closeFullLogViewBtn');
             const fullLogListContainer = document.getElementById('fullLogListContainer');
 
-            viewMoodLogTabBtn.addEventListener('click', () => {
-                fullLogListContainer.innerHTML = ''; // Clear previous entries
-                const fullMoodLogs = JSON.parse(localStorage.getItem('fullMoodLogs') || '[]');
+            let currentMood = { emoji: '', mood: '' };
 
-                if (fullMoodLogs.length === 0) {
-                    fullLogListContainer.innerHTML = '<p class="empty-full-log-message">Your full mood log is empty.</p>';
-                } else {
-                    fullMoodLogs.forEach(log => {
-                        const listItem = document.createElement('li');
-                        listItem.innerHTML = `
-                            <span class="log-emoji">${log.emoji}</span>
-                            <div class="log-details">
-                                <p class="log-note">${log.note}</p>
-                                <span class="log-timestamp">${log.timestamp}</span>
-                            </div>
-                        `;
-                        fullLogListContainer.appendChild(listItem);
-                    });
+            function saveMoodLog(logEntry) {
+                const logs = JSON.parse(localStorage.getItem('moodLogs') || '[]');
+                logs.unshift(logEntry); // Add to the beginning
+                localStorage.setItem('moodLogs', JSON.stringify(logs));
+                renderMoodLogs();
+            }
+
+            function renderMoodLogs() {
+                const logs = JSON.parse(localStorage.getItem('moodLogs') || '[]');
+                moodLogListSummary.innerHTML = '';
+                fullLogListContainer.innerHTML = '';
+
+                if (logs.length === 0) {
+                    moodLogListSummary.innerHTML = '<p class="empty-log-message">No moods logged yet. Click an emoji below to start!</p>';
+                    fullLogListContainer.innerHTML = '<p class="empty-full-log-message">No moods logged yet. Start by logging your mood from the main page!</p>';
+                    return;
                 }
-                fullMoodLogViewModal.style.display = 'flex';
-            });
 
-            closeFullLogViewBtn.addEventListener('click', () => {
-                fullMoodLogViewModal.style.display = 'none';
-            });
+                logs.slice(0, 3).forEach(log => { // Show only 3 recent on summary
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span class="log-emoji">${log.emoji}</span>
+                        <div class="log-details">
+                            <p class="log-note">${log.note || 'No note.'}</p>
+                            <span class="log-timestamp">${new Date(log.timestamp).toLocaleString()}</span>
+                        </div>
+                    `;
+                    moodLogListSummary.appendChild(li);
+                });
 
-            // --- ZODIAC PREDICTION ---
+                logs.forEach(log => { // Show all on full log view
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span class="log-emoji">${log.emoji}</span>
+                        <div class="log-details">
+                            <p class="log-note">${log.note || 'No note.'}</p>
+                            <span class="log-timestamp">${new Date(log.timestamp).toLocaleString()}</span>
+                        </div>
+                    `;
+                    fullLogListContainer.appendChild(li);
+                });
+            }
+
+            if (moodTrackerLaunchers) {
+                moodTrackerLaunchers.forEach(launcher => {
+                    launcher.addEventListener('click', () => {
+                        currentMood.emoji = launcher.dataset.emoji;
+                        currentMood.mood = launcher.dataset.mood;
+                        modalSelectedMoodEmoji.textContent = currentMood.emoji;
+                        moodLoggingModal.style.display = 'flex';
+                        moodNoteInput.value = ''; // Clear previous note
+                        moodNoteInput.focus();
+                    });
+                });
+            }
+
+            if (saveMoodLogBtn) {
+                saveMoodLogBtn.addEventListener('click', () => {
+                    const newLog = {
+                        emoji: currentMood.emoji,
+                        mood: currentMood.mood,
+                        note: moodNoteInput.value.trim(),
+                        timestamp: new Date().toISOString()
+                    };
+                    saveMoodLog(newLog);
+                    moodLoggingModal.style.display = 'none';
+                });
+            }
+
+            if (cancelMoodLogBtn) {
+                cancelMoodLogBtn.addEventListener('click', () => {
+                    moodLoggingModal.style.display = 'none';
+                });
+            }
+
+            if (viewMoodLogTabBtn) {
+                viewMoodLogTabBtn.addEventListener('click', () => {
+                    renderMoodLogs(); // Ensure logs are up-to-date before showing
+                    fullMoodLogViewModal.style.display = 'flex';
+                });
+            }
+
+            if (closeFullLogViewBtn) {
+                closeFullLogViewBtn.addEventListener('click', () => {
+                    fullMoodLogViewModal.style.display = 'none';
+                });
+            }
+
+            renderMoodLogs(); // Initial render of mood logs on page load
+
+            // --- ZODIAC PREDICTION (Place holder) ---
             const zodiacLink = document.getElementById('zodiacLink');
             const zodiacPredictionText = document.getElementById('zodiacPredictionText');
-            const predictions = [
-                "Today, focus on self-care and introspection. A quiet moment could reveal a new perspective.",
-                "Embrace new challenges! Your determination will lead to unexpected successes.",
-                "Communication is key. Express your thoughts clearly and listen intently.",
-                "A creative spark is within you. Let your imagination guide your activities today.",
-                "Connect with loved ones. Strengthening your bonds will bring joy and support.",
-                "Take a step back and reassess your goals. Alignment is more important than speed.",
-                "Trust your intuition. It will guide you through any uncertainties.",
-                "Today is a good day for organization. Tidy your space, tidy your mind.",
-                "Be open to unexpected opportunities. They may come from surprising places.",
-                "Practice gratitude. A positive mindset will attract positive experiences."
-            ];
 
             if (zodiacLink && zodiacPredictionText) {
+                const zodiacPredictions = [
+                    "Today brings fresh opportunities. Embrace new ideas and collaborations.",
+                    "Focus on self-care. A moment of reflection will bring clarity.",
+                    "Your intuition is strong. Trust your gut feelings in decisions.",
+                    "Connect with loved ones. Support from your circle will boost your spirits.",
+                    "A challenge may arise, but your resilience will see you through."
+                ];
                 zodiacLink.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const randomIndex = Math.floor(Math.random() * predictions.length);
-                    zodiacPredictionText.textContent = predictions[randomIndex];
+                    zodiacPredictionText.textContent = zodiacPredictions[Math.floor(Math.random() * zodiacPredictions.length)];
                 });
             }
 
-            // --- CONFETTI EFFECT ---
-            const confettiContainer = document.getElementById('confetti-container');
-
-            function createConfettiPiece() {
-                const piece = document.createElement('div');
-                piece.classList.add('confetti-piece');
-                piece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-                piece.style.left = `${Math.random() * 100}vw`;
-                piece.style.animationDelay = `${Math.random() * 2}s`;
-                piece.style.animationDuration = `${2 + Math.random() * 1}s`;
-                confettiContainer.appendChild(piece);
-
-                piece.addEventListener('animationend', () => {
-                    piece.remove();
-                });
-            }
-
-            function triggerConfetti() {
-                for (let i = 0; i < 50; i++) {
-                    createConfettiPiece();
-                }
-            }
-
-
-            // --- INITIAL LOAD ---
-            loadReminders();
-            // Create a default TODO card if none exist (or load from localStorage)
-            // For simplicity, let's create one on load. In a real app, you'd load saved cards.
-            createTodoCard();
-
-            // Refresh due dates every hour
-            setInterval(() => {
-                document.querySelectorAll('.todo-card ul.task-list li').forEach(checkDueDate);
-            }, 3600000); // Every hour
-
+            // Initialize due dates for any existing tasks if they were loaded from a persistent state
+            // (Assuming you'll implement loading tasks from localStorage/backend later)
+            document.querySelectorAll('.todo-card .task-list li').forEach(taskItem => {
+                const initialDueDate = taskItem.dataset.dueDate; // Get stored due date if exists
+                updateDueDateDisplayAndStatus(taskItem, initialDueDate);
+            });
         });
     </script>
 </body>
