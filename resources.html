@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - Student Wellness Planner</title>
+    <style>
+        /* CSS Custom Properties for Theming (replicated from index.html for consistency) */
+        :root {
+            --bg-color: #c6e2ff;
+            --header-bg: #a0c4e8;
+            --widget-bg: #ffffff;
+            --widget-border-color: #d8c8ff;
+            --text-color: #333333;
+            --text-light: #555555;
+            --accent-color: #8a63d2;
+            --nav-link-color: #000000;
+            --nav-link-hover-bg: #b0d0f0;
+            --progress-bar-bg: #e0e0e0;
+            --progress-bar-fill-1: #b298dc;
+            --progress-bar-fill-2: #8a63d2;
+            --icon-color: #333333;
+            --button-bg: #e6e6fa;
+            --button-text: #333;
+            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #232931;
+            --header-bg: #1a1f25;
+            --widget-bg: #393e46;
+            --widget-border-color: #5c5178;
+            --text-color: #eeeeee;
+            --text-light: #cccccc;
+            --accent-color: #b298dc;
+            --nav-link-color: #eeeeee;
+            --nav-link-hover-bg: #4a5058;
+            --progress-bar-bg: #555555;
+            --progress-bar-fill-1: #9370DB;
+            --progress-bar-fill-2: #8a63d2;
+            --icon-color: #eeeeee;
+            --button-bg: #504660;
+            --button-text: #eeeeee;
+            --box-shadow: 0 2px 5px rgba(255,255,255,0.05);
+        }
+
+        /* Basic Reset and Body Styles (replicated) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header (replicated) */
+        header {
+            background-color: var(--header-bg);
+            color: var(--nav-link-color);
+            padding: 0 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--box-shadow);
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            border: 2px solid var(--widget-border-color);
+        }
+
+        header nav a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s;
+        }
+
+        header nav a:hover {
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input[type="search"] {
+            padding: 8px 12px;
+            border: 1px solid var(--widget-border-color);
+            border-right: none;
+            border-radius: 20px 0 0 20px;
+            background-color: var(--widget-bg);
+            color: var(--text-color);
+            min-width: 200px;
+        }
+
+        .search-bar input[type="search"]::placeholder {
+            color: var(--text-light);
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            background-color: var(--widget-bg);
+            border: 1px solid var(--widget-border-color);
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            color: var(--icon-color);
+        }
+
+        /* Resources Page Specific Styles */
+        .resources-content {
+            flex-grow: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--widget-bg);
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            margin-top: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--widget-border-color);
+        }
+
+        .resources-content h1 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .resource-category {
+            margin-bottom: 30px;
+        }
+
+        .resource-category h2 {
+            color: var(--text-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .resource-link {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .resource-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Fixed Bottom Left Controls (replicated, but adapted for resources.html) */
+        .fixed-bottom-left {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: var(--text-light);
+            background-color: var(--widget-bg);
+            border: 1px solid var(--widget-border-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        #themeIcon {
+            font-size: 1.5em;
+            margin-right: 8px;
+            color: var(--icon-color);
+        }
+
+        /* Responsive Adjustments (replicated and adapted) */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 10px;
+                height: auto;
+                flex-direction: column;
+                align-items: flex-start;
+                padding-bottom: 10px;
+            }
+
+            body {
+                padding-top: 120px;
+            }
+
+            header nav {
+                margin-top: 10px;
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+            }
+
+            header nav a {
+                margin: 0 5px;
+            }
+
+            .search-bar {
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .search-bar input[type="search"] {
+                flex-grow: 1;
+            }
+
+            .fixed-bottom-left {
+                flex-direction: row;
+                align-items: center;
+                width: calc(100% - 20px);
+                justify-content: space-around;
+                background-color: var(--header-bg);
+                padding: 5px;
+                border-radius: 8px;
+                left: 10px;
+                bottom: 10px;
+            }
+
+            .theme-toggle {
+                padding: 5px 8px;
+            }
+
+            .resources-content {
+                margin-top: 20px;
+                margin-bottom: 20px;
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"></div>
+        <nav>
+            <a href="index.html" id="navHome">Home</a>
+            <a href="about.html" id="navAbout">About Us</a>
+            <a href="resources.html" id="navResources">Resources</a>
+        </nav>
+        <div class="search-bar">
+            <input type="search" id="searchInput" placeholder="Search...">
+            <button id="searchButton">&#128269;</button>
+        </div>
+    </header>
+
+    <main class="resources-content">
+        <h1>Resources</h1>
+
+        <div class="resource-category">
+            <h2>AI & Writing</h2>
+            <a href="https://chatgpt.com/" class="resource-link">ChatGPT</a>
+        </div>
+
+        <div class="resource-category">
+            <h2>Career & Networking</h2>
+            <a href="https://app.joinhandshake.com/login" class="resource-link">Handshake</a>
+            <a href="https://www.linkedin.com/" class="resource-link">LinkedIn</a>
+        </div>
+
+        <div class="resource-category">
+            <h2>Math & Academic Support</h2>
+             <a href="https://www.mathway.com/Algebra" class="resource-link">Mathway</a>
+            <a href="https://openstax.org/" class="resource-link">OpenStax</a>
+            <a href="https://quizlet.com/" class="resource-link">Quizlet</a>
+        </div>
+
+          <div class="resource-category">
+            <h2>Mental Health</h2>
+            <a href="https://www.7cups.com/" class="resource-link">7 Cups</a>
+        </div>
+
+         <div class="resource-category">
+            <h2>Miscellaneous</h2>
+            <a href="https://www.youtube.com/watch?v=K4YoQHjaziI" class="resource-link">YouTube</a>
+        </div>
+    </main>
+
+    <div class="fixed-bottom-left">
+        <div class="theme-toggle" id="themeToggleBtn">
+            <span id="themeIcon">☀️</span>
+            <span id="themeToggleText">Light/Dark mode Toggle</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- THEME TOGGLE ---
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeIcon.textContent = '🌙';
+            } else {
+                themeIcon.textContent = '☀️';
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    themeIcon.textContent = '🌙';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeIcon.textContent = '☀️';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // --- PLACEHOLDER ACTIONS (adapted for resources.html) ---
+            document.getElementById('searchButton').addEventListener('click', () => {
+                const searchTerm = document.getElementById('searchInput').value;
+                if (searchTerm) alert(`Searching for: ${searchTerm} (Search functionality to be implemented)`);
+                else alert('Please enter a search term.');
+            });
+            document.getElementById('navHome').addEventListener('click', (e) => { /* e.preventDefault(); */ }); // Removed preventDefault
+            document.getElementById('navAbout').addEventListener('click', (e) => { /* e.preventDefault(); */ }); // Removed preventDefault
+            document.getElementById('navResources').addEventListener('click', (e) => { /* e.preventDefault(); */ }); // Removed preventDefault
+        });
+    </script>
+</body>
+</html>
