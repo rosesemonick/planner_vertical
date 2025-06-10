@@ -3,1359 +3,1093 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Student Wellness Planner</title>
     <style>
+        /* CSS Custom Properties for Theming */
         :root {
-            --primary-color: #4CAF50; /* Green */
-            --secondary-color: #2196F3; /* Blue */
-            --accent-color: #FFC107; /* Amber */
-            --background-dark: #2C2F33;
-            --background-light: #F0F2F5;
-            --card-bg-dark: #23272A;
-            --card-bg-light: #FFFFFF;
-            --text-dark: #FFFFFF;
-            --text-light: #5C6F80;
-            --border-color-dark: #36393F;
-            --border-color-light: #E0E4E8;
-            --red-color: #F44336;
-            --orange-color: #FF9800;
-
+            --bg-color: #c6e2ff;
+            --header-bg: #a0c4e8;
+            --widget-bg: #ffffff;
+            --widget-border-color: #d8c8ff;
+            --text-color: #333333;
+            --text-light: #555555;
+            --accent-color: #8a63d2;
+            --nav-link-color: #000000;
+            --nav-link-hover-bg: #b0d0f0;
             --progress-bar-bg: #e0e0e0;
-            --progress-bar-fill-1: #8BC34A; /* Light green */
-            --progress-bar-fill-2: #FFEB3B; /* Yellow */
-            --progress-bar-fill-complete: #4CAF50; /* Primary green */
+            --progress-bar-fill-1: #b298dc;
+            --progress-bar-fill-2: #8a63d2;
+            --progress-bar-fill-complete: #4CAF50;
+            --icon-color: #333333;
+            --button-bg: #e6e6fa;
+            --button-text: #333;
+            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --accent-color-translucent: rgba(138, 99, 210, 0.2);
+            --modal-overlay-bg: rgba(0, 0, 0, 0.6);
+            --sidebar-button-bg: var(--widget-bg);
+            --sidebar-button-text: var(--text-color);
+            --sidebar-button-hover-bg: var(--bg-color);
+            --modal-header-bg: var(--header-bg);
+            --input-bg: var(--bg-color); 
+            --danger-color: #f44336; 
+            --danger-color-hover: #d32f2f;
 
-            --button-bg-primary: #4CAF50;
-            --button-text-primary: #FFFFFF;
-            --button-hover-primary: #43A047;
-
-            --button-bg-secondary: #E0E0E0;
-            --button-text-secondary: #333333;
-            --button-hover-secondary: #D5D5D5;
-        }
-
-        /* Dark Theme */
-        body.dark-theme {
-            background-color: var(--background-dark);
-            color: var(--text-dark);
-        }
-        body.dark-theme .widget,
-        body.dark-theme .modal-content {
-            background-color: var(--card-bg-dark);
-            border-color: var(--border-color-dark);
-            color: var(--text-dark);
-        }
-        body.dark-theme input[type="text"],
-        body.dark-theme textarea,
-        body.dark-theme input[type="time"],
-        body.dark-theme .reminder-text[contenteditable="true"],
-        body.dark-theme .card-title-text[contenteditable="true"],
-        body.dark-theme .task-label[contenteditable="true"] {
-            background-color: #36393F;
-            border-color: var(--border-color-dark);
-            color: var(--text-dark);
-        }
-        body.dark-theme .close-btn,
-        body.dark-theme .calendar-nav button {
-            color: var(--text-dark);
-        }
-        body.dark-theme .calendar-day {
-            color: var(--text-dark);
-        }
-        body.dark-theme .calendar-day.selected {
-            background-color: var(--primary-color);
-            color: var(--text-dark);
-        }
-        body.dark-theme .calendar-day.today {
-            border: 1px solid var(--accent-color);
-        }
-        body.dark-theme .reminder-dot {
-            background-color: var(--accent-color);
-        }
-        body.dark-theme .progress-bar-container {
-            background-color: #444;
-        }
-        body.dark-theme .mood-emoji-trigger {
-            background-color: #444;
-        }
-        body.dark-theme .mood-emoji-trigger:hover {
-            background-color: #555;
-        }
-        body.dark-theme .log-details .log-timestamp {
-            color: var(--text-light);
-        }
-        body.dark-theme .tab-button {
-            background-color: var(--card-bg-dark);
-            color: var(--text-dark);
-            border-color: var(--border-color-dark);
-        }
-        body.dark-theme .tab-button.active {
-            background-color: var(--primary-color);
-            color: var(--text-dark);
+            /* Custom properties for the prominent TODO button */
+            --new-todo-btn-bg: var(--accent-color);
+            --new-todo-btn-text: #ffffff;
+            --new-todo-btn-shadow: 0 4px 10px rgba(138, 99, 210, 0.35);
+            --new-todo-btn-hover-shadow: 0 6px 14px rgba(138, 99, 210, 0.45);
         }
 
-        /* Light Theme */
+        body.dark-mode {
+            --bg-color: #232931;
+            --header-bg: #1a1f25;
+            --widget-bg: #393e46;
+            --widget-border-color: #5c5178;
+            --text-color: #eeeeee;
+            --text-light: #cccccc;
+            --accent-color: #b298dc;
+            --nav-link-color: #eeeeee;
+            --nav-link-hover-bg: #4a5058;
+            --progress-bar-bg: #555555;
+            --progress-bar-fill-1: #9370DB;
+            --progress-bar-fill-2: #8a63d2;
+            --progress-bar-fill-complete: #67BD67;
+            --icon-color: #eeeeee;
+            --button-bg: #504660;
+            --button-text: #eeeeee;
+            --box-shadow: 0 2px 5px rgba(255,255,255,0.05);
+            --accent-color-translucent: rgba(178, 152, 220, 0.3);
+            --modal-overlay-bg: rgba(0, 0, 0, 0.7);
+            --sidebar-button-bg: var(--widget-bg);
+            --sidebar-button-text: var(--text-color);
+            --sidebar-button-hover-bg: var(--header-bg);
+            --modal-header-bg: var(--header-bg);
+            --input-bg: var(--header-bg); 
+            --danger-color: #ef5350;
+            --danger-color-hover: #e53935;
+
+            /* Custom properties for the prominent TODO button in dark mode */
+            --new-todo-btn-bg: var(--accent-color); 
+            --new-todo-btn-text: #ffffff;
+            --new-todo-btn-shadow: 0 4px 10px rgba(178, 152, 220, 0.35);
+            --new-todo-btn-hover-shadow: 0 6px 14px rgba(178, 152, 220, 0.45);
+        }
+
+        /* Basic Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-light);
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .widget {
-            background-color: var(--card-bg-light);
-            border: 1px solid var(--border-color-light);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            margin-bottom: 20px;
-            padding: 20px;
-            width: 100%;
-            max-width: 450px; /* Reduced max-width for better fit */
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .widget-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        h1, h2, h3, h4 {
-            color: var(--primary-color);
-            margin-top: 0;
-        }
-        h1 {
-            font-size: 2.2em;
-            font-weight: 700;
-            color: #333; /* Always dark for main title */
-        }
-        body.dark-theme h1 {
-             color: var(--text-dark); /* White for main title in dark theme */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color); color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            padding-top: 60px; padding-left: 220px;
         }
 
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            color: #888;
-            cursor: pointer;
-            transition: color 0.2s ease;
+        /* Header */
+        header {
+            background-color: var(--header-bg); color: var(--nav-link-color); padding: 0 20px;
+            height: 60px; display: flex; align-items: center; justify-content: space-between;
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: var(--box-shadow);
         }
-        .close-btn:hover {
-            color: var(--red-color);
+        .logo {
+            width: 40px; height: 40px; background-color: white;
+            border-radius: 50%; border: 2px solid var(--widget-border-color);
         }
-
-        /* Dashboard Layout */
-        .dashboard-header {
-            width: 100%;
-            max-width: 960px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 0 10px;
+        header nav a {
+            color: var(--nav-link-color); text-decoration: none; margin: 0 15px;
+            font-weight: bold; padding: 5px 0; border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s;
         }
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            width: 100%;
-            max-width: 960px;
+        header nav a:hover { border-bottom: 2px solid var(--accent-color); }
+        .search-bar { display: flex; align-items: center; }
+        .search-bar input[type="search"] {
+            padding: 8px 12px; border: 1px solid var(--widget-border-color); border-right: none;
+            border-radius: 20px 0 0 20px; background-color: var(--widget-bg);
+            color: var(--text-color); min-width: 200px;
         }
-
-        /* Theme Toggle */
-        .theme-switch {
-            position: relative;
-            display: inline-block;
-            width: 40px;
-            height: 20px;
-        }
-        .theme-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 20px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: var(--primary-color);
-        }
-        input:focus + .slider {
-            box-shadow: 0 0 1px var(--primary-color);
-        }
-        input:checked + .slider:before {
-            transform: translateX(20px);
+        .search-bar input[type="search"]::placeholder { color: var(--text-light); }
+        .search-bar button {
+            padding: 8px 12px; background-color: var(--widget-bg);
+            border: 1px solid var(--widget-border-color); border-left: none;
+            border-radius: 0 20px 20px 0; cursor: pointer; color: var(--icon-color);
         }
 
-        /* Motivational Quote */
-        .quote-container {
-            text-align: center;
-        }
-        .quote-container p {
-            font-size: 1.1em;
-            font-style: italic;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        .quote-container button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.3s ease;
-        }
-        .quote-container button:hover {
-            background-color: #1976D2;
+        /* Left Sidebar */
+        .left-sidebar {
+            position: fixed; top: 60px; left: 0; width: 220px; height: calc(100vh - 60px);
+            background-color: var(--bg-color); padding: 20px; display: flex;
+            flex-direction: column; gap: 15px; 
+            border-right: 1px solid var(--widget-border-color); z-index: 999; overflow-y: auto;
         }
 
-        /* To-Do List Widget */
-        .todo-card .task-list {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 15px;
-        }
-        .todo-card .task-list li {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-color-light);
-            transition: border-color 0.3s ease;
-            position: relative; /* For due date button positioning */
-        }
-        body.dark-theme .todo-card .task-list li {
-            border-color: var(--border-color-dark);
-        }
-        .todo-card .task-list li:last-child {
-            border-bottom: none;
-        }
-        .todo-card .task-list li input[type="checkbox"] {
-            margin-right: 10px;
-            min-width: 18px; /* Ensure checkbox size consistency */
-            min-height: 18px;
-            cursor: pointer;
-            accent-color: var(--primary-color); /* For checked state */
-        }
-        .todo-card .task-list li .task-label {
-            flex-grow: 1;
-            padding: 2px 0;
-            outline: none;
-            cursor: text;
-            min-width: 50px; /* Ensure it's always editable */
-        }
-        .todo-card .task-list li input[type="checkbox"]:checked + .task-label {
-            text-decoration: line-through;
-            color: var(--text-light);
-        }
-        .todo-card .add-task-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
-        .todo-card .add-task-btn:hover {
-            background-color: #43A047;
-        }
-        .todo-card .progress-item {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .todo-card .progress-bar-container {
-            width: 100%;
-            background-color: var(--progress-bar-bg);
-            border-radius: 5px;
-            height: 10px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-        .todo-card .progress-bar {
-            height: 100%;
-            width: 0%;
-            background-color: var(--progress-bar-fill-1);
-            border-radius: 5px;
-            transition: width 0.4s ease-in-out, background-color 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.7em;
-            color: white;
-            font-weight: bold;
-        }
-        .todo-card .progress-bar.full {
-            background-color: var(--progress-bar-fill-complete);
-        }
-        .todo-card .progress-label {
-            font-size: 0.9em;
-            color: var(--text-light);
-        }
-        .new-page-btn-container {
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+        /* Specific, more prominent styles for the New TODO List button */
         #newPageBtn {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 15px 12px; 
+            background-color: var(--new-todo-btn-bg);
+            color: var(--new-todo-btn-text);
+            border: none; 
+            border-radius: 10px; 
             cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-        #newPageBtn:hover {
-            background-color: #1976D2;
-        }
-
-        /* Task Due Date Styling */
-        .task-due-date {
-            font-size: 0.8em;
-            color: var(--text-light); /* Softer color for date */
-            margin-left: 10px;
-            white-space: nowrap; /* Prevent date from wrapping */
+            font-weight: 600; 
+            font-size: 1.1em; 
+            text-align: center; 
+            width: 100%;
+            box-shadow: var(--new-todo-btn-shadow);
+            transition: background-color 0.2s, color 0.2s, filter 0.2s, transform 0.2s, box-shadow 0.2s;
         }
 
-        .task-due-date.overdue {
-            color: var(--red-color); /* Overdue color */
-            font-weight: bold;
-        }
-
-        .task-due-date.today {
-            color: var(--orange-color); /* Due today color */
-            font-weight: bold;
-        }
-
-        .task-due-date.completed {
-            text-decoration: line-through;
-            color: var(--text-light);
+        #newPageBtn:hover,
+        #newPageBtn:focus {
+            background-color: var(--new-todo-btn-bg); 
+            color: var(--new-todo-btn-text); 
+            filter: brightness(1.12); 
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: var(--new-todo-btn-hover-shadow);
+            outline: none; 
         }
         
-        .set-due-date-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1em;
-            margin-left: auto; /* Push to the right */
-            color: var(--secondary-color);
-            transition: color 0.2s ease;
+        /* Styles for the OTHER sidebar tab buttons */
+        .sidebar-tab-button {
+            padding: 12px; 
+            background-color: var(--sidebar-button-bg);
+            color: var(--sidebar-button-text); 
+            border: 1px solid var(--widget-border-color);
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-align: left;
+            transition: background-color 0.3s, filter 0.2s; 
+            width: 100%;
+            box-shadow: var(--box-shadow);
+            display: flex; 
+            align-items: center; 
         }
-        .set-due-date-btn:hover {
-            color: #1976D2;
+        
+        .sidebar-tab-button:hover { 
+            background-color: var(--sidebar-button-hover-bg); 
+            filter: brightness(0.98);
+        }
+        
+        .sidebar-tab-button .tab-icon { margin-right: 10px; font-size: 1.1em; color: var(--accent-color); }
+
+
+        /* Main Content Area */
+        .main-content { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+        .motivational-quote-banner {
+            background-color: var(--widget-bg); border: 1px solid var(--widget-border-color);
+            padding: 15px; text-align: center; font-style: italic; border-radius: 8px;
+            box-shadow: var(--box-shadow); color: var(--text-light);
+        }
+        .widgets-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+        }
+        .widget {
+            background-color: var(--widget-bg); border: 1px solid var(--widget-border-color);
+            border-radius: 12px; padding: 20px; box-shadow: var(--box-shadow);
+            color: var(--text-color); display: flex; flex-direction: column;
+            transition: background-color 0.3s ease-out;
+        }
+        .widget h2 { margin-bottom: 15px; font-size: 1.5em; color: var(--text-color); }
+        .widget .widget-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+        }
+        .widget .widget-header h2 { margin-bottom: 0; flex-grow: 1; margin-right: 10px; }
+        .widget .close-btn { 
+            background: none; border: none; font-size: 1.8em; cursor: pointer;
+            color: var(--icon-color); padding: 0 5px; line-height: 1;
         }
 
-        /* Reminders Widget */
-        .reminders-list {
+        /* Specific Styles for Enhanced Reminders Widget */
+        .reminders-widget ul#remindersList {
             list-style: none;
-            padding: 0;
             margin-bottom: 15px;
+            padding: 0;
+            max-height: 250px; 
+            overflow-y: auto;
         }
-        .reminders-list li {
+        .reminders-widget li {
+            padding: 10px 5px; 
+            border-bottom: 1px solid var(--widget-border-color);
             display: flex;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color-light);
+            gap: 10px; 
+            transition: background-color 0.2s;
         }
-        body.dark-theme .reminders-list li {
-            border-color: var(--border-color-dark);
+        .reminders-widget li:hover {
+            background-color: rgba(0,0,0,0.03);
         }
-        .reminders-list li:last-child {
+        body.dark-mode .reminders-widget li:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+        .reminders-widget li:last-child {
             border-bottom: none;
         }
-        .reminders-list .reminder-checkbox {
-            margin-right: 10px;
-            min-width: 18px;
-            min-height: 18px;
-            cursor: pointer;
-            accent-color: var(--primary-color);
+        .reminders-widget .reminder-checkbox {
+            accent-color: var(--accent-color);
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
         }
-        .reminders-list .reminder-details {
+        .reminders-widget .reminder-details {
             flex-grow: 1;
         }
-        .reminders-list .reminder-text {
-            font-weight: bold;
+        .reminders-widget .reminder-text {
+            color: var(--text-light);
+            cursor: pointer; 
+            padding: 3px 5px;
+            border-radius: 3px;
         }
-        .reminders-list .reminder-text.completed {
+        .reminders-widget .reminder-date {
+            font-size: 0.8em;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-top: 4px;
+        }
+        .reminders-widget .reminder-text[contenteditable="true"] {
+            cursor: text;
+            outline: 1px solid var(--accent-color);
+            background-color: var(--input-bg);
+            box-shadow: 0 0 0 2px var(--accent-color-translucent);
+        }
+        .reminders-widget .reminder-text.completed {
             text-decoration: line-through;
             color: var(--text-light);
+            opacity: 0.7;
         }
-        .reminders-list .reminder-date {
-            font-size: 0.85em;
-            color: var(--text-light);
-        }
-        .reminders-list .delete-reminder-btn {
+        .reminders-widget .delete-reminder-btn {
             background: none;
             border: none;
-            color: var(--red-color);
-            font-size: 1.5em;
-            margin-left: 10px;
+            color: var(--danger-color);
+            font-size: 1.3em; 
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            padding: 0 5px;
+            line-height: 1;
+            border-radius: 50%;
+            transition: color 0.2s, background-color 0.2s;
+            flex-shrink: 0;
         }
-        .reminders-list .delete-reminder-btn:hover {
-            transform: scale(1.2);
-        }
-        .new-reminder-input-group {
-            display: flex;
-            gap: 10px;
-        }
-        .new-reminder-input-group input[type="text"] {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid var(--border-color-light);
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-        .new-reminder-input-group input[type="text"]:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-        .new-reminder-input-group button {
-            background-color: var(--primary-color);
+        .reminders-widget .delete-reminder-btn:hover {
             color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-        .new-reminder-input-group button:hover {
-            background-color: #43A047;
+            background-color: var(--danger-color-hover);
         }
 
-        /* Modals (shared styles) */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+        .add-reminder-form {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 1;
-            transition: opacity 0.4s ease-in-out;
+            gap: 10px;
+            margin-top: 10px;
+            border-top: 1px solid var(--widget-border-color);
+            padding-top: 15px;
+        }
+        .add-reminder-form #newReminderInput {
+            flex-grow: 1;
+            padding: 8px 10px;
+            border: 1px solid var(--widget-border-color);
+            border-radius: 6px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-size: 0.95em;
+        }
+           .add-reminder-form #newReminderInput::placeholder {
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+        .add-reminder-form #addReminderBtn {
+            padding: 8px 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: filter 0.2s;
+        }
+        .add-reminder-form #addReminderBtn:hover {
+            filter: brightness(0.9);
+        }
+
+        /* New TODO Cards */
+        .todo-card ul.task-list { list-style: none; margin-bottom: 20px; padding-left: 5px; }
+        .todo-card ul.task-list li { 
+            padding: 8px 0; 
+            display: flex; 
+            flex-wrap: wrap; /* Allow content to wrap */
+            align-items: center; 
+            gap: 5px 10px; /* Gap between rows and columns */
+            border-bottom: 1px solid var(--widget-border-color); /* Add a separator */
+        }
+        .todo-card ul.task-list li:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+        .todo-card input[type="checkbox"] {
+            margin-right: 5px; 
+            accent-color: var(--accent-color);
+            width: 18px; height: 18px; 
+            flex-shrink: 0; /* Prevent checkbox from shrinking */
+        }
+        .todo-card .task-content {
+            display: flex;
+            flex-direction: column; /* Stack label and date vertically */
+            flex-grow: 1; /* Allow content to take available space */
+            min-width: 0; /* Allow content to shrink if necessary */
+        }
+        .todo-card .task-label { 
+            color: var(--text-light); 
+            word-break: break-word; 
+            cursor: pointer;
+        }
+        /* Style for overdue tasks */
+        .todo-card .task-label.overdue {
+            color: var(--danger-color); /* Red color for overdue tasks */
+            font-weight: bold;
+        }
+        .todo-card .task-due-date-input {
+            margin-top: 2px;
+            padding: 2px 4px;
+            border: 1px solid var(--widget-border-color);
+            border-radius: 4px;
+            font-size: 0.8em;
+            color: var(--text-light);
+            background-color: var(--input-bg);
+            cursor: pointer;
+            width: fit-content; /* Adjust width to content */
+        }
+        body.dark-mode .todo-card .task-due-date-input {
+            background-color: var(--header-bg); /* Dark mode input background */
+        }
+
+        .todo-card .delete-task-btn {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            font-size: 1.2em; 
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 5px;
+            line-height: 1;
+            border-radius: 50%;
+            transition: color 0.2s, background-color 0.2s;
+            flex-shrink: 0;
+            margin-left: auto; /* Push to the right */
+        }
+        .todo-card .delete-task-btn:hover {
+            color: white;
+            background-color: var(--danger-color-hover);
+        }
+
+        .progress-item { margin-bottom: 15px; margin-top: auto; }
+        .progress-bar-container {
+            width: 100%; background-color: var(--progress-bar-bg); border-radius: 10px;
+            height: 20px; overflow: hidden; margin-bottom: 5px;
+            border: 1px solid var(--widget-border-color);
+        }
+        .progress-bar {
+            height: 100%; background-color: var(--progress-bar-fill-1);
+            border-radius: 10px 0 0 10px;
+            transition: width 0.5s ease-in-out, background-color 0.5s ease;
+            text-align: center; color: white; font-size: 0.8em; line-height: 20px;
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .progress-bar.full { border-radius: 10px; }
+        .progress-label { font-size: 0.9em; color: var(--text-light); text-align: center; }
+
+        .todo-card .card-title-text[contenteditable="true"],
+        .todo-card .task-label[contenteditable="true"] {
+            cursor: text; padding: 2px 4px; border-radius: 3px;
+            min-width: 20px; display: inline-block; background-color: transparent;
+        }
+        .todo-card .card-title-text[contenteditable="true"]:hover,
+        .todo-card .task-label[contenteditable="true"]:hover { background-color: rgba(0,0,0,0.05); }
+        body.dark-mode .todo-card .card-title-text[contenteditable="true"]:hover,
+        body.dark-mode .todo-card .task-label[contenteditable="true"]:hover { background-color: rgba(255,255,255,0.1); }
+        .todo-card .card-title-text[contenteditable="true"]:focus,
+        .todo-card .task-label[contenteditable="true"]:focus {
+            outline: 1px solid var(--accent-color);
+            box-shadow: 0 0 0 2px var(--accent-color-translucent);
+            background-color: var(--widget-bg);
+        }
+        .add-task-btn {
+            background-color: var(--button-bg); color: var(--button-text);
+            border: 1px solid var(--widget-border-color); padding: 6px 10px;
+            border-radius: 5px; cursor: pointer; margin-top: 12px; margin-bottom: 10px;
+            display: block; width: fit-content; margin-left: auto; margin-right: auto;
+            transition: background-color 0.2s, filter 0.2s;
+        }
+        .add-task-btn:hover { filter: brightness(0.95); }
+        
+        /* Zodiac Section */
+        .zodiac-section {
+            text-align: center; margin-top: 20px; padding: 20px;
+            background-color: var(--widget-bg); border: 1px solid var(--widget-border-color);
+            border-radius: 8px; box-shadow: var(--box-shadow);
+        }
+        #zodiacLink {
+            color: var(--accent-color); text-decoration: underline; cursor: pointer;
+            display: block; margin-bottom: 15px;
+        }
+        .zodiac-image-placeholder { font-size: 3em; color: var(--text-light); }
+        .zodiac-image-placeholder span { font-size: 0.4em; vertical-align: middle; }
+
+        /* Fixed Bottom Left Controls */
+        .fixed-bottom-left {
+            position: fixed; bottom: 20px; left: 20px;
+            display: flex; flex-direction: column; gap: 15px; z-index: 1000;
+        }
+        .mood-tracker-launcher { 
+            display: flex; gap: 10px; padding: 10px 15px; 
+            background-color: var(--widget-bg); border-radius: 8px;
+            box-shadow: var(--box-shadow); border: 1px solid var(--widget-border-color);
+        }
+        .mood-emoji-trigger {
+            font-size: 2em; cursor: pointer; transition: transform 0.2s; opacity: 0.7;
+        }
+        .mood-emoji-trigger:hover { transform: scale(1.2); opacity: 1; }
+
+        .theme-toggle {
+            display: flex; align-items: center; cursor: pointer; font-size: 0.9em;
+            color: var(--text-light); background-color: var(--widget-bg);
+            border: 1px solid var(--widget-border-color); padding: 8px 12px;
+            border-radius: 20px; box-shadow: var(--box-shadow);
+        }
+        #themeIcon { font-size: 1.5em; margin-right: 8px; color: var(--icon-color); }
+
+        /* Mood Log Widget (Summary View on Main Page) */
+        .mood-log-widget ul#moodLogListSummary { list-style: none; max-height: 200px; overflow-y: auto; padding-right: 10px; padding-left:0;}
+        .mood-log-widget li {
+            padding: 10px 0; border-bottom: 1px dashed var(--widget-border-color);
+            display: flex; align-items: flex-start; gap: 10px;
+        }
+        /* This was conflicting with reminder widget li, so ensure it's specific if needed or general if intended */
+        .mood-log-widget #moodLogListSummary li:last-child { border-bottom: none; }
+        .mood-log-widget .log-emoji { font-size: 1.5em; line-height: 1.2; }
+        .mood-log-widget .log-details { flex-grow: 1; }
+        .mood-log-widget .log-note { font-size: 0.95em; color: var(--text-color); margin-bottom: 4px; word-break: break-word; }
+        .mood-log-widget .log-timestamp { font-size: 0.75em; color: var(--text-light); }
+        .mood-log-widget .empty-log-message { text-align: center; color: var(--text-light); padding: 20px 0; }
+
+        /* Modal Overlays (Common) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--modal-overlay-bg); display: none; 
+            align-items: center; justify-content: center; z-index: 1500; 
+            animation: fadeIn 0.4s ease-out forwards;
         }
         .modal-overlay.fade-out {
-            opacity: 0;
+            animation: fadeOut 0.4s ease-in forwards;
         }
+        
+        /* Modal Content (Common Base) */
         .modal-content {
-            background-color: var(--card-bg-light);
-            padding: 25px;
+            background-color: var(--widget-bg);
             border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 500px;
-            transform: translateY(0);
-            transition: transform 0.3s ease-out;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%; 
+            transform: scale(0.8) translateY(20px);
+            opacity: 0;
+            animation: popIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
         }
         .modal-overlay.fade-out .modal-content {
-            transform: translateY(-20px);
+            animation: popOut 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
         }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+
+
+        /* Mood Logging Modal (for new entries) */
+        #moodLoggingModal .modal-content {
+            max-width: 450px;
+            text-align: center;
+            padding: 25px;
         }
-        .modal-header h3 {
-            margin: 0;
-            color: var(--primary-color);
+        #moodLoggingModal h3 { margin-top: 0; margin-bottom: 10px; font-size: 1.4em; color: var(--text-color); }
+        #modalSelectedMoodEmoji { font-size: 3em; margin-bottom: 15px; }
+        #moodNoteInput {
+            width: 100%; min-height: 80px; padding: 10px;
+            border: 1px solid var(--widget-border-color); border-radius: 6px; margin-bottom: 20px;
+            font-family: inherit; font-size: 1em; background-color: var(--input-bg); /* Changed */
+            color: var(--text-color);
         }
+        body.dark-mode #moodNoteInput { background-color: var(--input-bg); } /* Ensure consistency */
         .modal-actions {
+            padding: 10px 20px 20px;
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            margin-top: 20px;
         }
-
-        /* Calendar specific modal styles */
-        .calendar-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+        .modal-actions button {
+            padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer;
+            font-weight: bold; margin: 0 5px; transition: filter 0.2s;
         }
-        .calendar-nav button {
-            background: none;
-            border: none;
-            font-size: 1.8em;
-            color: var(--secondary-color);
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-        .calendar-nav button:hover {
-            color: #1976D2;
-        }
-        .calendar-nav h4 {
-            margin: 0;
-            color: #333;
-        }
-        body.dark-theme .calendar-nav h4 {
-            color: var(--text-dark);
-        }
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            text-align: center;
-        }
-        .calendar-day-name {
-            font-weight: bold;
-            color: var(--text-light);
-            padding: 5px 0;
-        }
-        .calendar-day {
-            padding: 10px 0;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background-color 0.2s ease, color 0.2s ease;
-            position: relative;
-        }
-        .calendar-day:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-        .calendar-day.today {
-            border: 2px solid var(--primary-color);
-            font-weight: bold;
-        }
-        .calendar-day.selected {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        .reminder-dot {
-            position: absolute;
-            bottom: 3px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-        }
-
-        /* Mood Tracker Widget */
-        .mood-emoji-selection {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-            margin-bottom: 20px;
-        }
-        .mood-emoji-trigger {
-            font-size: 2.5em;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            padding: 8px;
-            border-radius: 50%;
-            background-color: #F8F8F8;
-        }
-        .mood-emoji-trigger:hover {
-            transform: scale(1.1);
-            background-color: #EFEFEF;
-        }
-        .mood-log-entry {
-            margin-top: 15px;
-        }
-        .mood-log-entry textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color-light);
-            border-radius: 8px;
-            font-size: 1em;
-            min-height: 80px;
-            resize: vertical;
-        }
-        .mood-log-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px;
-        }
-        .mood-log-list li {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        body.dark-theme .mood-log-list li {
-            border-color: var(--border-color-dark);
-        }
-        .mood-log-list li:last-child {
-            border-bottom: none;
-        }
-        .log-emoji {
-            font-size: 1.8em;
-            margin-right: 10px;
-        }
-        .log-details {
-            flex-grow: 1;
-        }
-        .log-note {
-            margin: 0;
-            font-weight: bold;
-        }
-        .log-timestamp {
-            font-size: 0.8em;
-            color: var(--text-light);
-        }
-        .empty-log-message, .empty-full-log-message {
-            text-align: center;
-            color: var(--text-light);
-            font-style: italic;
-            padding: 10px 0;
-        }
+        .modal-actions .save-mood-btn { background-color: var(--accent-color); color: white; }
+        .modal-actions .cancel-mood-btn { background-color: var(--progress-bar-bg); color: var(--text-color); }
+        .modal-actions button:hover { filter: brightness(0.9); }
 
         /* Full Mood Log View Modal */
         #fullMoodLogViewModal .modal-content {
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        #fullLogListContainer {
-            list-style: none;
-            padding: 0;
-        }
-        #fullLogListContainer li {
-            border-bottom: 1px solid var(--border-color-light);
-            padding: 10px 0;
+            max-width: 700px; 
+            height: 80vh; 
             display: flex;
+            flex-direction: column;
+            padding: 0; 
+        }
+        #fullMoodLogViewModal .modal-header {
+            padding: 15px 20px;
+            background-color: var(--modal-header-bg);
+            color: var(--nav-link-color);
+            border-bottom: 1px solid var(--widget-border-color);
+            border-radius: 12px 12px 0 0; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #fullMoodLogViewModal .modal-header h3 {
+            margin: 0;
+            font-size: 1.6em;
+        }
+        #fullMoodLogViewModal .close-full-log-btn {
+            background: none; border: none; font-size: 2em;
+            color: var(--nav-link-color); cursor: pointer; line-height: 1; padding: 0 5px;
+        }
+        #fullMoodLogViewModal .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        #fullMoodLogViewModal #fullLogListContainer {
+            list-style: none;
+            padding: 0; 
+        }
+        #fullMoodLogViewModal #fullLogListContainer li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--widget-border-color);
+            display: flex;
+            gap: 15px;
             align-items: flex-start;
         }
-        body.dark-theme #fullLogListContainer li {
-            border-color: var(--border-color-dark);
-        }
-        #fullLogListContainer li:last-child {
+        #fullMoodLogViewModal #fullLogListContainer li:last-child {
             border-bottom: none;
         }
-        #fullLogListContainer .log-details {
-            margin-top: 5px; /* Adjust alignment with emoji */
+        #fullMoodLogViewModal #fullLogListContainer .log-emoji {
+            font-size: 2em;
+            margin-top: 2px;
+            flex-shrink: 0; 
         }
-        #fullLogListContainer .log-timestamp {
-            font-size: 0.75em;
-            margin-top: 5px;
+        #fullMoodLogViewModal #fullLogListContainer .log-details {
+            flex-grow: 1;
         }
-        .tab-buttons {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
+        #fullMoodLogViewModal #fullLogListContainer .log-note {
+            font-size: 1em;
+            color: var(--text-color);
+            margin-bottom: 5px;
+            white-space: pre-wrap; 
+            word-break: break-word;
         }
-        .tab-button {
-            background-color: var(--button-bg-secondary);
-            color: var(--button-text-secondary);
-            border: 1px solid var(--border-color-light);
-            border-radius: 8px;
-            padding: 10px 15px;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+        #fullMoodLogViewModal #fullLogListContainer .log-timestamp {
+            font-size: 0.8em;
+            color: var(--text-light);
         }
-        .tab-button:hover {
-            background-color: var(--button-hover-secondary);
-        }
-        .tab-button.active {
-            background-color: var(--primary-color);
-            color: var(--button-text-primary);
-            border-color: var(--primary-color);
+        #fullMoodLogViewModal .empty-full-log-message {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.1em;
+            color: var(--text-light);
         }
 
-        /* Zodiac Prediction Widget */
-        .zodiac-prediction {
-            text-align: center;
+        /* ----- NEW: Reminder Calendar Modal Specific Styles ----- */
+        #reminderCalendarModal {
+            --calendar-bg: var(--widget-bg);
+            --calendar-header-bg: var(--header-bg);
+            --calendar-border-color: var(--widget-border-color);
+            --calendar-text-color: var(--text-color);
+            --calendar-day-hover-bg: var(--accent-color-translucent);
+            --calendar-day-selected-bg: var(--accent-color);
+            --calendar-day-selected-text: white;
+            --calendar-today-border: 2px solid var(--accent-color);
+            --calendar-reminder-dot: var(--danger-color);
+            --time-input-bg: var(--input-bg);
+            --modal-backdrop-blur: 5px;
+            --modal-animation-duration: 0.4s;
         }
-        .zodiac-prediction p {
-            font-style: italic;
-            min-height: 2em; /* Ensure space even if no prediction */
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes popIn {
+            from { transform: scale(0.8) translateY(20px); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes popOut {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(0.8) translateY(20px); opacity: 0; }
+        }
+
+        #reminderCalendarModal .modal-content {
+            max-width: 400px;
+            border: 1px solid var(--calendar-border-color);
+        }
+        #reminderCalendarModal .modal-header {
+            padding: 15px 20px;
+            background-color: var(--calendar-header-bg);
+            border-bottom: 1px solid var(--calendar-border-color);
+            border-radius: 12px 12px 0 0;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            padding: 10px 0;
         }
-        .zodiac-prediction a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.2s ease;
+        #calendarMonthYear { font-weight: bold; font-size: 1.1em; }
+        #prevMonthBtn, #nextMonthBtn {
+            background: none; border: none; font-size: 1.8em; color: var(--text-color);
+            cursor: pointer; padding: 0 10px; transition: transform 0.2s;
         }
-        .zodiac-prediction a:hover {
-            color: #1976D2;
-            text-decoration: underline;
+        #prevMonthBtn:hover, #nextMonthBtn:hover { transform: scale(1.2); }
+        #calendarGrid {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; padding: 20px;
+        }
+        .calendar-day-name, .calendar-day {
+            text-align: center; padding: 8px; font-weight: bold; color: var(--text-light);
+        }
+        .calendar-day {
+            cursor: pointer; border-radius: 50%; position: relative;
+            transition: background-color 0.2s, color 0.2s, transform 0.2s;
+            color: var(--calendar-text-color);
+        }
+        .calendar-day:hover { background-color: var(--calendar-day-hover-bg); transform: scale(1.1); }
+        .calendar-day.not-current-month { color: var(--text-light); opacity: 0.5; pointer-events: none; }
+        .calendar-day.today { box-shadow: 0 0 0 var(--calendar-today-border); }
+        .calendar-day.selected {
+            background-color: var(--calendar-day-selected-bg); color: var(--calendar-day-selected-text) !important; font-weight: bold;
+        }
+        .calendar-day .reminder-dot {
+            position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+            width: 6px; height: 6px; background-color: var(--accent-color); border-radius: 50%;
+        }
+        #reminderTimeSection { padding: 0 20px 20px; text-align: center; }
+        #reminderTimeSection label { font-weight: bold; margin-right: 10px; }
+        #reminderTimeInput {
+            padding: 8px; border-radius: 6px; border: 1px solid var(--calendar-border-color);
+            background-color: var(--time-input-bg); color: var(--calendar-text-color); font-family: inherit;
         }
 
         /* Confetti */
         #confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Allows clicks to pass through */
-            overflow: hidden;
-            z-index: 1000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; overflow: hidden; z-index: 2000;
         }
         .confetti-piece {
-            position: absolute;
-            width: 10px;
-            height: 20px;
-            background-color: #FFD700; /* Example color */
-            animation: fall 3s ease-out forwards;
-            opacity: 0;
+            position: absolute; width: 8px; height: 16px;
+            opacity: 0; animation: fall 3s ease-out forwards;
         }
         @keyframes fall {
-            0% {
-                transform: translateY(0) rotateZ(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotateZ(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Search Bar */
-        .search-container {
-            display: flex;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
-        .search-container input {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid var(--border-color-light);
-            border-radius: 8px;
-            font-size: 1em;
-        }
-        .search-container button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-        .search-container button:hover {
-            background-color: #1976D2;
+            0% { opacity: 1; transform: translateY(-10vh) rotateZ(0deg); }
+            100% { opacity: 0; transform: translateY(110vh) rotateZ(720deg); }
         }
 
         /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            body { padding-left: 0; }
+            .left-sidebar { display: none; } 
+            .widgets-container { grid-template-columns: 1fr; }
+            .fixed-bottom-left { left: 10px; bottom: 10px; }
+        }
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
+            header {
+                padding: 0 10px; height: auto; flex-direction: column;
+                align-items: flex-start; padding-bottom: 10px;
             }
-            .dashboard-header {
-                flex-direction: column;
-                gap: 20px;
+            body { padding-top: 120px; }
+            header nav {
+                margin-top:10px; width: 100%; display: flex; justify-content: space-around;
             }
-            h1 {
-                font-size: 1.8em;
+            header nav a { margin: 0 5px; }
+            .search-bar { margin-top: 10px; width: 100%; }
+            .search-bar input[type="search"] { flex-grow: 1; }
+            .fixed-bottom-left{
+                flex-direction: row; align-items: center; width: calc(100% - 20px);
+                justify-content: space-around; background-color: var(--header-bg); 
+                padding: 5px; border-radius: 8px;
             }
-            .widget {
-                padding: 15px;
+            .mood-tracker-launcher { padding: 5px; }
+            .theme-toggle { padding: 5px 8px; }
+            #fullMoodLogViewModal .modal-content {
+                height: 90vh; 
+                width: 95%;
             }
         }
-
-        /* Modal for setting task due date */
-        .task-date-modal .modal-content {
-            width: 90%;
-            max-width: 400px;
-        }
-
-        /* Ensure consistent button styling across modals */
-        .modal-actions button {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
-
-        .modal-actions .cancel-btn {
-            background-color: var(--button-bg-secondary);
-            color: var(--button-text-secondary);
-        }
-
-        .modal-actions .cancel-btn:hover {
-            background-color: var(--button-hover-secondary);
-        }
-
-        .modal-actions .save-btn {
-            background-color: var(--button-bg-primary);
-            color: var(--button-text-primary);
-        }
-
-        .modal-actions .save-btn:hover {
-            background-color: var(--button-hover-primary);
-        }
-
     </style>
 </head>
-<body class="light-theme">
-    <div class="dashboard-header">
-        <h1>My Personal Dashboard</h1>
-        <label class="theme-switch">
-            <input type="checkbox" id="themeToggle">
-            <span class="slider"></span>
-        </label>
-    </div>
-
-    <div class="main-content">
-        <section class="widget quote-container">
-            <div class="widget-header">
-                <h2>Daily Wisdom</h2>
-            </div>
-            <p id="motivationalQuote">"The only way to do great work is to love what you do."</p>
-            <button id="changeQuoteBtn">New Quote</button>
-        </section>
-
-        <section class="widget search-container">
-            <div class="widget-header">
-                <h2>Search</h2>
-            </div>
-            <input type="text" id="searchInput" placeholder="Search anything...">
-            <button id="searchButton">Go</button>
-        </section>
-
-        <div id="widgetsContainer">
-            </div>
-
-        <div class="new-page-btn-container">
-            <button id="newPageBtn">Add New To-Do List</button>
+<body>
+    <header>
+        <div class="logo"></div>
+        <nav>
+            <a href="index.html" id="navHome">Home</a>
+            <a href="about.html" id="navAbout">About Us</a>
+            <a href="resources.html" id="navResources">Resources</a>
+        </nav>
+        <div class="search-bar">
+            <input type="search" id="searchInput" placeholder="Search...">
+            <button id="searchButton"></button>
         </div>
+    </header>
 
-        <section class="widget">
-            <div class="widget-header">
+    <aside class="left-sidebar">
+        <button class="new-page-btn" id="newPageBtn">+ New TODO List</button>
+        <button class="sidebar-tab-button" id="viewMoodLogTabBtn">
+            <span class="tab-icon">📜</span> View Full Mood Log
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <section class="motivational-quote-banner">
+            <p id="motivationalQuoteP">"Loading motivational quote..."</p>
+        </section>
+
+        <div class="widgets-container">
+            <section class="widget reminders-widget" id="remindersWidget">
                 <h2>Reminders</h2>
-            </div>
-            <ul id="remindersList" class="reminders-list">
+                <ul id="remindersList">
+                    <!-- Reminders will be populated here by JS -->
                 </ul>
-            <div class="new-reminder-input-group">
-                <input type="text" id="newReminderInput" placeholder="Add a new reminder...">
-                <button id="addReminderBtn">Set Date</button>
-            </div>
-        </section>
-
-        <section class="widget">
-            <div class="widget-header">
-                <h2>Mood Tracker</h2>
-                <div class="tab-buttons">
-                    <button class="tab-button active" id="summaryMoodLogTabBtn">Summary</button>
-                    <button class="tab-button" id="viewMoodLogTabBtn">View All</button>
+                <div class="add-reminder-form">
+                    <input type="text" id="newReminderInput" placeholder="Type reminder, then click '+' to set date...">
+                    <button id="addReminderBtn" title="Set Date & Time for Reminder">+</button>
                 </div>
-            </div>
-            <div class="mood-emoji-selection">
-                <span class="mood-emoji-trigger" data-mood="happy" data-emoji="😊">😊</span>
-                <span class="mood-emoji-trigger" data-mood="neutral" data-emoji="😐">😐</span>
-                <span class="mood-emoji-trigger" data-mood="sad" data-emoji="😔">😔</span>
-                <span class="mood-emoji-trigger" data-mood="stressed" data-emoji="😩">😩</span>
-                <span class="mood-emoji-trigger" data-mood="excited" data-emoji="🤩">🤩</span>
-            </div>
-            <div class="mood-log-entry">
-                <ul id="moodLogListSummary" class="mood-log-list">
-                    </ul>
-            </div>
-        </section>
+            </section>
 
-        <section class="widget zodiac-prediction">
-            <div class="widget-header">
-                <h2>Your Zodiac Prediction</h2>
-            </div>
-            <p id="zodiacPredictionText">Click below for your daily cosmic insight!</p>
-            <a href="#" id="zodiacLink">Get Your Prediction</a>
-        </section>
+            <section class="widget mood-log-widget" id="moodLogWidgetContainer"> 
+                <h2>Mood Log (Recent)</h2>
+                <ul id="moodLogListSummary">
+                    <p class="empty-log-message">No moods logged yet. Click an emoji below to start!</p>
+                </ul>
+            </section>
+            <!-- New TODO cards will be appended here -->
+        </div>
 
-    </div> <div id="reminderCalendarModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Set Reminder Date & Time</h3>
-                <button id="closeCalendarModalBtn" class="close-btn" title="Close Date Picker">×</button>
+        <section class="zodiac-section">
+            <a href="#" id="zodiacLink">click here for zodiac prediction</a>
+            <div class="zodiac-image-placeholder">
+                ☀️ <span>Zodiac & Daily Insights</span>
             </div>
-            <div class="calendar-nav">
-                <button id="prevMonthBtn" title="Previous Month">&lt;</button>
-                <h4 id="calendarMonthYear">Month Year</h4>
-                <button id="nextMonthBtn" title="Next Month">&gt;</button>
-            </div>
-            <div id="calendarGrid" class="calendar-grid">
-                </div>
-            <div class="reminder-time-input">
-                <label for="reminderTimeInput">Time:</label>
-                <input type="time" id="reminderTimeInput">
-            </div>
-            <div class="modal-actions">
-                <button id="cancelReminderBtn" class="cancel-btn">Cancel</button>
-                <button id="setReminderBtn" class="save-btn">Set Reminder</button>
-            </div>
+            <p id="zodiacPredictionText" style="margin-top: 10px; min-height: 1.2em;"></p>
+        </section>
+    </main>
+
+    <div class="fixed-bottom-left">
+        <div class="mood-tracker-launcher">
+            <span class="mood-emoji-trigger" data-mood="happy" data-emoji="😊" title="Log Happy Mood">😊</span>
+            <span class="mood-emoji-trigger" data-mood="sad" data-emoji="😟" title="Log Sad Mood">😟</span>
+            <span class="mood-emoji-trigger" data-mood="neutral" data-emoji="😐" title="Log Neutral Mood">😐</span>
+            <span class="mood-emoji-trigger" data-mood="excited" data-emoji="🥳" title="Log Excited Mood">🥳</span>
+            <span class="mood-emoji-trigger" data-mood="stressed" data-emoji="😫" title="Log Stressed Mood">😫</span>
+        </div>
+        <div class="theme-toggle" id="themeToggleBtn">
+            <span id="themeIcon">☀️</span>
+            <span id="themeToggleText">Light/Dark mode Toggle</span>
         </div>
     </div>
 
+    <!-- Mood Logging Modal (for new entries) -->
     <div id="moodLoggingModal" class="modal-overlay">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>Log Your Mood <span id="modalSelectedMoodEmoji"></span></h3>
-                <button id="cancelMoodLogBtn" class="close-btn" title="Close Mood Log">×</button>
-            </div>
-            <textarea id="moodNoteInput" placeholder="Add a note about why you feel this way... (optional)"></textarea>
+            <h3>How are you feeling?</h3>
+            <div id="modalSelectedMoodEmoji"></div>
+            <textarea id="moodNoteInput" placeholder="Add a note (optional)..."></textarea>
             <div class="modal-actions">
-                <button id="saveMoodLogBtn" class="save-btn">Save Mood Log</button>
+                <button id="cancelMoodLogBtn" class="cancel-mood-btn">Cancel</button>
+                <button id="saveMoodLogBtn" class="save-mood-btn">Log Mood</button>
             </div>
         </div>
     </div>
 
+    <!-- Full Mood Log View Modal -->
     <div id="fullMoodLogViewModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Your Full Mood Log</h3>
-                <button id="closeFullLogViewBtn" class="close-btn" title="Close Full Log">×</button>
+                <h3>Full Mood Log</h3>
+                <button id="closeFullLogViewBtn" class="close-full-log-btn" title="Close Log View">×</button>
             </div>
-            <ul id="fullLogListContainer">
+            <div class="modal-body">
+                <ul id="fullLogListContainer">
+                    <!-- Full log entries will be populated here by JS -->
                 </ul>
+            </div>
         </div>
     </div>
 
-    <div id="taskDueDateModal" class="modal-overlay task-date-modal">
+    <!-- ===== Reminder Calendar Modal ===== -->
+    <div id="reminderCalendarModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="taskDateModalTitle">Set Due Date for Task</h3>
-                <button id="closeTaskDateModalBtn" class="close-btn" title="Close Date Picker">×</button>
+                <button id="prevMonthBtn" title="Previous Month">&lt;</button>
+                <h3 id="calendarMonthYear">Month Year</h3>
+                <button id="nextMonthBtn" title="Next Month">&gt;</button>
             </div>
-            <div class="calendar-nav">
-                <button id="prevTaskMonthBtn" title="Previous Month">&lt;</button>
-                <h4 id="taskCalendarMonthYear">Month Year</h4>
-                <button id="nextTaskMonthBtn" title="Next Month">&gt;</button>
+            <div id="calendarGrid">
+                <!-- Day names and dates will be generated by JS -->
             </div>
-            <div id="taskCalendarGrid" class="calendar-grid">
-                </div>
+            <div id="reminderTimeSection">
+                <label for="reminderTimeInput">Set Time:</label>
+                <input type="time" id="reminderTimeInput">
+            </div>
             <div class="modal-actions">
-                <button id="clearTaskDueDateBtn" class="cancel-btn">Clear Due Date</button>
-                <button id="setTaskDueDateBtn" class="save-btn">Set Due Date</button>
+                <button id="cancelReminderBtn" class="cancel-mood-btn">Cancel</button>
+                <button id="setReminderBtn" class="save-mood-btn">Set Reminder</button>
             </div>
         </div>
     </div>
+
 
     <div id="confetti-container"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Global Variables and DOM Elements ---
-            const themeToggle = document.getElementById('themeToggle');
-            const motivationalQuoteEl = document.getElementById('motivationalQuote');
-            const changeQuoteBtn = document.getElementById('changeQuoteBtn');
-            const widgetsContainer = document.getElementById('widgetsContainer');
+            let cardIdCounter = 0; 
+            let globalTaskCounter = 0;
+            // NEW: Array to store all todo cards data
+            let todoCardsData = []; 
 
-            // --- Motivational Quotes ---
+            // --- THEME TOGGLE ---
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark') {
+                body.classList.add('dark-mode');
+                if (themeIcon) themeIcon.textContent = '🌙';
+            } else {
+                if (themeIcon) themeIcon.textContent = '☀️';
+            }
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    body.classList.toggle('dark-mode');
+                    localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+                    if (themeIcon) themeIcon.textContent = body.classList.contains('dark-mode') ? '🌙' : '☀️';
+                });
+            }
+
+            // --- MOTIVATIONAL QUOTE ---
             const quotes = [
                 "The only way to do great work is to love what you do. – Steve Jobs",
                 "Believe you can and you're halfway there. – Theodore Roosevelt",
-                "The future belongs to those who believe in the beauty of their dreams. – Eleanor Roosevelt",
-                "It always seems impossible until it's done. – Nelson Mandela",
-                "Success is not final, failure is not fatal: it is the courage to continue that counts. – Winston Churchill",
-                "The best way to predict the future is to create it. – Peter Drucker",
-                "The only limit to our realization of tomorrow will be our doubts of today. – Franklin D. Roosevelt"
+                "Your limitation—it's only your imagination."
             ];
-            function displayRandomQuote() {
-                if (motivationalQuoteEl) {
-                    const randomIndex = Math.floor(Math.random() * quotes.length);
-                    motivationalQuoteEl.textContent = quotes[randomIndex];
-                }
+            const quoteElement = document.getElementById('motivationalQuoteP');
+            if (quoteElement) {
+                quoteElement.textContent = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`;
             }
-            if (changeQuoteBtn) changeQuoteBtn.addEventListener('click', displayRandomQuote);
-            displayRandomQuote(); // Display a quote on load
+            
+            const widgetsContainer = document.querySelector('.widgets-container');
 
-            // --- Helper to select content for editable elements ---
+            // --- HELPER: SELECT TEXT IN CONTENTEDITABLE ---
             function selectElementContents(el) {
-                const range = document.createRange();
-                range.selectNodeContents(el);
+                if(!el) return;
+                const range = document.createRange(); range.selectNodeContents(el);
                 const sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
+                if (sel) { sel.removeAllRanges(); sel.addRange(range); }
             }
-
-            // --- Theme Toggle ---
-            if (themeToggle) {
-                // Load saved theme preference
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'dark') {
-                    document.body.classList.add('dark-theme');
-                    themeToggle.checked = true;
-                } else {
-                    document.body.classList.remove('dark-theme');
-                    themeToggle.checked = false;
-                }
-
-                themeToggle.addEventListener('change', () => {
-                    if (themeToggle.checked) {
-                        document.body.classList.add('dark-theme');
-                        localStorage.setItem('theme', 'dark');
-                    } else {
-                        document.body.classList.remove('dark-theme');
-                        localStorage.setItem('theme', 'light');
-                    }
-                });
-            }
-
-            // --- To-Do List Widget ---
-            let cardIdCounter = 0;
-            let globalTaskCounter = 0;
-            let currentOpenTaskForDate = null; // To store the task being edited for date setting
-
-            // --- LOCAL STORAGE KEY CONSTANTS ---
-            const LOCAL_STORAGE_TODO_KEY = 'todoCards';
-
-            // --- HELPER FUNCTIONS FOR LOCAL STORAGE ---
-            function loadTodoCards() {
-                const storedCards = localStorage.getItem(LOCAL_STORAGE_TODO_KEY);
-                if (storedCards) {
-                    const cardsData = JSON.parse(storedCards);
-                    // Reset counters based on loaded data to prevent ID collisions
-                    cardIdCounter = 0;
-                    globalTaskCounter = 0;
-
-                    if (cardsData.length > 0) {
-                        cardIdCounter = Math.max(...cardsData.map(card => parseInt(card.id.split('-')[1] || 0)));
-                        cardsData.forEach(card => {
-                            if (card.tasks && card.tasks.length > 0) {
-                                globalTaskCounter = Math.max(globalTaskCounter, ...card.tasks.map(task => parseInt(task.id.split('-')[2] || 0)));
-                            }
-                        });
-                    }
-
-                    // Clear existing default card before loading
-                    if (widgetsContainer) {
-                        widgetsContainer.innerHTML = '';
-                    }
-
-                    cardsData.forEach(cardData => {
-                        createTodoCard(cardData); // Pass data to recreate card
-                    });
-                } else {
-                    // Create a default card if no stored data
-                    createTodoCard();
-                }
-            }
-
+            
+            // --- TODO CARD PERSISTENCE FUNCTIONS ---
             function saveTodoCards() {
-                const todoCards = [];
-                document.querySelectorAll('.todo-card').forEach(cardElement => {
-                    const cardId = cardElement.id;
-                    const cardTitle = cardElement.querySelector('.card-title-text').textContent.trim();
-                    const tasks = [];
-                    cardElement.querySelectorAll('.task-list li').forEach(taskItem => {
-                        const checkbox = taskItem.querySelector('input[type="checkbox"]');
-                        const label = taskItem.querySelector('.task-label');
-                        const dueDateSpan = taskItem.querySelector('.task-due-date');
-                        tasks.push({
-                            id: checkbox.id,
-                            text: label.textContent.trim(),
-                            completed: checkbox.checked,
-                            dueDate: dueDateSpan ? dueDateSpan.dataset.dueDate : null // Save due date
-                        });
-                    });
-                    todoCards.push({ id: cardId, title: cardTitle, tasks: tasks });
-                });
-                localStorage.setItem(LOCAL_STORAGE_TODO_KEY, JSON.stringify(todoCards));
+                localStorage.setItem('todoCards', JSON.stringify(todoCardsData));
             }
 
+            function loadTodoCards() {
+                const storedTodoCards = localStorage.getItem('todoCards');
+                if (storedTodoCards) {
+                    todoCardsData = JSON.parse(storedTodoCards);
+                    renderTodoCards(); // Render all loaded cards
+                }
+            }
 
-            // --- TODO CARD FUNCTIONALITY ---
-            function createTodoCard(cardData = null) {
-                cardIdCounter++;
-                const cardId = cardData ? cardData.id : `todoCard-${cardIdCounter}`;
-                const cardElement = document.createElement('section');
-                cardElement.classList.add('widget', 'todo-card');
-                cardElement.id = cardId;
-                cardElement.innerHTML = `
-                    <div class="widget-header">
-                        <h2 class="card-title"><span class="card-title-text" contenteditable="true">${cardData ? cardData.title : `Untitled List ${cardIdCounter}`}</span></h2>
-                        <button class="close-btn close-card-btn" title="Close this list">×</button>
-                    </div>
-                    <ul class="task-list"></ul>
-                    <button class="add-task-btn">+ Add New Task</button>
-                    <div class="progress-item">
-                        <div class="progress-bar-container"><div class="progress-bar"></div></div>
-                        <p class="progress-label">0% Complete</p>
-                    </div>`;
-                if (widgetsContainer) {
-                    widgetsContainer.appendChild(cardElement);
+            // --- TODO CARD RENDERING ---
+            function renderTodoCards() {
+                // Clear existing dynamic todo cards before rendering
+                document.querySelectorAll('.todo-card').forEach(card => card.remove());
 
-                    const taskList = cardElement.querySelector('.task-list');
+                todoCardsData.forEach(cardData => {
+                    const cardElement = document.createElement('section');
+                    cardElement.classList.add('widget', 'todo-card');
+                    cardElement.id = cardData.id;
+                    cardElement.innerHTML = `
+                        <div class="widget-header">
+                            <h2 class="card-title"><span class="card-title-text" contenteditable="true">${cardData.title}</span></h2>
+                            <button class="close-btn close-card-btn" title="Close this list">×</button>
+                        </div>
+                        <ul class="task-list"></ul>
+                        <button class="add-task-btn">+ Add New Task</button>
+                        <div class="progress-item">
+                            <div class="progress-bar-container"><div class="progress-bar"></div></div>
+                            <p class="progress-label">0% Complete</p>
+                        </div>`;
+                    
+                    if (widgetsContainer) {
+                        widgetsContainer.appendChild(cardElement);
 
-                    if (cardData && cardData.tasks) {
-                        cardData.tasks.forEach(task => addTaskToTodoCard(cardElement, task.text, task.completed, task.dueDate));
-                    } else {
-                        addTaskToTodoCard(cardElement, "New Task");
-                    }
+                        // Add tasks to the newly created card
+                        const taskList = cardElement.querySelector('.task-list');
+                        cardData.tasks.forEach(task => {
+                            addTaskToTodoCard(cardElement, task.text, task.completed, task.dueDate, task.id);
+                        });
 
-                    updateProgressForCard(cardElement);
-                    const cardTitleText = cardElement.querySelector('.card-title-text');
-                    if (cardTitleText) {
-                        cardTitleText.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); cardTitleText.blur();}});
-                        cardTitleText.addEventListener('blur', saveTodoCards); // Save on title change
-                        if (!cardData) { // Only focus on new cards
-                            cardTitleText.focus();
-                            selectElementContents(cardTitleText);
+                        updateProgressForCard(cardElement);
+
+                        // Event listener for card title editing
+                        const cardTitleText = cardElement.querySelector('.card-title-text');
+                        if (cardTitleText) {
+                            cardTitleText.addEventListener('keydown', e => { 
+                                if (e.key === 'Enter') { 
+                                    e.preventDefault(); 
+                                    cardTitleText.blur();
+                                }
+                            });
+                            cardTitleText.addEventListener('blur', () => {
+                                cardData.title = cardTitleText.textContent.trim();
+                                saveTodoCards();
+                            });
                         }
                     }
-                }
-                saveTodoCards(); // Save after creating a new card
+                });
             }
 
-            function addTaskToTodoCard(cardElement, taskText = "New Task", completed = false, dueDate = null) {
-                globalTaskCounter++;
-                const taskId = `dynamic-task-${globalTaskCounter}`;
+            // --- TODO CARD FUNCTIONALITY ---
+            function createTodoCard() {
+                const newCardId = `todoCard-${Date.now()}`;
+                const newCardData = {
+                    id: newCardId,
+                    title: `Untitled List ${todoCardsData.length + 1}`,
+                    tasks: []
+                };
+                todoCardsData.push(newCardData);
+                saveTodoCards(); // Save immediately after creating a new card
+
+                // Re-render all cards to ensure the new one appears correctly
+                renderTodoCards(); 
+                
+                // Focus on the new card's title if it exists after rendering
+                const newlyCreatedCardElement = document.getElementById(newCardId);
+                if (newlyCreatedCardElement) {
+                    const cardTitleText = newlyCreatedCardElement.querySelector('.card-title-text');
+                    if (cardTitleText) {
+                        cardTitleText.focus();
+                        selectElementContents(cardTitleText);
+                    }
+                }
+
+                // Add an initial task to the new card
+                addTaskToTodoCard(newlyCreatedCardElement, "New Task", false, '');
+            }
+
+            function addTaskToTodoCard(cardElement, taskText = "New Task", completed = false, dueDate = '', taskId = `task-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`) {
                 const taskList = cardElement.querySelector('.task-list');
                 if (!taskList) return;
+
                 const taskItem = document.createElement('li');
+                taskItem.dataset.taskId = taskId;
                 taskItem.innerHTML = `
-                    <input type="checkbox" id="${taskId}" data-task-name="${taskText}" ${completed ? 'checked' : ''}>
-                    <span class="task-label" contenteditable="true">${taskText}</span>
-                    <span class="task-due-date"></span>
-                    <button class="set-due-date-btn" title="Set Due Date">📅</button>`; // Added due date button
+                    <input type="checkbox" class="task-checkbox" ${completed ? 'checked' : ''}>
+                    <div class="task-content">
+                        <span class="task-label" contenteditable="true">${taskText}</span>
+                        <input type="date" class="task-due-date-input" value="${dueDate}">
+                    </div>
+                    <button class="delete-task-btn" title="Delete Task">×</button>`;
                 taskList.appendChild(taskItem);
 
                 const newLabel = taskItem.querySelector('.task-label');
-                const checkbox = taskItem.querySelector('input[type="checkbox"]');
-                const dueDateSpan = taskItem.querySelector('.task-due-date');
-                const setDueDateBtn = taskItem.querySelector('.set-due-date-btn');
+                const dueDateInput = taskItem.querySelector('.task-due-date-input');
+                const deleteBtn = taskItem.querySelector('.delete-task-btn');
+                const checkbox = taskItem.querySelector('.task-checkbox');
 
-                // Set initial due date if provided
-                if (dueDate) {
-                    dueDateSpan.dataset.dueDate = dueDate;
-                    updateTaskDueDateDisplay(dueDateSpan, checkbox.checked);
+                // Find the parent card's data
+                const cardData = todoCardsData.find(card => card.id === cardElement.id);
+                if (!cardData) return;
+
+                // Add task to cardData if it's a brand new task
+                let taskData = cardData.tasks.find(task => task.id === taskId);
+                if (!taskData) {
+                    taskData = { id: taskId, text: taskText, completed: completed, dueDate: dueDate };
+                    cardData.tasks.push(taskData);
+                    saveTodoCards();
                 }
+
+                // Initial check for overdue status
+                checkOverdueStatus(taskItem, taskData.completed, taskData.dueDate);
 
                 if (newLabel) {
-                    newLabel.focus();
-                    selectElementContents(newLabel);
+                    // Make sure new task labels are editable and focused
+                    if (taskText === "New Task" && !completed && !dueDate) { // Only focus/select for genuinely new default tasks
+                        newLabel.focus();
+                        selectElementContents(newLabel);
+                    }
+
                     newLabel.addEventListener('blur', () => {
-                        if(checkbox) checkbox.dataset.taskName = newLabel.textContent.trim();
+                        taskData.text = newLabel.textContent.trim();
+                        saveTodoCards();
+                    });
+                    newLabel.addEventListener('keydown', e => { 
+                        if (e.key === 'Enter') { 
+                            e.preventDefault(); 
+                            newLabel.blur();
+                        }
+                    });
+                }
+
+                if (dueDateInput) {
+                    dueDateInput.addEventListener('change', () => {
+                        taskData.dueDate = dueDateInput.value;
+                        saveTodoCards();
+                        checkOverdueStatus(taskItem, taskData.completed, taskData.dueDate); // Re-check on date change
+                    });
+                }
+
+                if (checkbox) {
+                    checkbox.addEventListener('change', () => {
+                        taskData.completed = checkbox.checked;
+                        if (checkbox.checked) {
+                            triggerConfetti();
+                            newLabel.classList.add('completed');
+                        } else {
+                            newLabel.classList.remove('completed');
+                        }
+                        saveTodoCards();
                         updateProgressForCard(cardElement);
-                        saveTodoCards(); // Save on task text change
+                        checkOverdueStatus(taskItem, taskData.completed, taskData.dueDate); // Re-check on completion change
                     });
-                    newLabel.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); newLabel.blur();}});
+                }
+                 if (completed) { // Apply completed class if task is loaded as completed
+                    newLabel.classList.add('completed');
                 }
 
-                checkbox.addEventListener('change', () => {
-                    if (checkbox.checked) {
-                        triggerConfetti();
-                        dueDateSpan.classList.add('completed');
-                    } else {
-                        dueDateSpan.classList.remove('completed');
-                    }
-                    updateTaskDueDateDisplay(dueDateSpan, checkbox.checked); // Update display on check/uncheck
-                    updateProgressForCard(cardElement);
-                    saveTodoCards(); // Save on task completion change
-                });
-
-                setDueDateBtn.addEventListener('click', () => {
-                    currentOpenTaskForDate = {
-                        dueDateSpan: dueDateSpan,
-                        checkbox: checkbox
-                    };
-                    openTaskDateModal(dueDate); // Pass existing due date to modal
-                });
-
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', () => {
+                        const index = cardData.tasks.findIndex(t => t.id === taskId);
+                        if (index > -1) {
+                            cardData.tasks.splice(index, 1);
+                            taskItem.remove();
+                            saveTodoCards();
+                            updateProgressForCard(cardElement);
+                        }
+                    });
+                }
                 updateProgressForCard(cardElement);
-                saveTodoCards(); // Save after adding a new task
             }
 
-            // --- NEW: Task Due Date Modal Logic ---
-            const taskDueDateModal = document.getElementById('taskDueDateModal');
-            const closeTaskDateModalBtn = document.getElementById('closeTaskDateModalBtn');
-            const prevTaskMonthBtn = document.getElementById('prevTaskMonthBtn');
-            const nextTaskMonthBtn = document.getElementById('nextTaskMonthBtn');
-            const taskCalendarMonthYearEl = document.getElementById('taskCalendarMonthYear');
-            const taskCalendarGridEl = document.getElementById('taskCalendarGrid');
-            const setTaskDueDateBtn = document.getElementById('setTaskDueDateBtn');
-            const clearTaskDueDateBtn = document.getElementById('clearTaskDueDateBtn');
-
-            let taskCalendarDate = new Date();
-            let selectedTaskDate = null;
-
-            function openTaskDateModal(initialDueDate = null) {
-                if (initialDueDate) {
-                    selectedTaskDate = new Date(initialDueDate);
-                    taskCalendarDate = new Date(initialDueDate); // Align calendar to existing date
-                } else {
-                    selectedTaskDate = new Date(); // Default to today
-                    taskCalendarDate = new Date();
-                }
-                generateTaskCalendar();
-                taskDueDateModal.classList.remove('fade-out');
-                taskDueDateModal.style.display = 'flex';
-            }
-
-            function closeTaskDateModal() {
-                taskDueDateModal.classList.add('fade-out');
-                setTimeout(() => {
-                    taskDueDateModal.style.display = 'none';
-                    currentOpenTaskForDate = null; // Clear the task reference
-                }, 400);
-            }
-
-            function generateTaskCalendar() {
-                taskCalendarGridEl.innerHTML = '';
-                const month = taskCalendarDate.getMonth();
-                const year = taskCalendarDate.getFullYear();
-
-                taskCalendarMonthYearEl.textContent = `${taskCalendarDate.toLocaleString('default', { month: 'long' })} ${year}`;
-
-                const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                dayNames.forEach(day => {
-                    const dayNameEl = document.createElement('div');
-                    dayNameEl.classList.add('calendar-day-name');
-                    dayNameEl.textContent = day;
-                    taskCalendarGridEl.appendChild(dayNameEl);
-                });
-
-                const firstDayOfMonth = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                for (let i = 0; i < firstDayOfMonth; i++) {
-                    taskCalendarGridEl.appendChild(document.createElement('div'));
+            function checkOverdueStatus(taskItem, completed, dueDate) {
+                const taskLabel = taskItem.querySelector('.task-label');
+                if (!taskLabel || completed || !dueDate) {
+                    taskLabel.classList.remove('overdue');
+                    return;
                 }
 
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const dayEl = document.createElement('div');
-                    dayEl.classList.add('calendar-day');
-                    dayEl.textContent = i;
-                    dayEl.dataset.date = new Date(year, month, i).toISOString();
-
-                    const today = new Date();
-                    const currentDay = new Date(year, month, i);
-
-                    // Add 'today' class if it's the current date
-                    if (currentDay.getDate() === today.getDate() && currentDay.getMonth() === today.getMonth() && currentDay.getFullYear() === today.getFullYear()) {
-                        dayEl.classList.add('today');
-                    }
-
-                    // Add 'selected' class if it's the selected date
-                    if (selectedTaskDate && currentDay.getDate() === selectedTaskDate.getDate() && currentDay.getMonth() === selectedTaskDate.getMonth() && currentDay.getFullYear() === selectedTaskDate.getFullYear()) {
-                        dayEl.classList.add('selected');
-                    }
-
-                    dayEl.addEventListener('click', () => {
-                        selectedTaskDate = new Date(year, month, i);
-                        document.querySelectorAll('#taskCalendarGrid .calendar-day.selected').forEach(d => d.classList.remove('selected'));
-                        dayEl.classList.add('selected');
-                    });
-                    taskCalendarGridEl.appendChild(dayEl);
-                }
-            }
-
-            prevTaskMonthBtn.addEventListener('click', () => {
-                taskCalendarDate.setMonth(taskCalendarDate.getMonth() - 1);
-                generateTaskCalendar();
-            });
-
-            nextTaskMonthBtn.addEventListener('click', () => {
-                taskCalendarDate.setMonth(taskCalendarDate.getMonth() + 1);
-                generateTaskCalendar();
-            });
-
-            setTaskDueDateBtn.addEventListener('click', () => {
-                if (currentOpenTaskForDate && selectedTaskDate) {
-                    const dueDateISO = selectedTaskDate.toISOString();
-                    currentOpenTaskForDate.dueDateSpan.dataset.dueDate = dueDateISO;
-                    updateTaskDueDateDisplay(currentOpenTaskForDate.dueDateSpan, currentOpenTaskForDate.checkbox.checked);
-                    saveTodoCards(); // Save after setting due date
-                }
-                closeTaskDateModal();
-            });
-
-            clearTaskDueDateBtn.addEventListener('click', () => {
-                if (currentOpenTaskForDate) {
-                    currentOpenTaskForDate.dueDateSpan.removeAttribute('data-due-date');
-                    updateTaskDueDateDisplay(currentOpenTaskForDate.dueDateSpan, currentOpenTaskForDate.checkbox.checked);
-                    saveTodoCards(); // Save after clearing due date
-                }
-                closeTaskDateModal();
-            });
-
-            closeTaskDateModalBtn.addEventListener('click', closeTaskDateModal);
-
-            // --- NEW: Function to update task due date display and class ---
-            function updateTaskDueDateDisplay(dueDateSpan, isCompleted) {
-                if (!dueDateSpan) return;
-
-                const dueDate = dueDateSpan.dataset.dueDate;
-                dueDateSpan.textContent = '';
-                dueDateSpan.className = 'task-due-date'; // Reset classes
-
-                if (!dueDate) return;
-
-                const date = new Date(dueDate);
                 const now = new Date();
-                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const taskDateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                const due = new Date(dueDate);
+                
+                // Compare only dates, not times, for overdue check
+                const nowNoTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const dueNoTime = new Date(due.getFullYear(), due.getMonth(), due.getDate());
 
-                let displayString = '';
-                let isOverdue = false;
-
-                if (taskDateOnly.getTime() < today.getTime() && !isCompleted) {
-                    isOverdue = true;
-                }
-
-                if (taskDateOnly.getTime() === today.getTime()) {
-                    displayString = `Today ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-                    dueDateSpan.classList.add('today');
-                } else if (taskDateOnly.getTime() > today.getTime() && (taskDateOnly.getTime() - today.getTime()) < (24 * 60 * 60 * 1000)) { // Tomorrow
-                    displayString = `Tomorrow ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                if (dueNoTime < nowNoTime) {
+                    taskLabel.classList.add('overdue');
                 } else {
-                    displayString = date.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
-                    // Only add time if it's not midnight (i.e., a specific time was set)
-                    if (date.getHours() !== 0 || date.getMinutes() !== 0) {
-                        displayString += ` ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-                    }
-                }
-
-                dueDateSpan.textContent = displayString;
-
-                if (isOverdue) {
-                    dueDateSpan.classList.add('overdue');
-                }
-                if (isCompleted) {
-                    dueDateSpan.classList.add('completed');
+                    taskLabel.classList.remove('overdue');
                 }
             }
 
@@ -1364,14 +1098,28 @@
                 const checkboxes = cardElement.querySelectorAll('.task-list input[type="checkbox"]');
                 const progressBar = cardElement.querySelector('.progress-bar');
                 const progressLabel = cardElement.querySelector('.progress-label');
-                if (!progressBar || !progressLabel) return;
+                if (!progressBar || !progressLabel) return; 
+
                 const totalTasks = checkboxes.length;
                 let checkedTasks = 0;
-                checkboxes.forEach(cb => { if (cb.checked) checkedTasks++; });
+                checkboxes.forEach(cb => { 
+                    if (cb.checked) {
+                        checkedTasks++; 
+                        // Ensure the task label has 'completed' class when checking
+                        const taskLabel = cb.nextElementSibling.querySelector('.task-label');
+                        if (taskLabel) taskLabel.classList.add('completed');
+                    } else {
+                         // Ensure the task label removes 'completed' class when unchecking
+                        const taskLabel = cb.nextElementSibling.querySelector('.task-label');
+                        if (taskLabel) taskLabel.classList.remove('completed');
+                    }
+                });
+
                 const percentage = totalTasks === 0 ? 0 : Math.round((checkedTasks / totalTasks) * 100);
                 progressBar.style.width = `${percentage}%`;
                 progressBar.textContent = `${percentage}%`;
                 progressLabel.textContent = `${checkedTasks} of ${totalTasks} tasks complete (${percentage}%)`;
+
                 if (percentage === 100 && totalTasks > 0) {
                     progressBar.classList.add('full');
                     progressBar.style.backgroundColor = 'var(--progress-bar-fill-complete)';
@@ -1379,99 +1127,136 @@
                     progressBar.classList.remove('full');
                     progressBar.style.backgroundColor = percentage < 50 ? 'var(--progress-bar-fill-1)' : 'var(--progress-bar-fill-2)';
                 }
-                saveTodoCards(); // Save whenever progress updates (which means task status changed)
             }
-
 
             if (widgetsContainer) {
                 widgetsContainer.addEventListener('click', function(event) {
                     const target = event.target;
+                    // Handle "Add New Task" button click
                     if (target.classList.contains('add-task-btn')) {
                         const cardElement = target.closest('.todo-card');
-                        if (cardElement) addTaskToTodoCard(cardElement);
+                        if (cardElement) {
+                            addTaskToTodoCard(cardElement);
+                            // Update the card's data
+                            const cardData = todoCardsData.find(card => card.id === cardElement.id);
+                            if (cardData) {
+                                // addTaskToTodoCard now adds to cardData.tasks automatically
+                                saveTodoCards();
+                            }
+                        }
                     }
+                    // Handle "Close this list" button click
                     if (target.classList.contains('close-card-btn')) {
                         const cardElement = target.closest('.todo-card');
                         if (cardElement) {
+                            // Remove card data from array
+                            todoCardsData = todoCardsData.filter(card => card.id !== cardElement.id);
                             cardElement.remove();
-                            saveTodoCards(); // Save after removing a card
+                            saveTodoCards();
                         }
                     }
                 });
+
                 widgetsContainer.addEventListener('change', function(event) {
                     const target = event.target;
+                    // Handle task checkbox change
                     if (target.matches('.todo-card .task-list input[type="checkbox"]')) {
                         const cardElement = target.closest('.todo-card');
-                        if (cardElement) {
-                            // Confetti trigger is already in addTaskToTodoCard's change listener
-                            updateProgressForCard(cardElement);
+                        const taskItem = target.closest('li');
+                        const taskId = taskItem.dataset.taskId;
+                        
+                        if (cardElement && taskItem && taskId) {
+                            const cardData = todoCardsData.find(card => card.id === cardElement.id);
+                            const taskData = cardData ? cardData.tasks.find(task => task.id === taskId) : null;
+
+                            if (taskData) {
+                                taskData.completed = target.checked;
+                                saveTodoCards();
+                                updateProgressForCard(cardElement);
+                                checkOverdueStatus(taskItem, taskData.completed, taskData.dueDate); // Re-check on completion change
+                            }
                         }
                     }
+                    // Handle task due date change (already handled within addTaskToTodoCard listener)
                 });
             }
-
+            
             const newPageButton = document.getElementById('newPageBtn');
-            if (newPageButton) newPageButton.addEventListener('click', () => createTodoCard()); // Call with no data for new card
+            if (newPageButton) newPageButton.addEventListener('click', createTodoCard);
 
-            // --- Reminders ---
+            // --- ENHANCED REMINDERS WIDGET V3 (With Notifications) ---
             const remindersListEl = document.getElementById('remindersList');
             const newReminderInput = document.getElementById('newReminderInput');
             const addReminderBtn = document.getElementById('addReminderBtn');
+            
             const reminderCalendarModal = document.getElementById('reminderCalendarModal');
-            const closeCalendarModalBtn = document.getElementById('closeCalendarModalBtn');
+            const calendarMonthYearEl = document.getElementById('calendarMonthYear');
             const prevMonthBtn = document.getElementById('prevMonthBtn');
             const nextMonthBtn = document.getElementById('nextMonthBtn');
-            const calendarMonthYearEl = document.getElementById('calendarMonthYear');
             const calendarGridEl = document.getElementById('calendarGrid');
             const reminderTimeInput = document.getElementById('reminderTimeInput');
             const setReminderBtn = document.getElementById('setReminderBtn');
             const cancelReminderBtn = document.getElementById('cancelReminderBtn');
-
-            let reminders = [];
+            
+            let reminders = []; 
+            let calendarDate = new Date();
+            let selectedDate = null;
             let reminderTextToSet = '';
-            let calendarDate = new Date(); // Date displayed in the calendar modal
-            let selectedDate = null; // Date chosen by the user in the calendar modal
+
+            // --- NEW: Notification Logic ---
+            function requestNotificationPermission() {
+                if (!("Notification" in window)) {
+                    console.log("This browser does not support desktop notification");
+                } else if (Notification.permission === "default") {
+                    Notification.requestPermission();
+                }
+            }
+            
+            function showNotification(reminderText) {
+                if (Notification.permission === "granted") {
+                    new Notification("Upcoming Reminder!", {
+                        body: reminderText,
+                        // icon: "path/to/your/icon.png" // Optional: Add an icon
+                    });
+                } else {
+                    // Fallback for when permission is denied or not granted
+                    alert(`Reminder: ${reminderText}`);
+                }
+            }
+            
+            function checkRemindersForNotification() {
+                const now = new Date().getTime();
+                const oneHour = 60 * 60 * 1000;
+                let needsSave = false;
+                
+                reminders.forEach(reminder => {
+                    const dueDate = new Date(reminder.dueDate).getTime();
+                    // Check if reminder is in the future, within the hour, not completed, and not already notified
+                    if (dueDate > now && (dueDate - now) <= oneHour && !reminder.completed && !reminder.notified) {
+                        showNotification(reminder.text);
+                        reminder.notified = true; // Mark as notified
+                        needsSave = true;
+                    }
+                });
+                
+                if (needsSave) {
+                    saveReminders(); // Save the updated 'notified' status
+                }
+            }
+            // --- End of new Notification Logic ---
 
             function loadReminders() {
-                reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
+                const storedReminders = localStorage.getItem('reminders');
+                if (storedReminders) {
+                    reminders = JSON.parse(storedReminders);
+                    reminders.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+                }
                 renderReminders();
             }
 
             function saveReminders() {
+                reminders.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
                 localStorage.setItem('reminders', JSON.stringify(reminders));
-            }
-
-            function requestNotificationPermission() {
-                if ('Notification' in window) {
-                    if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-                        Notification.requestPermission().then(permission => {
-                            if (permission === 'granted') {
-                                console.log('Notification permission granted.');
-                            } else {
-                                console.warn('Notification permission denied.');
-                            }
-                        });
-                    }
-                }
-            }
-
-            function showNotification(title, body) {
-                if ('Notification' in window && Notification.permission === 'granted') {
-                    new Notification(title, { body });
-                }
-            }
-
-            function checkRemindersForNotification() {
-                const now = new Date();
-                reminders.forEach(reminder => {
-                    const dueDate = new Date(reminder.dueDate);
-                    // Check if reminder is due within the next minute and not yet notified
-                    if (!reminder.notified && !reminder.completed && dueDate <= now && dueDate > new Date(now.getTime() - 60000)) {
-                        showNotification('Reminder!', reminder.text);
-                        reminder.notified = true; // Mark as notified
-                        saveReminders(); // Save the updated status
-                    }
-                });
             }
 
             function formatDueDate(dateString) {
@@ -1499,7 +1284,7 @@
 
             function renderReminders() {
                 if (!remindersListEl) return;
-                remindersListEl.innerHTML = '';
+                remindersListEl.innerHTML = ''; 
 
                 if (reminders.length === 0) {
                     const emptyLi = document.createElement('li');
@@ -1511,7 +1296,7 @@
 
                 reminders.forEach(reminder => {
                     const li = document.createElement('li');
-                    li.dataset.id = reminder.id;
+                    li.dataset.id = reminder.id; 
 
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
@@ -1528,17 +1313,17 @@
                     if (reminder.completed) {
                         textSpan.classList.add('completed');
                     }
-
+                    
                     const dateSpan = document.createElement('div');
                     dateSpan.className = 'reminder-date';
                     dateSpan.textContent = formatDueDate(reminder.dueDate);
 
                     detailsDiv.appendChild(textSpan);
                     detailsDiv.appendChild(dateSpan);
-
+                    
                     const deleteBtn = document.createElement('button');
                     deleteBtn.classList.add('delete-reminder-btn');
-                    deleteBtn.innerHTML = '&times;';
+                    deleteBtn.innerHTML = '&times;'; 
                     deleteBtn.title = "Delete Reminder";
                     deleteBtn.addEventListener('click', () => deleteReminder(reminder.id));
 
@@ -1552,11 +1337,13 @@
             function openCalendarModal() {
                 reminderTextToSet = newReminderInput.value.trim();
                 if (reminderTextToSet === '') {
-                    alert("Please type a reminder message first!");
+                    // Replaced alert with a custom message handling if possible, or keep as-is if alerts are allowed
+                    // For now, retaining alert as per original code behavior for consistency, though custom UI is preferred.
+                    alert("Please type a reminder message first!"); 
                     newReminderInput.focus();
                     return;
                 }
-
+                
                 selectedDate = new Date();
                 const now = new Date();
                 const hours = now.getHours().toString().padStart(2, '0');
@@ -1572,16 +1359,16 @@
                 reminderCalendarModal.classList.add('fade-out');
                 setTimeout(() => {
                     reminderCalendarModal.style.display = 'none';
-                }, 400);
+                }, 400); 
             }
 
             function generateCalendar() {
                 calendarGridEl.innerHTML = '';
                 const month = calendarDate.getMonth();
                 const year = calendarDate.getFullYear();
-
+                
                 calendarMonthYearEl.textContent = `${calendarDate.toLocaleString('default', { month: 'long' })} ${year}`;
-
+                
                 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
                 dayNames.forEach(day => {
                     const dayNameEl = document.createElement('div');
@@ -1597,7 +1384,7 @@
                     const d = new Date(r.dueDate);
                     return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
                 });
-
+                
                 for (let i = 0; i < firstDayOfMonth; i++) {
                     calendarGridEl.appendChild(document.createElement('div'));
                 }
@@ -1641,31 +1428,31 @@
 
             function confirmAndSetReminder() {
                 requestNotificationPermission(); // Ask for permission when user sets a reminder
-
+                
                 if (!selectedDate || !reminderTextToSet) return;
-
+                
                 const timeParts = reminderTimeInput.value.split(':');
-                selectedDate.setHours(parseInt(timeParts[0] || 0));
-                selectedDate.setMinutes(parseInt(timeParts[1] || 0));
+                selectedDate.setHours(timeParts[0] || 0);
+                selectedDate.setMinutes(timeParts[1] || 0);
                 selectedDate.setSeconds(0);
 
                 const newReminder = {
-                    id: `rem-${Date.now()}`,
+                    id: `rem-${Date.now()}`, 
                     text: reminderTextToSet,
                     completed: false,
                     dueDate: selectedDate.toISOString(),
                     notified: false // NEW: Add notified flag
                 };
-                reminders.push(newReminder);
+                reminders.push(newReminder); 
                 saveReminders();
                 renderReminders();
-                newReminderInput.value = '';
+                newReminderInput.value = ''; 
                 closeCalendarModal();
             }
 
             setReminderBtn.addEventListener('click', confirmAndSetReminder);
             cancelReminderBtn.addEventListener('click', closeCalendarModal);
-
+            
             function deleteReminder(reminderId) {
                 reminders = reminders.filter(r => r.id !== reminderId);
                 saveReminders();
@@ -1677,7 +1464,7 @@
                 if (reminder) {
                     reminder.completed = !reminder.completed;
                     saveReminders();
-                    renderReminders();
+                    renderReminders(); 
                 }
             }
 
@@ -1687,6 +1474,7 @@
                     openCalendarModal();
                 }
             });
+            loadReminders();
 
 
             // --- ENHANCED MOOD TRACKER ---
@@ -1696,14 +1484,13 @@
             const moodNoteInput = document.getElementById('moodNoteInput');
             const saveMoodLogBtn = document.getElementById('saveMoodLogBtn');
             const cancelMoodLogBtn = document.getElementById('cancelMoodLogBtn');
-
-            const moodLogListSummaryEl = document.getElementById('moodLogListSummary');
+            
+            const moodLogListSummaryEl = document.getElementById('moodLogListSummary'); 
 
             const viewMoodLogTabBtn = document.getElementById('viewMoodLogTabBtn');
             const fullMoodLogViewModal = document.getElementById('fullMoodLogViewModal');
             const closeFullLogViewBtn = document.getElementById('closeFullLogViewBtn');
             const fullLogListContainer = document.getElementById('fullLogListContainer');
-            const summaryMoodLogTabBtn = document.getElementById('summaryMoodLogTabBtn');
 
             let currentSelectedMood = { type: '', emoji: ''};
 
@@ -1745,39 +1532,38 @@
                         note: note, timestamp: timestamp.toISOString()
                     };
                     saveMoodEntry(moodEntry);
-                    renderMoodLogSummary();
+                    renderMoodLogSummary(); 
                     if (fullMoodLogViewModal && fullMoodLogViewModal.style.display === 'flex') {
                         renderFullMoodLog();
                     }
                     closeMoodModal();
                 });
             }
-
+            
             if(cancelMoodLogBtn) cancelMoodLogBtn.addEventListener('click', closeMoodModal);
 
             function getMoodLog() {
                 return JSON.parse(localStorage.getItem('moodLog') || '[]');
             }
             function saveMoodEntry(entry) {
-                const log = getMoodLog();
-                log.unshift(entry); // Add to the beginning to show most recent first
+                const log = getMoodLog(); log.unshift(entry);
                 localStorage.setItem('moodLog', JSON.stringify(log));
             }
 
             function renderMoodLogSummary() {
                 const log = getMoodLog();
-                if (!moodLogListSummaryEl) return;
-                moodLogListSummaryEl.innerHTML = '';
+                if (!moodLogListSummaryEl) return; 
+                moodLogListSummaryEl.innerHTML = ''; 
                 if (log.length === 0) {
                     moodLogListSummaryEl.innerHTML = '<p class="empty-log-message">No moods logged yet. Click an emoji below to start!</p>';
                     return;
                 }
-                const summaryLog = log.slice(0, 5); // Show only top 5 for summary
+                const summaryLog = log.slice(0, 5); 
                 summaryLog.forEach(entry => {
                     const li = document.createElement('li');
                     const entryDate = new Date(entry.timestamp);
-                    const formattedTimestamp = entryDate.toLocaleString(undefined, {
-                        month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                    const formattedTimestamp = entryDate.toLocaleString(undefined, { 
+                        month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
                     });
                     li.innerHTML = `
                         <span class="log-emoji">${entry.emoji}</span>
@@ -1800,8 +1586,8 @@
                 log.forEach(entry => {
                     const li = document.createElement('li');
                     const entryDate = new Date(entry.timestamp);
-                    const formattedTimestamp = entryDate.toLocaleString(undefined, {
-                        year: 'numeric', month: 'long', day: 'numeric',
+                    const formattedTimestamp = entryDate.toLocaleString(undefined, { 
+                        year: 'numeric', month: 'long', day: 'numeric', 
                         hour: '2-digit', minute: '2-digit', second: '2-digit'
                     });
                     li.innerHTML = `
@@ -1816,9 +1602,7 @@
 
             if (viewMoodLogTabBtn) {
                 viewMoodLogTabBtn.addEventListener('click', () => {
-                    viewMoodLogTabBtn.classList.add('active');
-                    summaryMoodLogTabBtn.classList.remove('active');
-                    renderFullMoodLog();
+                    renderFullMoodLog(); 
                     if(fullMoodLogViewModal) {
                            fullMoodLogViewModal.classList.remove('fade-out');
                            fullMoodLogViewModal.style.display = 'flex';
@@ -1826,27 +1610,17 @@
                 });
             }
 
-            if (summaryMoodLogTabBtn) {
-                summaryMoodLogTabBtn.addEventListener('click', () => {
-                    summaryMoodLogTabBtn.classList.add('active');
-                    viewMoodLogTabBtn.classList.remove('active');
-                    // Summary is already rendered, just close full view if open
-                    closeFullLogViewModal();
-                });
-            }
-
-
             function closeFullLogViewModal() {
-                 if(fullMoodLogViewModal) {
+                   if(fullMoodLogViewModal) {
                     fullMoodLogViewModal.classList.add('fade-out');
                     setTimeout(() => {
                         fullMoodLogViewModal.style.display = 'none';
                     }, 400);
-                 }
+                   }
             }
 
             if(closeFullLogViewBtn) closeFullLogViewBtn.addEventListener('click', closeFullLogViewModal);
-
+            
             // Close modal when clicking on the overlay
             document.querySelectorAll('.modal-overlay').forEach(modal => {
                 modal.addEventListener('click', (event) => {
@@ -1855,59 +1629,46 @@
                         if(modal.id === 'fullMoodLogViewModal') closeFullLogViewModal();
                         if(modal.id === 'moodLoggingModal') closeMoodModal();
                         if(modal.id === 'reminderCalendarModal') closeCalendarModal();
-                        if(modal.id === 'taskDueDateModal') closeTaskDateModal(); // Added for task date modal
                     }
                 });
             });
 
-            renderMoodLogSummary(); // Initial render of summary
+            renderMoodLogSummary();
+
 
             // --- ZODIAC PREDICTION ---
             const zodiacLink = document.getElementById('zodiacLink');
             const zodiacPredictionText = document.getElementById('zodiacPredictionText');
-            const zodiacPredictions = [
-                "Today is a good day for learning new things and expanding your horizons.",
-                "Expect a pleasant surprise from an unexpected source!",
-                "Focus on your most important tasks; efficiency will lead to success.",
-                "Connect with loved ones. Emotional bonds will be strengthened today.",
-                "A creative idea will spark; don't be afraid to pursue it.",
-                "Take a moment for self-reflection. Inner peace will bring clarity.",
-                "New opportunities may arise. Be open to change and growth.",
-                "It's a great day for collaboration. Teamwork will lead to breakthroughs.",
-                "Financial matters may require your attention. Review your budget.",
-                "Embrace spontaneity! A delightful adventure awaits.",
-                "Your intuition is strong today. Trust your gut feelings.",
-                "Practice gratitude. A positive mindset will attract positive outcomes."
-            ];
+            const zodiacPredictions = ["Today is a good day for learning.", "Expect a pleasant surprise!", "Focus on tasks."];
             if(zodiacLink && zodiacPredictionText) {
                 zodiacLink.addEventListener('click', (e) => {
                     e.preventDefault();
                     zodiacPredictionText.textContent = zodiacPredictions[Math.floor(Math.random() * zodiacPredictions.length)];
                 });
             }
-
+            
             // --- CONFETTI FUNCTION ---
             const confettiContainer = document.getElementById('confetti-container');
-            function triggerConfetti() {
+            function triggerConfetti() { 
                 if (!confettiContainer) return;
-                confettiContainer.innerHTML = '';
-                for (let i = 0; i < 50; i++) {
+                confettiContainer.innerHTML = ''; 
+                for (let i = 0; i < 50; i++) { 
                     const piece = document.createElement('div');
                     piece.classList.add('confetti-piece');
-                    piece.style.left = `${Math.random() * window.innerWidth}px`;
-                    piece.style.top = `${-20 - (Math.random() * 50)}px`;
-                    const colors = ['#FFC107', '#4CAF50', '#2196F3', '#E91E63', '#9C27B0', '#FFEB3B'];
+                    piece.style.left = `${Math.random() * window.innerWidth}px`; 
+                    piece.style.top = `${-20 - (Math.random() * 50)}px`; 
+                    const colors = ['#FFC107', '#4CAF50', '#2196F3', '#E91E63', '#9C27B0', '#FFEB3B']; 
                     piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    piece.style.width = (Math.random() * 6 + 4) + 'px';
-                    piece.style.height = (Math.random() * 10 + 6) + 'px';
+                    piece.style.width = (Math.random() * 6 + 4) + 'px'; 
+                    piece.style.height = (Math.random() * 10 + 6) + 'px'; 
                     if(Math.random() > 0.5) piece.style.borderRadius = '50%';
-                    piece.style.animationDuration = (Math.random() * 1 + 2) + 's';
-                    piece.style.animationDelay = (Math.random() * 0.2) + 's';
+                    piece.style.animationDuration = (Math.random() * 1 + 2) + 's'; 
+                    piece.style.animationDelay = (Math.random() * 0.2) + 's'; 
                     confettiContainer.appendChild(piece);
                     setTimeout(() => piece.remove(), parseFloat(piece.style.animationDuration) * 1000 + parseFloat(piece.style.animationDelay) * 1000 + 100);
                 }
             }
-
+            
             // --- SEARCH FUNCTIONALITY ---
             const searchInput = document.getElementById('searchInput');
             const searchButton = document.getElementById('searchButton');
@@ -1920,20 +1681,9 @@
             }
 
             // --- INITIALIZE TIMERS AND CHECKS ---
-            loadReminders(); // Load existing reminders
-            loadTodoCards(); // Load existing todo cards
             setInterval(checkRemindersForNotification, 60000); // Check every minute
             checkRemindersForNotification(); // Also check once on page load
-
-            // Update task due dates on load and periodically
-            function refreshAllTaskDueDates() {
-                document.querySelectorAll('.todo-card .task-due-date').forEach(dueDateSpan => {
-                    const checkbox = dueDateSpan.closest('li').querySelector('input[type="checkbox"]');
-                    updateTaskDueDateDisplay(dueDateSpan, checkbox.checked);
-                });
-            }
-            setInterval(refreshAllTaskDueDates, 5 * 60 * 1000); // Refresh every 5 minutes for "overdue" status
-            refreshAllTaskDueDates(); // Initial refresh
+            loadTodoCards(); // Load existing todo cards on page load
         });
     </script>
 </body>
