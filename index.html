@@ -30,8 +30,8 @@
             --sidebar-button-text: var(--text-color);
             --sidebar-button-hover-bg: var(--bg-color);
             --modal-header-bg: var(--header-bg);
-            --input-bg: var(--bg-color); 
-            --danger-color: #f44336; 
+            --input-bg: var(--bg-color);
+            --danger-color: #f44336;
             --danger-color-hover: #d32f2f;
 
             /* Custom properties for the prominent TODO button */
@@ -65,12 +65,12 @@
             --sidebar-button-text: var(--text-color);
             --sidebar-button-hover-bg: var(--header-bg);
             --modal-header-bg: var(--header-bg);
-            --input-bg: var(--header-bg); 
+            --input-bg: var(--header-bg);
             --danger-color: #ef5350;
             --danger-color-hover: #e53935;
 
             /* Custom properties for the prominent TODO button in dark mode */
-            --new-todo-btn-bg: var(--accent-color); 
+            --new-todo-btn-bg: var(--accent-color);
             --new-todo-btn-text: #ffffff;
             --new-todo-btn-shadow: 0 4px 10px rgba(178, 152, 220, 0.35);
             --new-todo-btn-hover-shadow: 0 6px 14px rgba(178, 152, 220, 0.45);
@@ -119,21 +119,21 @@
         .left-sidebar {
             position: fixed; top: 60px; left: 0; width: 220px; height: calc(100vh - 60px);
             background-color: var(--bg-color); padding: 20px; display: flex;
-            flex-direction: column; gap: 15px; 
+            flex-direction: column; gap: 15px;
             border-right: 1px solid var(--widget-border-color); z-index: 999; overflow-y: auto;
         }
 
         /* Specific, more prominent styles for the New TODO List button */
         #newPageBtn {
-            padding: 15px 12px; 
+            padding: 15px 12px;
             background-color: var(--new-todo-btn-bg);
             color: var(--new-todo-btn-text);
-            border: none; 
-            border-radius: 10px; 
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600; 
-            font-size: 1.1em; 
-            text-align: center; 
+            font-weight: 600;
+            font-size: 1.1em;
+            text-align: center;
             width: 100%;
             box-shadow: var(--new-todo-btn-shadow);
             transition: background-color 0.2s, color 0.2s, filter 0.2s, transform 0.2s, box-shadow 0.2s;
@@ -142,37 +142,37 @@
 
         #newPageBtn:hover,
         #newPageBtn:focus {
-            background-color: var(--new-todo-btn-bg); 
-            color: var(--new-todo-btn-text); 
-            filter: brightness(1.12); 
+            background-color: var(--new-todo-btn-bg);
+            color: var(--new-todo-btn-text);
+            filter: brightness(1.12);
             transform: translateY(-2px) scale(1.02);
             box-shadow: var(--new-todo-btn-hover-shadow);
             /* Animation play state removed */
-            outline: none; 
+            outline: none;
         }
-        
+
         /* Styles for the OTHER sidebar tab buttons */
         .sidebar-tab-button {
-            padding: 12px; 
+            padding: 12px;
             background-color: var(--sidebar-button-bg);
-            color: var(--sidebar-button-text); 
+            color: var(--sidebar-button-text);
             border: 1px solid var(--widget-border-color);
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: bold; 
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
             text-align: left;
-            transition: background-color 0.3s, filter 0.2s; 
+            transition: background-color 0.3s, filter 0.2s;
             width: 100%;
             box-shadow: var(--box-shadow);
-            display: flex; 
-            align-items: center; 
+            display: flex;
+            align-items: center;
         }
-        
-        .sidebar-tab-button:hover { 
-            background-color: var(--sidebar-button-hover-bg); 
+
+        .sidebar-tab-button:hover {
+            background-color: var(--sidebar-button-hover-bg);
             filter: brightness(0.98);
         }
-        
+
         .sidebar-tab-button .tab-icon { margin-right: 10px; font-size: 1.1em; color: var(--accent-color); }
 
 
@@ -197,7 +197,7 @@
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
         }
         .widget .widget-header h2 { margin-bottom: 0; flex-grow: 1; margin-right: 10px; }
-        .widget .close-btn { 
+        .widget .close-btn {
             background: none; border: none; font-size: 1.8em; cursor: pointer;
             color: var(--icon-color); padding: 0 5px; line-height: 1;
         }
@@ -207,15 +207,15 @@
             list-style: none;
             margin-bottom: 15px;
             padding: 0;
-            max-height: 250px; 
+            max-height: 250px;
             overflow-y: auto;
         }
         .reminders-widget li {
-            padding: 10px 5px; 
+            padding: 10px 5px;
             border-bottom: 1px solid var(--widget-border-color);
             display: flex;
             align-items: center;
-            gap: 10px; 
+            gap: 10px;
             transition: background-color 0.2s;
         }
         .reminders-widget li:hover {
@@ -236,7 +236,7 @@
         .reminders-widget .reminder-text {
             flex-grow: 1;
             color: var(--text-light);
-            cursor: pointer; 
+            cursor: pointer;
             padding: 3px 5px;
             border-radius: 3px;
         }
@@ -255,7 +255,7 @@
             background: none;
             border: none;
             color: var(--danger-color);
-            font-size: 1.3em; 
+            font-size: 1.3em;
             font-weight: bold;
             cursor: pointer;
             padding: 0 5px;
@@ -285,7 +285,7 @@
             color: var(--text-color);
             font-size: 0.95em;
         }
-         .add-reminder-form #newReminderInput::placeholder {
+           .add-reminder-form #newReminderInput::placeholder {
             color: var(--text-light);
             opacity: 0.8;
         }
@@ -305,12 +305,45 @@
 
         /* New TODO Cards */
         .todo-card ul.task-list { list-style: none; margin-bottom: 20px; padding-left: 5px; }
-        .todo-card ul.task-list li { padding: 8px 0; display: flex; align-items: center; }
+        .todo-card ul.task-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; /* Allow content to wrap */
+            gap: 5px; /* Space between items in the list item */
+        }
         .todo-card input[type="checkbox"] {
-            margin-right: 10px; accent-color: var(--accent-color);
+            margin-right: 5px; /* Adjust margin to accommodate new elements */
+            accent-color: var(--accent-color);
             width: 18px; height: 18px; flex-shrink: 0;
         }
-        .todo-card .task-label { color: var(--text-light); flex-grow: 1; word-break: break-word; }
+        .todo-card .task-label {
+            color: var(--text-light);
+            flex-grow: 1;
+            word-break: break-word;
+            min-width: 150px; /* Ensure it doesn't get too small */
+        }
+        .todo-card .task-due-date {
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-left: auto; /* Push to the right */
+            padding: 2px 5px;
+            border-radius: 4px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--widget-border-color);
+            cursor: pointer;
+        }
+        .todo-card .task-due-date.overdue {
+            color: white;
+            background-color: var(--danger-color);
+            font-weight: bold;
+        }
+        .todo-card .task-due-date[contenteditable="true"] {
+             outline: 1px solid var(--accent-color);
+             box-shadow: 0 0 0 2px var(--accent-color-translucent);
+             background-color: var(--widget-bg);
+        }
+
 
         .progress-item { margin-bottom: 15px; margin-top: auto; }
         .progress-bar-container {
@@ -351,36 +384,12 @@
             transition: background-color 0.2s, filter 0.2s;
         }
         .add-task-btn:hover { filter: brightness(0.95); }
-        
+
         /* Zodiac Section */
         .zodiac-section {
-            <div class="zodiac-section widget" id="zodiacWidget">
-    <div class="widget-header">
-        <h2>Zodiac Prediction ✨</h2>
-        <button class="close-btn" data-widget="zodiacWidget">&times;</button>
-    </div>
-    <div class="zodiac-content">
-        <label for="zodiacSignSelect" style="display: block; margin-bottom: 10px; font-weight: bold;">Select your Zodiac Sign:</label>
-        <select id="zodiacSignSelect" style="padding: 8px; border-radius: 5px; border: 1px solid var(--widget-border-color); background-color: var(--input-bg); color: var(--text-color); margin-bottom: 15px; width: 80%; max-width: 250px;">
-            <option value="">-- Choose your sign --</option>
-            <option value="Aries">Aries ♈</option>
-            <option value="Taurus">Taurus ♉</option>
-            <option value="Gemini">Gemini ♊</option>
-            <option value="Cancer">Cancer ♋</option>
-            <option value="Leo">Leo ♌</option>
-            <option value="Virgo">Virgo ♍</option>
-            <option value="Libra">Libra ♎</option>
-            <option value="Scorpio">Scorpio ♏</option>
-            <option value="Sagittarius">Sagittarius ♐</option>
-            <option value="Capricorn">Capricorn ♑</option>
-            <option value="Aquarius">Aquarius ♒</option>
-            <option value="Pisces">Pisces ♓</option>
-        </select>
-        <div id="zodiacPredictionDisplay" style="margin-top: 15px; padding: 15px; background-color: var(--bg-color); border-radius: 8px; border: 1px dashed var(--widget-border-color); min-height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--text-light);">
-            Select a sign to see your daily prediction!
-        </div>
-    </div>
-</div>
+            text-align: center; margin-top: 20px; padding: 20px;
+            background-color: var(--widget-bg); border: 1px solid var(--widget-border-color);
+            border-radius: 8px; box-shadow: var(--box-shadow);
         }
         #zodiacLink {
             color: var(--accent-color); text-decoration: underline; cursor: pointer;
@@ -394,8 +403,8 @@
             position: fixed; bottom: 20px; left: 20px;
             display: flex; flex-direction: column; gap: 15px; z-index: 1000;
         }
-        .mood-tracker-launcher { 
-            display: flex; gap: 10px; padding: 10px 15px; 
+        .mood-tracker-launcher {
+            display: flex; gap: 10px; padding: 10px 15px;
             background-color: var(--widget-bg); border-radius: 8px;
             box-shadow: var(--box-shadow); border: 1px solid var(--widget-border-color);
         }
@@ -429,15 +438,15 @@
         /* Modal Overlays (Common) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--modal-overlay-bg); display: none; 
-            align-items: center; justify-content: center; z-index: 1500; 
+            background-color: var(--modal-overlay-bg); display: none;
+            align-items: center; justify-content: center; z-index: 1500;
         }
         /* Modal Content (Common Base) */
         .modal-content {
             background-color: var(--widget-bg);
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            width: 90%; 
+            width: 90%;
         }
 
         /* Mood Logging Modal (for new entries) */
@@ -465,18 +474,18 @@
 
         /* Full Mood Log View Modal */
         #fullMoodLogViewModal .modal-content {
-            max-width: 700px; 
-            height: 80vh; 
+            max-width: 700px;
+            height: 80vh;
             display: flex;
             flex-direction: column;
-            padding: 0; 
+            padding: 0;
         }
         #fullMoodLogViewModal .modal-header {
             padding: 15px 20px;
             background-color: var(--modal-header-bg);
             color: var(--nav-link-color);
             border-bottom: 1px solid var(--widget-border-color);
-            border-radius: 12px 12px 0 0; 
+            border-radius: 12px 12px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -496,7 +505,7 @@
         }
         #fullMoodLogViewModal #fullLogListContainer {
             list-style: none;
-            padding: 0; 
+            padding: 0;
         }
         #fullMoodLogViewModal #fullLogListContainer li {
             padding: 12px 0;
@@ -511,7 +520,7 @@
         #fullMoodLogViewModal #fullLogListContainer .log-emoji {
             font-size: 2em;
             margin-top: 2px;
-            flex-shrink: 0; 
+            flex-shrink: 0;
         }
         #fullMoodLogViewModal #fullLogListContainer .log-details {
             flex-grow: 1;
@@ -520,7 +529,7 @@
             font-size: 1em;
             color: var(--text-color);
             margin-bottom: 5px;
-            white-space: pre-wrap; 
+            white-space: pre-wrap;
             word-break: break-word;
         }
         #fullMoodLogViewModal #fullLogListContainer .log-timestamp {
@@ -551,7 +560,7 @@
         /* Responsive Adjustments */
         @media (max-width: 992px) {
             body { padding-left: 0; }
-            .left-sidebar { display: none; } 
+            .left-sidebar { display: none; }
             .widgets-container { grid-template-columns: 1fr; }
             .fixed-bottom-left { left: 10px; bottom: 10px; }
         }
@@ -569,13 +578,13 @@
             .search-bar input[type="search"] { flex-grow: 1; }
             .fixed-bottom-left{
                 flex-direction: row; align-items: center; width: calc(100% - 20px);
-                justify-content: space-around; background-color: var(--header-bg); 
+                justify-content: space-around; background-color: var(--header-bg);
                 padding: 5px; border-radius: 8px;
             }
             .mood-tracker-launcher { padding: 5px; }
             .theme-toggle { padding: 5px 8px; }
             #fullMoodLogViewModal .modal-content {
-                height: 90vh; 
+                height: 90vh;
                 width: 95%;
             }
         }
@@ -611,22 +620,20 @@
             <section class="widget reminders-widget" id="remindersWidget">
                 <h2>Reminders</h2>
                 <ul id="remindersList">
-                    <!-- Reminders will be populated here by JS -->
-                </ul>
+                    </ul>
                 <div class="add-reminder-form">
                     <input type="text" id="newReminderInput" placeholder="Add a new reminder...">
                     <button id="addReminderBtn" title="Add Reminder">+</button>
                 </div>
             </section>
 
-            <section class="widget mood-log-widget" id="moodLogWidgetContainer"> 
+            <section class="widget mood-log-widget" id="moodLogWidgetContainer">
                 <h2>Mood Log (Recent)</h2>
                 <ul id="moodLogListSummary">
-                     <p class="empty-log-message">No moods logged yet. Click an emoji below to start!</p>
+                   <p class="empty-log-message">No moods logged yet. Click an emoji below to start!</p>
                 </ul>
             </section>
-            <!-- New TODO cards will be appended here -->
-        </div>
+            </div>
 
         <section class="zodiac-section">
             <a href="#" id="zodiacLink">click here for zodiac prediction</a>
@@ -651,7 +658,6 @@
         </div>
     </div>
 
-    <!-- Mood Logging Modal (for new entries) -->
     <div id="moodLoggingModal" class="modal-overlay">
         <div class="modal-content">
             <h3>How are you feeling?</h3>
@@ -664,7 +670,6 @@
         </div>
     </div>
 
-    <!-- Full Mood Log View Modal -->
     <div id="fullMoodLogViewModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -673,8 +678,7 @@
             </div>
             <div class="modal-body">
                 <ul id="fullLogListContainer">
-                    <!-- Full log entries will be populated here by JS -->
-                </ul>
+                    </ul>
             </div>
         </div>
     </div>
@@ -683,7 +687,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            let cardIdCounter = 0; 
+            let cardIdCounter = 0;
             let globalTaskCounter = 0;
 
             // --- THEME TOGGLE ---
@@ -717,7 +721,7 @@
             if (quoteElement) {
                 quoteElement.textContent = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`;
             }
-            
+
             const widgetsContainer = document.querySelector('.widgets-container');
 
             // --- HELPER: SELECT TEXT IN CONTENTEDITABLE ---
@@ -727,7 +731,7 @@
                 const sel = window.getSelection();
                 if (sel) { sel.removeAllRanges(); sel.addRange(range); }
             }
-            
+
             // --- TODO CARD FUNCTIONALITY ---
             function createTodoCard() {
                 cardIdCounter++;
@@ -748,423 +752,410 @@
                     </div>`;
                 if (widgetsContainer) {
                     widgetsContainer.appendChild(cardElement);
-                    addTaskToTodoCard(cardElement, "New Task"); 
-                    updateProgressForCard(cardElement); 
+                    addTaskToTodoCard(cardElement, "New Task");
+                    updateProgressForCard(cardElement);
                     const cardTitleText = cardElement.querySelector('.card-title-text');
                     if (cardTitleText) {
                         cardTitleText.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); cardTitleText.blur();}});
-                        cardTitleText.focus();
-                        selectElementContents(cardTitleText);
                     }
+
+                    // Add event listener for adding new tasks
+                    const addTaskBtn = cardElement.querySelector('.add-task-btn');
+                    addTaskBtn.addEventListener('click', () => addTaskToTodoCard(cardElement, "New Task"));
+
+                    // Add event listener for closing the card
+                    const closeCardBtn = cardElement.querySelector('.close-card-btn');
+                    closeCardBtn.addEventListener('click', () => cardElement.remove());
+
+                    // Event listeners for task interactions (checkbox, text edit, date edit)
+                    const taskList = cardElement.querySelector('.task-list');
+                    taskList.addEventListener('change', (e) => {
+                        if (e.target.type === 'checkbox' && e.target.classList.contains('task-checkbox')) {
+                            e.target.closest('li').querySelector('.task-label').classList.toggle('completed', e.target.checked);
+                            updateProgressForCard(cardElement);
+                        }
+                    });
+
+                    taskList.addEventListener('input', (e) => {
+                        if (e.target.classList.contains('task-label')) {
+                             // No specific action needed on input for now, but good to have
+                        }
+                    });
+
+                    taskList.addEventListener('focusout', (e) => {
+                        if (e.target.classList.contains('task-label') && e.target.textContent.trim() === '') {
+                            // If task label is empty, remove the task
+                            e.target.closest('li').remove();
+                            updateProgressForCard(cardElement);
+                        }
+                        if (e.target.classList.contains('task-due-date')) {
+                            // Validate and format date on focusout
+                            const dateInput = e.target;
+                            const dateValue = dateInput.textContent.trim();
+                            if (dateValue) {
+                                const parsedDate = new Date(dateValue);
+                                if (isNaN(parsedDate)) {
+                                    dateInput.textContent = ''; // Clear if invalid
+                                } else {
+                                    // Format to YYYY-MM-DD
+                                    dateInput.textContent = parsedDate.toISOString().split('T')[0];
+                                }
+                            }
+                            checkDueDate(dateInput.closest('li')); // Re-check due date class
+                        }
+                    });
+
+                    taskList.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' && (e.target.classList.contains('task-label') || e.target.classList.contains('task-due-date'))) {
+                            e.preventDefault();
+                            e.target.blur(); // Exit contenteditable
+                        }
+                    });
                 }
             }
 
-            function addTaskToTodoCard(cardElement, taskText = "New Task") {
+            function addTaskToTodoCard(cardElement, taskText, dueDate = '') {
                 globalTaskCounter++;
-                const taskId = `dynamic-task-${globalTaskCounter}`;
                 const taskList = cardElement.querySelector('.task-list');
-                if (!taskList) return;
-                const taskItem = document.createElement('li');
-                taskItem.innerHTML = `
-                    <input type="checkbox" id="${taskId}" data-task-name="${taskText}">
-                    <span class="task-label" contenteditable="true">${taskText}</span>`;
-                taskList.appendChild(taskItem);
-                const newLabel = taskItem.querySelector('.task-label');
-                if (newLabel) {
-                    newLabel.focus();
-                    selectElementContents(newLabel);
-                    newLabel.addEventListener('blur', () => {
-                        const checkbox = taskItem.querySelector('input[type="checkbox"]');
-                        if(checkbox) checkbox.dataset.taskName = newLabel.textContent.trim();
-                        updateProgressForCard(cardElement); 
-                    });
-                    newLabel.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); newLabel.blur();}});
-                }
-                updateProgressForCard(cardElement);
+                const listItem = document.createElement('li');
+                listItem.dataset.taskId = `task-${globalTaskCounter}`;
+                listItem.innerHTML = `
+                    <input type="checkbox" class="task-checkbox">
+                    <span class="task-label" contenteditable="true">${taskText}</span>
+                    <span class="task-due-date" contenteditable="true" title="Click to edit due date">${dueDate}</span>
+                    <button class="delete-task-btn close-btn" title="Delete Task">×</button>`;
+                taskList.appendChild(listItem);
+
+                const deleteButton = listItem.querySelector('.delete-task-btn');
+                deleteButton.addEventListener('click', () => {
+                    listItem.remove();
+                    updateProgressForCard(cardElement);
+                });
+
+                const taskLabel = listItem.querySelector('.task-label');
+                taskLabel.addEventListener('click', () => selectElementContents(taskLabel));
+
+                const dueDateSpan = listItem.querySelector('.task-due-date');
+                dueDateSpan.addEventListener('click', () => selectElementContents(dueDateSpan));
+                dueDateSpan.addEventListener('blur', () => checkDueDate(listItem)); // Check on blur
+
+                checkDueDate(listItem); // Initial check
+                updateProgressForCard(cardElement); // Update progress after adding task
             }
 
             function updateProgressForCard(cardElement) {
-                const checkboxes = cardElement.querySelectorAll('.task-list input[type="checkbox"]');
+                const checkboxes = cardElement.querySelectorAll('.task-checkbox');
+                const completedCheckboxes = cardElement.querySelectorAll('.task-checkbox:checked');
                 const progressBar = cardElement.querySelector('.progress-bar');
                 const progressLabel = cardElement.querySelector('.progress-label');
-                if (!progressBar || !progressLabel) return; 
-                const totalTasks = checkboxes.length;
-                let checkedTasks = 0;
-                checkboxes.forEach(cb => { if (cb.checked) checkedTasks++; });
-                const percentage = totalTasks === 0 ? 0 : Math.round((checkedTasks / totalTasks) * 100);
-                progressBar.style.width = `${percentage}%`;
-                progressBar.textContent = `${percentage}%`;
-                progressLabel.textContent = `${checkedTasks} of ${totalTasks} tasks complete (${percentage}%)`;
-                if (percentage === 100 && totalTasks > 0) {
-                    progressBar.classList.add('full');
-                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-complete)';
-                } else {
+
+                if (checkboxes.length === 0) {
+                    progressBar.style.width = '0%';
+                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-1)';
+                    progressLabel.textContent = 'No tasks yet.';
                     progressBar.classList.remove('full');
-                    progressBar.style.backgroundColor = percentage < 50 ? 'var(--progress-bar-fill-1)' : 'var(--progress-bar-fill-2)';
+                    return;
+                }
+
+                const percentage = (completedCheckboxes.length / checkboxes.length) * 100;
+                progressBar.style.width = `${percentage}%`;
+                progressLabel.textContent = `${Math.round(percentage)}% Complete`;
+
+                if (percentage === 100) {
+                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-complete)';
+                    progressBar.classList.add('full');
+                    triggerConfetti();
+                } else if (percentage > 50) {
+                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-2)';
+                    progressBar.classList.remove('full');
+                } else {
+                    progressBar.style.backgroundColor = 'var(--progress-bar-fill-1)';
+                    progressBar.classList.remove('full');
                 }
             }
 
-            if (widgetsContainer) {
-                widgetsContainer.addEventListener('click', function(event) {
-                    const target = event.target;
-                    if (target.classList.contains('add-task-btn')) {
-                        const cardElement = target.closest('.todo-card');
-                        if (cardElement) addTaskToTodoCard(cardElement);
-                    }
-                    if (target.classList.contains('close-card-btn')) {
-                        const cardElement = target.closest('.todo-card');
-                        if (cardElement) cardElement.remove();
-                    }
-                });
-                widgetsContainer.addEventListener('change', function(event) {
-                    const target = event.target;
-                    if (target.matches('.todo-card .task-list input[type="checkbox"]')) {
-                        const cardElement = target.closest('.todo-card');
-                        if (cardElement) {
-                            if (target.checked) triggerConfetti();
-                            updateProgressForCard(cardElement);
-                        }
-                    }
-                });
-            }
-            
-            const newPageButton = document.getElementById('newPageBtn');
-            if (newPageButton) newPageButton.addEventListener('click', createTodoCard);
+            function checkDueDate(taskListItem) {
+                const dueDateSpan = taskListItem.querySelector('.task-due-date');
+                const checkbox = taskListItem.querySelector('.task-checkbox');
+                const dueDateString = dueDateSpan.textContent.trim();
 
-            // --- ENHANCED REMINDERS WIDGET ---
-            const remindersListEl = document.getElementById('remindersList');
+                if (!dueDateString || checkbox.checked) {
+                    dueDateSpan.classList.remove('overdue');
+                    return;
+                }
+
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Normalize today's date to midnight
+
+                const taskDueDate = new Date(dueDateString);
+                taskDueDate.setHours(0, 0, 0, 0); // Normalize task due date to midnight
+
+                if (taskDueDate < today) {
+                    dueDateSpan.classList.add('overdue');
+                } else {
+                    dueDateSpan.classList.remove('overdue');
+                }
+            }
+
+
+            // --- REMINDER WIDGET FUNCTIONALITY ---
+            const remindersList = document.getElementById('remindersList');
             const newReminderInput = document.getElementById('newReminderInput');
             const addReminderBtn = document.getElementById('addReminderBtn');
 
-            let reminders = []; 
+            function addReminder(text, isCompleted = false) {
+                if (text === null || text.trim() === "") return;
 
-            function loadReminders() {
-                const storedReminders = localStorage.getItem('reminders');
-                if (storedReminders) {
-                    reminders = JSON.parse(storedReminders);
-                }
-                renderReminders();
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <input type="checkbox" class="reminder-checkbox" ${isCompleted ? 'checked' : ''}>
+                    <span class="reminder-text ${isCompleted ? 'completed' : ''}" contenteditable="true">${text}</span>
+                    <button class="delete-reminder-btn" title="Delete Reminder">×</button>
+                `;
+                remindersList.appendChild(listItem);
+
+                const checkbox = listItem.querySelector('.reminder-checkbox');
+                const reminderTextSpan = listItem.querySelector('.reminder-text');
+                const deleteButton = listItem.querySelector('.delete-reminder-btn');
+
+                checkbox.addEventListener('change', () => {
+                    reminderTextSpan.classList.toggle('completed', checkbox.checked);
+                    saveReminders();
+                });
+
+                reminderTextSpan.addEventListener('click', () => selectElementContents(reminderTextSpan));
+                reminderTextSpan.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        reminderTextSpan.blur();
+                        saveReminders();
+                    }
+                });
+                reminderTextSpan.addEventListener('focusout', () => {
+                    if (reminderTextSpan.textContent.trim() === '') {
+                        listItem.remove();
+                    }
+                    saveReminders();
+                });
+
+                deleteButton.addEventListener('click', () => {
+                    listItem.remove();
+                    saveReminders();
+                });
+
+                saveReminders();
             }
 
             function saveReminders() {
+                const reminders = [];
+                remindersList.querySelectorAll('li').forEach(listItem => {
+                    reminders.push({
+                        text: listItem.querySelector('.reminder-text').textContent,
+                        completed: listItem.querySelector('.reminder-checkbox').checked
+                    });
+                });
                 localStorage.setItem('reminders', JSON.stringify(reminders));
             }
 
-            function renderReminders() {
-                if (!remindersListEl) return;
-                remindersListEl.innerHTML = ''; 
+            function loadReminders() {
+                const reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
+                reminders.forEach(reminder => addReminder(reminder.text, reminder.completed));
+            }
 
-                if (reminders.length === 0) {
-                    const emptyLi = document.createElement('li');
-                    emptyLi.textContent = 'No reminders yet. Add one below!';
-                    emptyLi.style.textAlign = 'center';
-                    emptyLi.style.color = 'var(--text-light)';
-                    emptyLi.style.borderBottom = 'none'; 
-                    emptyLi.style.padding = '10px 0'; 
-                    remindersListEl.appendChild(emptyLi);
-                    return;
+            addReminderBtn.addEventListener('click', () => {
+                const text = newReminderInput.value;
+                if (text) {
+                    addReminder(text);
+                    newReminderInput.value = '';
                 }
-
-                reminders.forEach(reminder => {
-                    const li = document.createElement('li');
-                    li.dataset.id = reminder.id; 
-
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.classList.add('reminder-checkbox');
-                    checkbox.checked = reminder.completed;
-                    checkbox.addEventListener('change', () => toggleReminderComplete(reminder.id));
-
-                    const textSpan = document.createElement('span');
-                    textSpan.classList.add('reminder-text');
-                    textSpan.textContent = reminder.text;
-                    if (reminder.completed) {
-                        textSpan.classList.add('completed');
-                    }
-                    textSpan.addEventListener('click', () => makeReminderEditable(textSpan, reminder.id));
-                    
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.classList.add('delete-reminder-btn');
-                    deleteBtn.innerHTML = '&times;'; 
-                    deleteBtn.title = "Delete Reminder";
-                    deleteBtn.addEventListener('click', () => deleteReminder(reminder.id));
-
-                    li.appendChild(checkbox);
-                    li.appendChild(textSpan);
-                    li.appendChild(deleteBtn);
-                    remindersListEl.appendChild(li);
-                });
-            }
-
-            function makeReminderEditable(spanElement, reminderId) {
-                if (spanElement.isContentEditable || spanElement.classList.contains('completed')) return;
-
-                const originalText = spanElement.textContent;
-                spanElement.contentEditable = true;
-                spanElement.focus();
-                selectElementContents(spanElement);
-
-                const onBlurOrEnter = () => {
-                    spanElement.contentEditable = false;
-                    const newText = spanElement.textContent.trim();
-                    if (newText && newText !== originalText) {
-                        const reminder = reminders.find(r => r.id === reminderId);
-                        if (reminder) {
-                            reminder.text = newText;
-                            saveReminders();
-                        }
-                    } else if (!newText && originalText) { 
-                        spanElement.textContent = originalText; 
-                    } else if (!newText && !originalText) {
-                        spanElement.textContent = "Empty Reminder"; 
-                    }
-                    spanElement.removeEventListener('blur', onBlurOrEnter);
-                    spanElement.removeEventListener('keydown', onKeydown);
-                };
-
-                const onKeydown = (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault(); 
-                        onBlurOrEnter();
-                    } else if (e.key === 'Escape') {
-                        spanElement.textContent = originalText; 
-                        onBlurOrEnter(); 
-                    }
-                };
-                spanElement.addEventListener('blur', onBlurOrEnter);
-                spanElement.addEventListener('keydown', onKeydown);
-            }
-
-            function addReminderHandler() { 
-                if (!newReminderInput) return;
-                const text = newReminderInput.value.trim();
-                if (text === '') {
-                    newReminderInput.focus();
-                    return;
+            });
+            newReminderInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    addReminderBtn.click();
                 }
-                const newReminder = {
-                    id: `rem-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`, 
-                    text: text,
-                    completed: false
-                };
-                reminders.unshift(newReminder); 
-                saveReminders();
-                renderReminders();
-                newReminderInput.value = ''; 
-                newReminderInput.focus();
-            }
+            });
 
-            function deleteReminder(reminderId) {
-                reminders = reminders.filter(r => r.id !== reminderId);
-                saveReminders();
-                renderReminders();
-            }
-
-            function toggleReminderComplete(reminderId) {
-                const reminder = reminders.find(r => r.id === reminderId);
-                if (reminder) {
-                    reminder.completed = !reminder.completed;
-                    saveReminders();
-                    renderReminders(); 
-                }
-            }
-
-            if (addReminderBtn && newReminderInput) {
-                addReminderBtn.addEventListener('click', addReminderHandler);
-                newReminderInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        addReminderHandler();
-                    }
-                });
-            }
-            loadReminders();
-
-
-            // --- ENHANCED MOOD TRACKER ---
-            const moodEmojiTriggers = document.querySelectorAll('.mood-emoji-trigger');
+            // --- MOOD LOGGING ---
             const moodLoggingModal = document.getElementById('moodLoggingModal');
             const modalSelectedMoodEmoji = document.getElementById('modalSelectedMoodEmoji');
             const moodNoteInput = document.getElementById('moodNoteInput');
             const saveMoodLogBtn = document.getElementById('saveMoodLogBtn');
             const cancelMoodLogBtn = document.getElementById('cancelMoodLogBtn');
-            
-            const moodLogListSummaryEl = document.getElementById('moodLogListSummary'); 
+            const moodEmojiTriggers = document.querySelectorAll('.mood-emoji-trigger');
+            let selectedMoodEmoji = '';
 
-            const viewMoodLogTabBtn = document.getElementById('viewMoodLogTabBtn');
+            moodEmojiTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    selectedMoodEmoji = trigger.dataset.emoji;
+                    modalSelectedMoodEmoji.textContent = selectedMoodEmoji;
+                    moodLoggingModal.style.display = 'flex';
+                    moodNoteInput.value = ''; // Clear previous note
+                    moodNoteInput.focus();
+                });
+            });
+
+            saveMoodLogBtn.addEventListener('click', () => {
+                const note = moodNoteInput.value.trim();
+                const timestamp = new Date().toLocaleString();
+                addMoodLogEntry(selectedMoodEmoji, note, timestamp);
+                moodLoggingModal.style.display = 'none';
+            });
+
+            cancelMoodLogBtn.addEventListener('click', () => {
+                moodLoggingModal.style.display = 'none';
+            });
+
+            const moodLogListSummary = document.getElementById('moodLogListSummary');
+            const emptyLogMessageSummary = moodLogListSummary.querySelector('.empty-log-message');
+
+            function addMoodLogEntry(emoji, note, timestamp, isFullLog = false) {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span class="log-emoji">${emoji}</span>
+                    <div class="log-details">
+                        <p class="log-note">${note}</p>
+                        <span class="log-timestamp">${timestamp}</span>
+                    </div>
+                `;
+                moodLogListSummary.prepend(listItem); // Add to summary
+                if (moodLogListSummary.children.length > 5) {
+                    moodLogListSummary.removeChild(moodLogListSummary.lastChild); // Keep only 5 recent
+                }
+
+                if (emptyLogMessageSummary) {
+                    emptyLogMessageSummary.style.display = 'none';
+                }
+
+                if (!isFullLog) { // Avoid saving again when loading full log
+                    saveMoodLogs();
+                }
+            }
+
+            function saveMoodLogs() {
+                const moodLogs = [];
+                // Only save the actual entries, not the "empty message"
+                document.querySelectorAll('#moodLogListSummary li').forEach(item => {
+                    const emoji = item.querySelector('.log-emoji').textContent;
+                    const note = item.querySelector('.log-note').textContent;
+                    const timestamp = item.querySelector('.log-timestamp').textContent;
+                    moodLogs.push({ emoji, note, timestamp });
+                });
+
+                // Get existing full log and add new entry
+                let fullMoodLogs = JSON.parse(localStorage.getItem('fullMoodLogs') || '[]');
+                // Check if the latest summary entry is already in the full log
+                const latestSummaryLog = moodLogs[0];
+                if (latestSummaryLog && (!fullMoodLogs.length || JSON.stringify(latestSummaryLog) !== JSON.stringify(fullMoodLogs[0]))) {
+                    fullMoodLogs.unshift(latestSummaryLog); // Add new entry to the top of full log
+                }
+                localStorage.setItem('fullMoodLogs', JSON.stringify(fullMoodLogs));
+                updateMoodLogSummaryDisplay();
+            }
+
+            function updateMoodLogSummaryDisplay() {
+                const storedMoodLogs = JSON.parse(localStorage.getItem('fullMoodLogs') || '[]');
+                moodLogListSummary.innerHTML = ''; // Clear existing summary
+                if (storedMoodLogs.length === 0) {
+                    moodLogListSummary.innerHTML = `<p class="empty-log-message">No moods logged yet. Click an emoji below to start!</p>`;
+                } else {
+                    storedMoodLogs.slice(0, 5).forEach(log => {
+                        addMoodLogEntry(log.emoji, log.note, log.timestamp, true); // Use true to prevent re-saving
+                    });
+                }
+            }
+            updateMoodLogSummaryDisplay(); // Initial load
+
+            // --- FULL MOOD LOG VIEW MODAL ---
             const fullMoodLogViewModal = document.getElementById('fullMoodLogViewModal');
+            const viewMoodLogTabBtn = document.getElementById('viewMoodLogTabBtn');
             const closeFullLogViewBtn = document.getElementById('closeFullLogViewBtn');
             const fullLogListContainer = document.getElementById('fullLogListContainer');
 
-            let currentSelectedMood = { type: '', emoji: ''};
+            viewMoodLogTabBtn.addEventListener('click', () => {
+                fullLogListContainer.innerHTML = ''; // Clear previous entries
+                const fullMoodLogs = JSON.parse(localStorage.getItem('fullMoodLogs') || '[]');
 
-            function openMoodModal(moodType, moodEmoji) {
-                currentSelectedMood.type = moodType;
-                currentSelectedMood.emoji = moodEmoji;
-                if(modalSelectedMoodEmoji) modalSelectedMoodEmoji.textContent = moodEmoji;
-                if(moodNoteInput) moodNoteInput.value = '';
-                if(moodLoggingModal) moodLoggingModal.style.display = 'flex';
-                if(moodNoteInput) moodNoteInput.focus();
-            }
-
-            function closeMoodModal() {
-                if(moodLoggingModal) moodLoggingModal.style.display = 'none';
-            }
-
-            if (moodEmojiTriggers) {
-                moodEmojiTriggers.forEach(trigger => {
-                    trigger.addEventListener('click', function() {
-                        openMoodModal(this.dataset.mood, this.dataset.emoji);
+                if (fullMoodLogs.length === 0) {
+                    fullLogListContainer.innerHTML = '<p class="empty-full-log-message">Your full mood log is empty.</p>';
+                } else {
+                    fullMoodLogs.forEach(log => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <span class="log-emoji">${log.emoji}</span>
+                            <div class="log-details">
+                                <p class="log-note">${log.note}</p>
+                                <span class="log-timestamp">${log.timestamp}</span>
+                            </div>
+                        `;
+                        fullLogListContainer.appendChild(listItem);
                     });
-                });
-            }
-
-            if (saveMoodLogBtn) {
-                saveMoodLogBtn.addEventListener('click', () => {
-                    const note = moodNoteInput.value.trim();
-                    const timestamp = new Date();
-                    const moodEntry = {
-                        mood: currentSelectedMood.type, emoji: currentSelectedMood.emoji,
-                        note: note, timestamp: timestamp.toISOString()
-                    };
-                    saveMoodEntry(moodEntry);
-                    renderMoodLogSummary(); 
-                    if (fullMoodLogViewModal && fullMoodLogViewModal.style.display === 'flex') {
-                        renderFullMoodLog();
-                    }
-                    closeMoodModal();
-                });
-            }
-            
-            if(cancelMoodLogBtn) cancelMoodLogBtn.addEventListener('click', closeMoodModal);
-            if(moodLoggingModal) {
-                moodLoggingModal.addEventListener('click', (event) => {
-                    if (event.target === moodLoggingModal) closeMoodModal();
-                });
-            }
-
-            function getMoodLog() {
-                return JSON.parse(localStorage.getItem('moodLog') || '[]');
-            }
-            function saveMoodEntry(entry) {
-                const log = getMoodLog(); log.unshift(entry);
-                localStorage.setItem('moodLog', JSON.stringify(log));
-            }
-
-            function renderMoodLogSummary() {
-                const log = getMoodLog();
-                if (!moodLogListSummaryEl) return; 
-                moodLogListSummaryEl.innerHTML = ''; 
-                if (log.length === 0) {
-                    moodLogListSummaryEl.innerHTML = '<p class="empty-log-message">No moods logged yet. Click an emoji below to start!</p>';
-                    return;
                 }
-                const summaryLog = log.slice(0, 5); 
-                summaryLog.forEach(entry => {
-                    const li = document.createElement('li');
-                    const entryDate = new Date(entry.timestamp);
-                    const formattedTimestamp = entryDate.toLocaleString(undefined, { 
-                        month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
-                    });
-                    li.innerHTML = `
-                        <span class="log-emoji">${entry.emoji}</span>
-                        <div class="log-details">
-                            <p class="log-note">${(entry.note ? entry.note.substring(0, 50) + (entry.note.length > 50 ? '...' : '') : '<em>No note</em>')}</p>
-                            <p class="log-timestamp">${formattedTimestamp}</p>
-                        </div>`;
-                    moodLogListSummaryEl.appendChild(li);
-                });
-            }
+                fullMoodLogViewModal.style.display = 'flex';
+            });
 
-            function renderFullMoodLog() {
-                const log = getMoodLog();
-                if (!fullLogListContainer) return;
-                fullLogListContainer.innerHTML = '';
-                if (log.length === 0) {
-                    fullLogListContainer.innerHTML = '<p class="empty-full-log-message">Your mood log is empty. Start logging your mood using the emojis below!</p>';
-                    return;
-                }
-                log.forEach(entry => {
-                    const li = document.createElement('li');
-                    const entryDate = new Date(entry.timestamp);
-                    const formattedTimestamp = entryDate.toLocaleString(undefined, { 
-                        year: 'numeric', month: 'long', day: 'numeric', 
-                        hour: '2-digit', minute: '2-digit', second: '2-digit'
-                    });
-                     li.innerHTML = `
-                        <span class="log-emoji">${entry.emoji}</span>
-                        <div class="log-details">
-                            <p class="log-note">${entry.note || '<em>No note added for this entry.</em>'}</p>
-                            <p class="log-timestamp">Logged on: ${formattedTimestamp}</p>
-                        </div>`;
-                    fullLogListContainer.appendChild(li);
-                });
-            }
-
-            if (viewMoodLogTabBtn) {
-                viewMoodLogTabBtn.addEventListener('click', () => {
-                    renderFullMoodLog(); 
-                    if(fullMoodLogViewModal) fullMoodLogViewModal.style.display = 'flex';
-                });
-            }
-
-            if (closeFullLogViewBtn) {
-                closeFullLogViewBtn.addEventListener('click', () => {
-                    if(fullMoodLogViewModal) fullMoodLogViewModal.style.display = 'none';
-                });
-            }
-            if (fullMoodLogViewModal) {
-                 fullMoodLogViewModal.addEventListener('click', (event) => {
-                    if (event.target === fullMoodLogViewModal) {
-                        fullMoodLogViewModal.style.display = 'none';
-                    }
-                });
-            }
-            renderMoodLogSummary();
-
+            closeFullLogViewBtn.addEventListener('click', () => {
+                fullMoodLogViewModal.style.display = 'none';
+            });
 
             // --- ZODIAC PREDICTION ---
             const zodiacLink = document.getElementById('zodiacLink');
             const zodiacPredictionText = document.getElementById('zodiacPredictionText');
-            const zodiacPredictions = ["Today is a good day for learning.", "Expect a pleasant surprise!", "Focus on tasks."];
-            if(zodiacLink && zodiacPredictionText) {
+            const predictions = [
+                "Today, focus on self-care and introspection. A quiet moment could reveal a new perspective.",
+                "Embrace new challenges! Your determination will lead to unexpected successes.",
+                "Communication is key. Express your thoughts clearly and listen intently.",
+                "A creative spark is within you. Let your imagination guide your activities today.",
+                "Connect with loved ones. Strengthening your bonds will bring joy and support.",
+                "Take a step back and reassess your goals. Alignment is more important than speed.",
+                "Trust your intuition. It will guide you through any uncertainties.",
+                "Today is a good day for organization. Tidy your space, tidy your mind.",
+                "Be open to unexpected opportunities. They may come from surprising places.",
+                "Practice gratitude. A positive mindset will attract positive experiences."
+            ];
+
+            if (zodiacLink && zodiacPredictionText) {
                 zodiacLink.addEventListener('click', (e) => {
                     e.preventDefault();
-                    zodiacPredictionText.textContent = zodiacPredictions[Math.floor(Math.random() * zodiacPredictions.length)];
+                    const randomIndex = Math.floor(Math.random() * predictions.length);
+                    zodiacPredictionText.textContent = predictions[randomIndex];
                 });
             }
-            
-            // --- CONFETTI FUNCTION ---
+
+            // --- CONFETTI EFFECT ---
             const confettiContainer = document.getElementById('confetti-container');
-            function triggerConfetti() { 
-                if (!confettiContainer) return;
-                confettiContainer.innerHTML = ''; 
-                for (let i = 0; i < 50; i++) { 
-                    const piece = document.createElement('div');
-                    piece.classList.add('confetti-piece');
-                    piece.style.left = `${Math.random() * window.innerWidth}px`; 
-                    piece.style.top = `${-20 - (Math.random() * 50)}px`; 
-                    const colors = ['#FFC107', '#4CAF50', '#2196F3', '#E91E63', '#9C27B0', '#FFEB3B']; 
-                    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    piece.style.width = (Math.random() * 6 + 4) + 'px'; 
-                    piece.style.height = (Math.random() * 10 + 6) + 'px'; 
-                    if(Math.random() > 0.5) piece.style.borderRadius = '50%';
-                    piece.style.animationDuration = (Math.random() * 1 + 2) + 's'; 
-                    piece.style.animationDelay = (Math.random() * 0.2) + 's'; 
-                    confettiContainer.appendChild(piece);
-                    setTimeout(() => piece.remove(), parseFloat(piece.style.animationDuration) * 1000 + parseFloat(piece.style.animationDelay) * 1000 + 100);
+
+            function createConfettiPiece() {
+                const piece = document.createElement('div');
+                piece.classList.add('confetti-piece');
+                piece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                piece.style.left = `${Math.random() * 100}vw`;
+                piece.style.animationDelay = `${Math.random() * 2}s`;
+                piece.style.animationDuration = `${2 + Math.random() * 1}s`;
+                confettiContainer.appendChild(piece);
+
+                piece.addEventListener('animationend', () => {
+                    piece.remove();
+                });
+            }
+
+            function triggerConfetti() {
+                for (let i = 0; i < 50; i++) {
+                    createConfettiPiece();
                 }
             }
-            
-            // --- SEARCH FUNCTIONALITY ---
-            const searchInput = document.getElementById('searchInput');
-            const searchButton = document.getElementById('searchButton');
-            if (searchInput && searchButton) {
-                searchInput.addEventListener('keypress', e => { if (e.key === 'Enter') searchButton.click(); });
-                searchButton.addEventListener('click', () => {
-                    const searchTerm = searchInput.value;
-                    alert(searchTerm ? `Searching for: ${searchTerm}... (Not implemented)` : 'Please enter a search term.');
-                });
-            }
+
+
+            // --- INITIAL LOAD ---
+            loadReminders();
+            // Create a default TODO card if none exist (or load from localStorage)
+            // For simplicity, let's create one on load. In a real app, you'd load saved cards.
+            createTodoCard();
+
+            // Refresh due dates every hour
+            setInterval(() => {
+                document.querySelectorAll('.todo-card ul.task-list li').forEach(checkDueDate);
+            }, 3600000); // Every hour
+
         });
     </script>
 </body>
