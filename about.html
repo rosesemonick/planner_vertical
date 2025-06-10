@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Student Wellness Planner</title>
+    <style>
+        /* CSS Custom Properties for Theming (replicated from index.html for consistency) */
+        :root {
+            --bg-color: #c6e2ff; /* Light blue background */
+            --header-bg: #a0c4e8; /* Slightly darker blue for header */
+            --widget-bg: #ffffff;
+            --widget-border-color: #d8c8ff; /* Light purple */
+            --text-color: #333333;
+            --text-light: #555555;
+            --accent-color: #8a63d2; /* Darker purple for accents */
+            --nav-link-color: #000000;
+            --nav-link-hover-bg: #b0d0f0;
+            --progress-bar-bg: #e0e0e0;
+            --progress-bar-fill-1: #b298dc; /* Medium purple */
+            --progress-bar-fill-2: #8a63d2; /* Darker purple */
+            --icon-color: #333333;
+            --button-bg: #e6e6fa; /* Lavender for buttons */
+            --button-text: #333;
+            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #232931;
+            --header-bg: #1a1f25;
+            --widget-bg: #393e46;
+            --widget-border-color: #5c5178;
+            --text-color: #eeeeee;
+            --text-light: #cccccc;
+            --accent-color: #b298dc;
+            --nav-link-color: #eeeeee;
+            --nav-link-hover-bg: #4a5058;
+            --progress-bar-bg: #555555;
+            --progress-bar-fill-1: #9370DB; /* Medium Orchid */
+            --progress-bar-fill-2: #8a63d2;
+            --icon-color: #eeeeee;
+            --button-bg: #504660;
+            --button-text: #eeeeee;
+            --box-shadow: 0 2px 5px rgba(255,255,255,0.05);
+        }
+
+        /* Basic Reset and Body Styles (replicated) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            padding-top: 60px; /* For fixed header */
+            display: flex; /* Use flexbox for main content */
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+
+        /* Header (replicated) */
+        header {
+            background-color: var(--header-bg);
+            color: var(--nav-link-color);
+            padding: 0 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--box-shadow);
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            border: 2px solid var(--widget-border-color);
+        }
+
+        header nav a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s;
+        }
+
+        header nav a:hover {
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input[type="search"] {
+            padding: 8px 12px;
+            border: 1px solid var(--widget-border-color);
+            border-right: none;
+            border-radius: 20px 0 0 20px;
+            background-color: var(--widget-bg);
+            color: var(--text-color);
+            min-width: 200px;
+        }
+        .search-bar input[type="search"]::placeholder {
+            color: var(--text-light);
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            background-color: var(--widget-bg);
+            border: 1px solid var(--widget-border-color);
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            color: var(--icon-color);
+        }
+
+        /* About Us Page Specific Styles */
+        .about-us-content {
+            flex-grow: 1; /* Allows content to take up available space */
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto; /* Center the content */
+            background-color: var(--widget-bg);
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            margin-top: 30px; /* Space from header */
+            margin-bottom: 30px; /* Space before potential footer/bottom elements */
+            border: 1px solid var(--widget-border-color);
+        }
+
+        .about-us-content h1 {
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+
+        .about-us-content p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .inspiration-quote {
+        font-style: italic;
+        font-size: 1.2em;
+        text-align: center;
+        color: var(--accent-color);
+        margin-bottom: 30px;
+        padding: 10px 20px;
+        border-left: 4px solid var(--accent-color);
+        background-color: rgba(138, 99, 210, 0.05);
+        border-radius: 8px;
+        }
+
+        .inspiration-quote span {
+            display: block;
+            margin-top: 8px;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+
+
+        /* Fixed Bottom Left Controls (replicated, but adapted for about.html) */
+        .fixed-bottom-left {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: var(--text-light);
+            background-color: var(--widget-bg);
+            border: 1px solid var(--widget-border-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        #themeIcon {
+            font-size: 1.5em;
+            margin-right: 8px;
+            color: var(--icon-color);
+        }
+
+        /* Responsive Adjustments (replicated and adapted) */
+        @media (max-width: 768px) { /* Mobile */
+            header {
+                padding: 0 10px;
+                height: auto;
+                flex-direction: column;
+                align-items: flex-start;
+                padding-bottom: 10px;
+            }
+            body {
+                padding-top: 120px; /* Adjust for taller header */
+            }
+            header nav {
+                margin-top:10px;
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+            }
+            header nav a {
+                margin: 0 5px;
+            }
+            .search-bar {
+                margin-top: 10px;
+                width: 100%;
+            }
+            .search-bar input[type="search"] {
+                flex-grow: 1;
+            }
+             .fixed-bottom-left{
+                flex-direction: row; /* horizontal for small screens */
+                align-items: center;
+                width: calc(100% - 20px);
+                justify-content: space-around;
+                background-color: var(--header-bg); /* Give it a backdrop */
+                padding: 5px;
+                border-radius: 8px;
+                left: 10px; /* Adjust left for mobile */
+                bottom: 10px; /* Adjust bottom for mobile */
+             }
+             .theme-toggle {
+                padding: 5px 8px;
+             }
+             .about-us-content {
+                margin-top: 20px;
+                margin-bottom: 20px;
+                padding: 20px 15px;
+             }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"></div>
+        <nav>
+            <a href="index.html" id="navHome">Home</a>
+            <a href="about.html" id="navAbout">About Us</a>
+            <a href="resources.html" id="navResources">Resources</a>
+        </nav>
+        <div class="search-bar">
+            <input type="search" id="searchInput" placeholder="Search...">
+            <button id="searchButton">&#128269;</button>
+        </div>
+    </header>
+
+    <main class="about-us-content">
+    <h1>About Us</h1>
+
+    <section>
+        <h2 style="color: var(--accent-color); font-size: 1.4em; margin-bottom: 10px;">🎓 Who We Are</h2>
+        <p>
+        We're a team of college students who understand the struggles of balancing school, work, and life. That’s why we built this digital planner, to help students like us stay organized, motivated, and mentally balanced.
+        </p>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-color); font-size: 1.4em; margin-top: 30px; margin-bottom: 10px;">🛠️ What We Offer</h2>
+        <ul style="list-style: none; padding-left: 0; font-size: 1.1em; line-height: 1.8;">
+        <li>📅 Calendar & To-Do Checklists</li>
+        <li>💡 Daily Motivational Quotes</li>
+        <li>🧠 Mental Health Widget</li>
+        <li>📈 Progress & Mood Tracking</li>
+        <li>🎉 Celebration Confetti</li>
+        <li>📚 Resources for students</li>
+        <li>🌙 Light/Dark Mode Toggle</li>
+        <li>✨ Customizable Icons</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-color); font-size: 1.4em; margin-top: 30px; margin-bottom: 10px;">💜 Our Mission</h2>
+        <p>
+        This is more than just a productivity tool, it's a supportive space built by students, for students. We believe your planner should feel like a friend cheering you on, not just a list of deadlines.
+        
+        </p>
+    </section>
+
+    <blockquote class="inspiration-quote">
+        "Someone’s sitting in the shade today because someone planted a tree a long time ago."<br>
+        <span>– Warren Buffett</span>
+    </blockquote>
+
+    </main>
+
+
+    <div class="fixed-bottom-left">
+        <div class="theme-toggle" id="themeToggleBtn">
+            <span id="themeIcon">☀️</span>
+            <span id="themeToggleText">Light/Dark mode Toggle</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- THEME TOGGLE ---
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeIcon.textContent = '🌙';
+            } else {
+                themeIcon.textContent = '☀️';
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    themeIcon.textContent = '🌙';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeIcon.textContent = '☀️';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // --- PLACEHOLDER ACTIONS (adapted for about.html) ---
+            document.getElementById('searchButton').addEventListener('click', () => {
+                const searchTerm = document.getElementById('searchInput').value;
+                if(searchTerm) alert(`Searching for: ${searchTerm} (Search functionality to be implemented)`);
+                else alert('Please enter a search term.');
+            });
+            
+            // For navHome and navAbout, the default behavior of the <a> tag is desired (navigation).
+            // No e.preventDefault() is needed if you want them to navigate.
+            // The commented out e.preventDefault() correctly allows navigation.
+            document.getElementById('navHome').addEventListener('click', (e) => { /* e.preventDefault(); */ }); 
+            document.getElementById('navAbout').addEventListener('click', (e) => { /* e.preventDefault(); */ }); 
+            
+            // For navResources:
+            // We remove e.preventDefault() to allow navigation to resources.html
+            // We remove the alert() to get rid of the placeholder popup.
+            document.getElementById('navResources').addEventListener('click', (e) => {
+                // No e.preventDefault(); // This allows the link to navigate
+                // No alert(); // This removes the popup
+                // The link will now navigate to resources.html due to its href attribute
+            });
+        });
+    </script>
+</body>
+</html>
