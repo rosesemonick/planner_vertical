@@ -49,32 +49,27 @@
             line-height: 1.6;
             padding: 20px;
             transition: background-color 0.3s, color 0.3s;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
 
-        /* Header */
+        /* Dashboard Header */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
-            background-color: var(--background-color-secondary);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px var(--shadow-color);
+            padding-bottom: 20px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
 
         .header-left h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             color: var(--primary-color);
             margin-bottom: 5px;
         }
 
         .header-left p {
-            font-size: 0.9em;
+            font-size: 1em;
             color: var(--text-light);
         }
 
@@ -82,6 +77,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            margin-top: 10px; /* Space from header-left on smaller screens */
         }
 
         .search-container {
@@ -89,7 +85,7 @@
             border: 1px solid var(--border-color);
             border-radius: 20px;
             overflow: hidden;
-            background-color: var(--background-color);
+            background-color: var(--background-color-secondary);
             box-shadow: inset 0 1px 3px var(--shadow-color);
         }
 
@@ -135,15 +131,15 @@
             background-color: var(--border-color);
         }
 
-        /* Main Content Grid */
-        .widgets-grid {
+        /* Widgets Container */
+        .widgets-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            flex-grow: 1;
+            margin-bottom: 20px; /* Space between widgets and new page button */
         }
 
-        /* Widget Base Style */
+        /* Widget Base Styles */
         .widget {
             background-color: var(--background-color-secondary);
             border-radius: 8px;
@@ -151,6 +147,7 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
+            min-height: 250px; /* Ensure a minimum height for all widgets */
         }
 
         .widget-header {
@@ -181,11 +178,11 @@
             color: var(--primary-color);
         }
 
-        /* Motivational Quote Widget */
+        /* Specific Widget Styles */
         .quote-widget {
             text-align: center;
-            justify-content: center; /* Center content vertically */
-            align-items: center; /* Center content horizontally */
+            justify-content: center;
+            align-items: center;
         }
 
         .quote-widget p {
@@ -195,11 +192,6 @@
         }
 
         /* To-Do Card Specifics */
-        .todo-card {
-            min-height: 250px;
-            position: relative;
-        }
-
         .todo-card .card-title-text {
             outline: none;
             border: none;
@@ -254,7 +246,7 @@
             padding: 3px 5px;
             font-size: 0.8em;
             color: var(--text-color);
-            background-color: var(--background-color-secondary);
+            background-color: var(--background-color); /* Matches the main background */
             max-width: 150px; /* Limit width of date input */
             margin-top: 4px; /* Space between text and date */
             outline: none;
@@ -360,7 +352,6 @@
 
         /* Reminders Widget */
         .reminders-widget {
-            min-height: 250px;
             display: flex;
             flex-direction: column;
         }
@@ -596,8 +587,7 @@
             font-size: 1em;
             cursor: pointer;
             transition: background-color 0.2s;
-            margin-top: 20px; /* Space below widgets */
-            align-self: flex-start; /* Align to the left in flex container */
+            margin-top: 20px;
         }
 
         .new-page-btn:hover {
@@ -910,12 +900,26 @@
         </div>
     </header>
 
-    <main class="widgets-grid">
+    <div class="widgets-container">
         <section class="widget quote-widget">
             <div class="widget-header">
                 <h2>Daily Insight</h2>
             </div>
             <p id="motivationalQuoteP">"Loading quote..."</p>
+        </section>
+
+        <section class="widget todo-card" id="todoCard-1">
+            <div class="widget-header">
+                <h2 class="card-title"><span class="card-title-text" contenteditable="true">My First To-Do List</span></h2>
+                <button class="close-btn close-card-btn" title="Close this list">×</button>
+            </div>
+            <ul class="task-list">
+                </ul>
+            <button class="add-task-btn">+ Add New Task</button>
+            <div class="progress-item">
+                <div class="progress-bar-container"><div class="progress-bar"></div></div>
+                <p class="progress-label">0% Complete</p>
+            </div>
         </section>
 
         <section class="widget reminders-widget">
@@ -956,8 +960,7 @@
             <p id="zodiacPredictionText">Click below for your daily prediction!</p>
             <a href="#" id="zodiacLink">Get My Prediction</a>
         </section>
-
-        </main>
+    </div>
 
     <button id="newPageBtn" class="new-page-btn">Add New To-Do List</button>
 
@@ -1051,15 +1054,14 @@
                 "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
                 "Strive not to be a success, but rather to be of value. - Albert Einstein"
             ];
-            const quoteElement = document.getElementById('motivationalQuoteP');
-            if (quoteElement) {
-                // Ensure there are two elements with this ID, and update both
-                document.querySelectorAll('#motivationalQuoteP').forEach(element => {
+            const quoteElements = document.querySelectorAll('#motivationalQuoteP');
+            if (quoteElements) {
+                quoteElements.forEach(element => {
                     element.textContent = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`;
                 });
             }
 
-            const widgetsContainer = document.querySelector('.widgets-grid'); // Changed to .widgets-grid
+            const widgetsContainer = document.querySelector('.widgets-container');
 
             // --- HELPER: SELECT TEXT IN CONTENTEDITABLE ---
             function selectElementContents(el) {
@@ -1156,7 +1158,6 @@
             function renderTask(taskItem) {
                 const dueDateInput = taskItem.querySelector('.task-due-date');
                 const checkbox = taskItem.querySelector('input[type="checkbox"]');
-                const taskTextSpan = taskItem.querySelector('.task-text');
 
                 // Always remove before adding to ensure correct state
                 taskItem.classList.remove('overdue', 'completed');
@@ -1193,14 +1194,14 @@
                 const percentage = totalTasks === 0 ? 0 : Math.round((checkedTasks / totalTasks) * 100);
                 progressBar.style.width = `${percentage}%`;
                 progressBar.textContent = `${percentage}%`;
-                progressLabel.textContent = `${checkedTasks} of ${totalTasks} tasks complete (${percentage}%)`;
+                progressBar.style.backgroundColor = percentage < 50 ? 'var(--progress-bar-fill-1)' : 'var(--progress-bar-fill-2)';
                 if (percentage === 100 && totalTasks > 0) {
                     progressBar.classList.add('full');
                     progressBar.style.backgroundColor = 'var(--progress-bar-fill-complete)';
                 } else {
                     progressBar.classList.remove('full');
-                    progressBar.style.backgroundColor = percentage < 50 ? 'var(--progress-bar-fill-1)' : 'var(--progress-bar-fill-2)';
                 }
+                progressLabel.textContent = `${checkedTasks} of ${totalTasks} tasks complete (${percentage}%)`;
                 saveTodoCards(); // Save state after progress update
             }
 
@@ -1255,16 +1256,17 @@
                 const storedTodoCards = localStorage.getItem('todoCards');
                 if (storedTodoCards) {
                     const todoCardsData = JSON.parse(storedTodoCards);
-                    // Clear existing dummy cards if any (though typically there won't be if loading from scratch)
-                    // If you have static initial cards in HTML, you might want to remove them here first.
-                    // For this example, assuming all cards are dynamic.
-                    document.querySelector('.widgets-grid').innerHTML = ''; // Clear only dynamically added widgets
+                    // Clear the default todoCard-1 if it exists, as we're loading from storage
+                    const defaultCard = document.getElementById('todoCard-1');
+                    if (defaultCard) {
+                        defaultCard.remove();
+                    }
 
                     todoCardsData.forEach(cardData => {
                         // Update cardIdCounter to ensure new cards get unique, increasing IDs
                         const currentCardNum = parseInt(cardData.id.replace('todoCard-', '')) || 0;
-                        if (currentCardNum > cardIdCounter) {
-                            cardIdCounter = currentCardNum;
+                        if (currentCardNum >= cardIdCounter) { // Use >= to ensure counter is higher than existing max ID
+                            cardIdCounter = currentCardNum + 1;
                         }
 
                         const cardElement = document.createElement('section');
@@ -1285,19 +1287,28 @@
 
                         cardData.tasks.forEach(task => {
                             // Update globalTaskCounter to ensure new tasks get unique, increasing IDs
-                            const currentTaskNum = parseInt(task.id ? task.id.replace('dynamic-task-', '') : 0) || 0; // Assuming tasks might have an id now if saved
-                            if (currentTaskNum > globalTaskCounter) {
-                                globalTaskCounter = currentTaskNum;
-                            }
+                            // Note: If task objects didn't originally store an 'id', this part needs careful handling.
+                            // For simplicity, we'll just ensure globalTaskCounter is large enough for new tasks.
+                            globalTaskCounter++; // Just increment for each loaded task to keep unique IDs going
                             addTaskToTodoCard(cardElement, task); // Use the modified addTaskToTodoCard that accepts an object
                         });
                         updateProgressForCard(cardElement); // Update progress and apply overdue styling
+
+                        const cardTitleText = cardElement.querySelector('.card-title-text');
+                        if (cardTitleText) {
+                            cardTitleText.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); cardTitleText.blur();}});
+                        }
                     });
-                    // Increment cardIdCounter by 1 after loading all cards to avoid ID conflicts for newly created cards
-                    cardIdCounter++;
-                    globalTaskCounter++; // Same for tasks
+                    // Ensure globalTaskCounter is properly set for new tasks if no tasks were loaded or IDs weren't strictly increasing
+                    if (todoCardsData.length === 0) { // If no cards were loaded, start task counter from 0
+                         globalTaskCounter = 0;
+                    }
+                } else {
+                    // If no saved data, create a default card and add an initial task
+                    createTodoCard();
                 }
             }
+
 
             // --- ENHANCED REMINDERS WIDGET V3 (With Notifications) ---
             const remindersListEl = document.getElementById('remindersList');
@@ -1555,7 +1566,7 @@
                     text: reminderTextToSet,
                     completed: false,
                     dueDate: selectedDate.toISOString(),
-                    notified: false // NEW: Add notified flag
+                    notified: false // Add notified flag
                 };
                 reminders.push(newReminder);
                 saveReminders();
