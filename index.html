@@ -1106,21 +1106,261 @@
             font-weight: 900;
         }
 
-        /* Pomodoro specific styles */
-        .pomodoro-widget #statusBar {
-          display: flex;
-          justify-content: center;
-          margin: 10px 0;
-          gap: 5px;
+        /* Pomodoro Timer specific styles */
+        .pomodoro-widget {
+            text-align: center;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        .pomodoro-widget .statusDot {
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background-color: #ccc;
+
+        .pomodoro-widget h2 {
+            font-size: 1.8em;
+            color: var(--accent-color);
+            margin-bottom: 10px;
         }
-        .pomodoro-widget .statusDot.active {
-          background-color: #6C63FF;
+
+        #statusBar {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0 20px;
+            gap: 8px;
+        }
+        .statusDot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: var(--progress-bar-bg); /* Light grey for inactive */
+            border: 1px solid var(--widget-border-color);
+            transition: background-color 0.3s;
+        }
+        .statusDot.active {
+            background-color: var(--accent-color); /* Accent color for active sessions */
+        }
+
+        #pomodoroLabel {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        #pomodoroDisplay {
+            font-family: 'Poppins', monospace;
+            font-size: 5em;
+            font-weight: 700;
+            color: var(--accent-color);
+            background: var(--input-bg);
+            border: 1px solid var(--widget-border-color);
+            border-radius: 15px;
+            padding: 20px 0;
+            margin-bottom: 25px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .pomodoro-controls button {
+            padding: 12px 25px;
+            margin: 0 8px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: white;
+            background-color: var(--accent-color);
+            box-shadow: var(--new-todo-btn-shadow);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+        .pomodoro-controls button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--new-todo-btn-hover-shadow);
+        }
+        .pomodoro-controls button#pausePomodoroBtn {
+            background-color: var(--warning-color); /* Yellow for pause */
+        }
+        .pomodoro-controls button#resetPomodoroBtn {
+            background-color: var(--danger-color); /* Red for reset */
+        }
+
+        .pomodoro-settings {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--widget-border-color);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px 25px;
+            align-items: center;
+        }
+        .pomodoro-settings label {
+            font-size: 0.95em;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .pomodoro-settings input[type="number"] {
+            width: 70px;
+            padding: 8px 12px;
+            border: 1px solid var(--widget-border-color);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95em;
+            text-align: center;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+        .pomodoro-settings input[type="number"]:focus {
+            box-shadow: 0 0 0 3px var(--accent-color-translucent);
+        }
+
+        #sessionCounter {
+            font-size: 1em;
+            color: var(--text-light);
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+
+        /* Habit Tracker specific styles */
+        .habit-tracker-widget {
+            overflow-x: auto; /* Allow horizontal scrolling for table */
+        }
+        .habit-tracker-widget .add-habit-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .habit-tracker-widget #newHabitInput {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--widget-border-color);
+            border-radius: 10px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1em;
+            outline: none;
+            transition: box-shadow 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .habit-tracker-widget #newHabitInput:focus {
+            box-shadow: 0 0 0 3px var(--accent-color-translucent);
+        }
+        .habit-tracker-widget #addHabitBtn {
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--new-todo-btn-shadow);
+        }
+        .habit-tracker-widget #addHabitBtn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--new-todo-btn-hover-shadow);
+        }
+
+        .habit-table-container {
+            width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling for the table */
+        }
+
+        .habit-table {
+            width: 100%;
+            border-collapse: separate; /* Use separate to allow rounded corners */
+            border-spacing: 0;
+            min-width: 500px; /* Ensure table doesn't shrink too much */
+        }
+        .habit-table th, .habit-table td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid var(--widget-border-color);
+            border-right: 1px solid var(--widget-border-color);
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .habit-table th {
+            background-color: var(--button-bg);
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.9em;
+            position: sticky;
+            top: 0; /* Make header sticky */
+            z-index: 1;
+        }
+        .habit-table th:first-child {
+            text-align: left;
+            border-top-left-radius: 12px;
+        }
+        .habit-table th:last-child {
+            border-top-right-radius: 12px;
+            border-right: none;
+        }
+        .habit-table tr:last-child td {
+            border-bottom: none;
+        }
+        .habit-table td:last-child {
+            border-right: none;
+        }
+
+        .habit-name-cell {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-color);
+            position: sticky;
+            left: 0; /* Make habit names sticky */
+            background-color: var(--widget-bg); /* Ensure background is visible when sticky */
+            z-index: 1;
+        }
+        .habit-name-text {
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        .habit-name-text:hover {
+            background-color: var(--accent-color-translucent);
+        }
+        .habit-name-text:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        .daily-check input[type="checkbox"] {
+            accent-color: var(--accent-color);
+            width: 20px; height: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .daily-check input[type="checkbox"]:hover {
+            transform: scale(1.1);
+        }
+        .daily-check input[type="checkbox"]:checked {
+            transform: scale(1.2);
+        }
+
+        .delete-habit-btn {
+            background: none; border: none;
+            color: var(--danger-color);
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 5px;
+            line-height: 1;
+            border-radius: 50%;
+            transition: color 0.2s, background-color 0.2s, transform 0.2s;
+            opacity: 0.6;
+            margin-left: 10px; /* Space from habit name */
+        }
+        .delete-habit-btn:hover {
+            opacity: 1;
+            color: white;
+            background-color: var(--danger-color-hover);
+            transform: scale(1.1);
         }
 
         /* Animations and Toasts */
@@ -1249,6 +1489,9 @@
         <button class="sidebar-tab-button" id="openPomodoroBtn">
             <span class="tab-icon">🍅</span> Pomodoro Timer
         </button>
+        <button class="sidebar-tab-button" id="openHabitTrackerBtn">
+            <span class="tab-icon">✅</span> Habit Tracker
+        </button>
     </aside>
 
     <main class="main-content">
@@ -1276,26 +1519,59 @@
                 </div>
                 <div id="widgetCalendarGrid" class="calendar-grid-widget"></div>
             </section>
-            <section class="widget pomodoro-widget" id="pomodoroWidget" style="display: none;">
-                <div class="widget-header drag-handle">
-                    <h2>Pomodoro Timer</h2>
-                    <button class="close-btn" onclick="document.getElementById('pomodoroWidget').style.display='none'">×</button>
+            <section class="widget pomodoro-widget" id="pomodoroWidget" style="display:none;">
+                <h2 class="drag-handle">Pomodoro Timer</h2>
+                <div id="statusBar"></div>
+                <h3 id="pomodoroLabel">Focus Time</h3>
+                <div id="pomodoroDisplay">25:00</div>
+                <div class="pomodoro-controls">
+                    <button id="startPomodoroBtn">▶ Start</button>
+                    <button id="pausePomodoroBtn" style="display:none;">⏸ Pause</button>
+                    <button id="resetPomodoroBtn">🔄 Reset</button>
                 </div>
-              <div id="statusBar"></div>
-              <h3 id="pomodoroLabel">Focus Time</h3>
-              <div id="pomodoroDisplay">25:00</div>
-              <button id="startPomodoroBtn">▶ Start</button>
-              <button id="pausePomodoroBtn" style="display:none;">⏸ Pause</button>
-              <button id="resetPomodoroBtn">🔄 Reset</button>
-              <div style="margin-top: 20px;">
-                <label for="customMinutes">Focus (min): </label>
-                <input type="number" id="customMinutes" value="25" min="1" max="90">
-                <label for="breakMinutes">Break (min): </label>
-                <input type="number" id="breakMinutes" value="5" min="1" max="30">
-                <label for="totalSessions">Sessions: </label>
-                <input type="number" id="totalSessions" value="4" min="1" max="10">
-              </div>
-              <p id="sessionCounter">Session: 1</p>
+                <div class="pomodoro-settings">
+                    <div>
+                        <label for="customMinutes">Focus (min): </label>
+                        <input type="number" id="customMinutes" value="25" min="1" max="90">
+                    </div>
+                    <div>
+                        <label for="breakMinutes">Break (min): </label>
+                        <input type="number" id="breakMinutes" value="5" min="1" max="30">
+                    </div>
+                    <div>
+                        <label for="totalSessions">Sessions: </label>
+                        <input type="number" id="totalSessions" value="4" min="1" max="10">
+                    </div>
+                </div>
+                <p id="sessionCounter">Session: 1 / 4</p>
+                <audio id="alertSound" src="https://www.soundjay.com/buttons/beep-07.mp3" preload="auto"></audio>
+            </section>
+            <section class="widget habit-tracker-widget" id="habitTrackerWidget" style="display:none;">
+                <h2 class="drag-handle">Habit Tracker</h2>
+                <div class="add-habit-form">
+                    <input type="text" id="newHabitInput" placeholder="Add new habit...">
+                    <button id="addHabitBtn">Add Habit</button>
+                </div>
+                <div class="habit-table-container">
+                    <table class="habit-table">
+                        <thead>
+                            <tr id="habitTableHeader">
+                                <th>Habit</th>
+                                <th>Sun</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                                <th></th> <!-- For delete button -->
+                            </tr>
+                        </thead>
+                        <tbody id="habitTableBody">
+                            <!-- Habits will be rendered here -->
+                        </tbody>
+                    </table>
+                </div>
             </section>
         </div>
         
@@ -1308,7 +1584,7 @@
         </section>
 
         <div id="streakDisplay" class="streak-container" title="Your current streak">
-            <span id="streakCount">0</span> 
+            <span id="streakCount">0</span> 
             <span class="fire-icon">🔥</span>
         </div>
     </main>
@@ -1383,6 +1659,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             let todoCardsData = [];
             let reminders = [];
+            let habitsData = []; // New array for habits
             let typingIntervalId = null;
 
             // ===== STREAK & ACHIEVEMENT CONSTANTS =====
@@ -1605,7 +1882,9 @@
             function saveData() {
                 localStorage.setItem('todoCards', JSON.stringify(todoCardsData));
                 localStorage.setItem('reminders', JSON.stringify(reminders));
+                localStorage.setItem('habits', JSON.stringify(habitsData)); // Save habits
                 renderCalendarWidget();
+                renderHabitTracker(); // Re-render habit tracker on save
             }
 
             function loadData() {
@@ -1613,10 +1892,13 @@
                 if (storedTodoCards) todoCardsData = JSON.parse(storedTodoCards);
                 const storedReminders = localStorage.getItem('reminders');
                 if (storedReminders) reminders = JSON.parse(storedReminders);
+                const storedHabits = localStorage.getItem('habits'); // Load habits
+                if (storedHabits) habitsData = JSON.parse(storedHabits);
 
                 renderTodoCards();
                 renderReminders();
                 renderCalendarWidget();
+                renderHabitTracker(); // Initial render of habit tracker
             }
 
             // ===== TODO CARD LOGIC =====
@@ -2000,7 +2282,6 @@
                             const taskDate = new Date(task.dueDate);
                             return taskDate.getFullYear() === year && taskDate.getMonth() === month && taskDate.getDate() === i;
                         });
-
                     if (tasksForDay.length > 0) {
                         const totalTasks = tasksForDay.length;
                         const completedTasks = tasksForDay.filter(task => task.completed).length;
@@ -2334,10 +2615,11 @@
                     }
                     element.style.opacity = show ? '1' : '0.2';
                     element.style.pointerEvents = show ? 'auto' : 'none';
+                    element.style.display = show ? '' : 'none'; // Also set display to none to remove from layout
                 };
 
                 if (query === '') {
-                    document.querySelectorAll('.reminders-widget, .todo-card, #remindersList li, .todo-card .task-list li').forEach(el => applyVisibility(el, true));
+                    document.querySelectorAll('.reminders-widget, .todo-card, .habit-tracker-widget, .pomodoro-widget, #remindersList li, .todo-card .task-list li, .habit-table tbody tr').forEach(el => applyVisibility(el, true));
                     applyVisibility(document.getElementById('calendarWidget'), true);
                     if (noResultsEl) noResultsEl.style.display = 'none';
                     return;
@@ -2370,10 +2652,395 @@
                     if (showCard) anyResultsFound = true;
                 });
 
+                const habitTrackerWidget = document.getElementById('habitTrackerWidget');
+                let habitsVisible = false;
+                habitTrackerWidget.querySelectorAll('.habit-table tbody tr').forEach(habitRow => {
+                    const habitName = habitRow.querySelector('.habit-name-text')?.textContent.toLowerCase();
+                    const match = habitName && habitName.includes(query);
+                    applyVisibility(habitRow, match);
+                    if (match) habitsVisible = true;
+                });
+                applyVisibility(habitTrackerWidget, habitsVisible);
+                if (habitsVisible) anyResultsFound = true;
+
+                // For Pomodoro widget, if it's not explicitly searched, it should be hidden
+                const pomodoroWidget = document.getElementById('pomodoroWidget');
+                if (pomodoroWidget) {
+                    const pomodoroTitle = pomodoroWidget.querySelector('h2')?.textContent.toLowerCase();
+                    const pomodoroMatches = pomodoroTitle && pomodoroTitle.includes(query);
+                    applyVisibility(pomodoroWidget, pomodoroMatches);
+                    if (pomodoroMatches) anyResultsFound = true;
+                }
+
+
                 if (noResultsEl) {
                     noResultsEl.style.display = anyResultsFound ? 'none' : 'block';
                 }
             }
+
+            // ===== HABIT TRACKER LOGIC =====
+            const habitTableBody = document.getElementById('habitTableBody');
+            const newHabitInput = document.getElementById('newHabitInput');
+            const addHabitBtn = document.getElementById('addHabitBtn');
+            const openHabitTrackerBtn = document.getElementById('openHabitTrackerBtn'); // Sidebar button
+            const habitTrackerWidget = document.getElementById('habitTrackerWidget'); // The widget itself
+
+            function renderHabitTracker() {
+                habitTableBody.innerHTML = '';
+                const today = new Date();
+                const currentDayIndex = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+
+                habitsData.forEach(habit => {
+                    const row = document.createElement('tr');
+                    row.dataset.habitId = habit.id;
+
+                    const habitNameCell = document.createElement('td');
+                    habitNameCell.classList.add('habit-name-cell');
+                    habitNameCell.innerHTML = `<span class="habit-name-text" contenteditable="true">${habit.name}</span>`;
+                    
+                    // Add blur listener for editing habit name
+                    habitNameCell.querySelector('.habit-name-text').addEventListener('blur', (e) => {
+                        const updatedName = e.target.textContent.trim();
+                        const habitToUpdate = habitsData.find(h => h.id === habit.id);
+                        if (habitToUpdate && updatedName !== '') {
+                            habitToUpdate.name = updatedName;
+                            saveData();
+                        } else if (updatedName === '') {
+                            e.target.textContent = habit.name; // Revert if empty
+                        }
+                    });
+                    // Prevent new line on Enter key
+                    habitNameCell.querySelector('.habit-name-text').addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            e.target.blur();
+                        }
+                    });
+
+                    row.appendChild(habitNameCell);
+
+                    for (let i = 0; i < 7; i++) {
+                        const dayCell = document.createElement('td');
+                        dayCell.classList.add('daily-check');
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.dataset.dayIndex = i;
+                        checkbox.checked = habit.dailyCompletion[i];
+                        
+                        // Disable checkboxes for future days
+                        if (i > currentDayIndex) {
+                            checkbox.disabled = true;
+                        }
+
+                        checkbox.addEventListener('change', (e) => {
+                            toggleHabitCompletion(habit.id, i, e.target.checked);
+                        });
+                        dayCell.appendChild(checkbox);
+                        row.appendChild(dayCell);
+                    }
+
+                    const deleteCell = document.createElement('td');
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.classList.add('delete-habit-btn');
+                    deleteBtn.textContent = '×';
+                    deleteBtn.title = 'Delete Habit';
+                    deleteBtn.addEventListener('click', () => deleteHabit(habit.id));
+                    deleteCell.appendChild(deleteBtn);
+                    row.appendChild(deleteCell);
+
+                    habitTableBody.appendChild(row);
+                });
+            }
+
+            function addHabit() {
+                const habitName = newHabitInput.value.trim();
+                if (habitName) {
+                    const newHabit = {
+                        id: `habit-${Date.now()}`,
+                        name: habitName,
+                        dailyCompletion: Array(7).fill(false) // 0:Sun, 1:Mon, ..., 6:Sat
+                    };
+                    habitsData.push(newHabit);
+                    newHabitInput.value = '';
+                    saveData(); // Save and re-render
+                    showToast(`Habit "${habitName}" added!`, 'info');
+                } else {
+                    showToast("Please enter a habit name.", "info");
+                }
+            }
+
+            function toggleHabitCompletion(habitId, dayIndex, isChecked) {
+                const habit = habitsData.find(h => h.id === habitId);
+                if (habit) {
+                    habit.dailyCompletion[dayIndex] = isChecked;
+                    saveData(); // Save and re-render
+                }
+            }
+
+            function deleteHabit(habitId) {
+                habitsData = habitsData.filter(h => h.id !== habitId);
+                saveData(); // Save and re-render
+                showToast("Habit deleted!", "info");
+            }
+
+            // Function to reset daily completion for a new day
+            function resetDailyHabits() {
+                const lastResetDate = localStorage.getItem('lastHabitResetDate');
+                const today = new Date().toLocaleDateString('en-CA');
+
+                if (lastResetDate !== today) {
+                    habitsData.forEach(habit => {
+                        // Reset all checkboxes for the new day
+                        habit.dailyCompletion = Array(7).fill(false); 
+                    });
+                    localStorage.setItem('lastHabitResetDate', today);
+                    saveData(); // Save and re-render after reset
+                    showToast("Habit checkboxes reset for the new day!", "info");
+                }
+            }
+
+            // Toggle visibility of Habit Tracker widget
+            openHabitTrackerBtn.addEventListener('click', () => {
+                if (habitTrackerWidget.style.display === 'none') {
+                    habitTrackerWidget.style.display = 'flex';
+                    habitTrackerWidget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    habitTrackerWidget.style.display = 'none';
+                }
+            });
+
+            // ===== POMODORO TIMER LOGIC =====
+            let pomodoroInterval;
+            let isRunning = false;
+            let defaultFocusMinutes = 25;
+            let defaultBreakMinutes = 5;
+            let totalSessionLimit = 4;
+            let isBreak = false;
+            let timeLeft = defaultFocusMinutes * 60;
+            let sessionCount = 1;
+            
+            const pomodoroWidget = document.getElementById("pomodoroWidget");
+            const openPomodoroBtn = document.getElementById("openPomodoroBtn");
+            const startBtn = document.getElementById("startPomodoroBtn");
+            const pauseBtn = document.getElementById("pausePomodoroBtn");
+            const resetBtn = document.getElementById("resetPomodoroBtn");
+            const display = document.getElementById("pomodoroDisplay");
+            const label = document.getElementById("pomodoroLabel");
+            const customMinutesInput = document.getElementById("customMinutes");
+            const breakMinutesInput = document.getElementById("breakMinutes");
+            const sessionCounter = document.getElementById("sessionCounter");
+            const totalSessionsInput = document.getElementById("totalSessions");
+            const alertSound = document.getElementById("alertSound");
+            const statusBar = document.getElementById("statusBar");
+
+            function savePomodoroState() {
+                localStorage.setItem('pomodoroFocusMinutes', defaultFocusMinutes.toString());
+                localStorage.setItem('pomodoroBreakMinutes', defaultBreakMinutes.toString());
+                localStorage.setItem('pomodoroTotalSessions', totalSessionLimit.toString());
+                localStorage.setItem('pomodoroIsBreak', isBreak.toString());
+                localStorage.setItem('pomodoroTimeLeft', timeLeft.toString());
+                localStorage.setItem('pomodoroSessionCount', sessionCount.toString());
+                localStorage.setItem('pomodoroIsRunning', isRunning.toString());
+            }
+
+            function loadPomodoroState() {
+                defaultFocusMinutes = parseInt(localStorage.getItem('pomodoroFocusMinutes') || '25');
+                defaultBreakMinutes = parseInt(localStorage.getItem('pomodoroBreakMinutes') || '5');
+                totalSessionLimit = parseInt(localStorage.getItem('pomodoroTotalSessions') || '4');
+                isBreak = localStorage.getItem('pomodoroIsBreak') === 'true';
+                timeLeft = parseInt(localStorage.getItem('pomodoroTimeLeft') || (defaultFocusMinutes * 60).toString());
+                sessionCount = parseInt(localStorage.getItem('pomodoroSessionCount') || '1');
+                isRunning = localStorage.getItem('pomodoroIsRunning') === 'true';
+
+                customMinutesInput.value = defaultFocusMinutes;
+                breakMinutesInput.value = defaultBreakMinutes;
+                totalSessionsInput.value = totalSessionLimit;
+
+                label.textContent = isBreak ? "Break Time" : "Focus Time";
+                updateDisplay();
+                updateSession();
+
+                if (isRunning) {
+                    startTimer(); // Restart timer if it was running
+                } else {
+                    startBtn.style.display = "inline";
+                    pauseBtn.style.display = "none";
+                }
+            }
+            
+            function renderStatusBar() {
+                statusBar.innerHTML = "";
+                for (let i = 1; i <= totalSessionLimit; i++) {
+                    const dot = document.createElement("div");
+                    dot.classList.add("statusDot");
+                    if (i < sessionCount || (i === sessionCount && isBreak)) {
+                        dot.classList.add("active");
+                    }
+                    statusBar.appendChild(dot);
+                }
+            }
+            
+            customMinutesInput.addEventListener("change", () => {
+                defaultFocusMinutes = parseInt(customMinutesInput.value) || 25;
+                if (!isBreak) resetTimer();
+                savePomodoroState();
+            });
+            
+            breakMinutesInput.addEventListener("change", () => {
+                defaultBreakMinutes = parseInt(breakMinutesInput.value) || 5;
+                if (isBreak) resetTimer();
+                savePomodoroState();
+            });
+            
+            totalSessionsInput.addEventListener("change", () => {
+                totalSessionLimit = parseInt(totalSessionsInput.value) || 4;
+                if (sessionCount > totalSessionLimit) sessionCount = totalSessionLimit;
+                updateSession();
+                savePomodoroState();
+            });
+            
+            function updateDisplay() {
+                const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+                const seconds = String(timeLeft % 60).padStart(2, "0");
+                display.textContent = `${minutes}:${seconds}`;
+            }
+            
+            function updateSession() {
+                sessionCounter.textContent = `Session: ${sessionCount} / ${totalSessionLimit}`;
+                renderStatusBar();
+            }
+            
+            function playSound() {
+                if (alertSound) {
+                    alertSound.currentTime = 0;
+                    alertSound.play();
+                }
+            }
+            
+            function showCustomAlert(message) {
+                const alertDiv = document.createElement('div');
+                alertDiv.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: var(--widget-bg);
+                    border: 1px solid var(--widget-border-color);
+                    border-radius: 16px;
+                    padding: 20px 30px;
+                    box-shadow: var(--box-shadow);
+                    z-index: 2000;
+                    font-family: 'Poppins', sans-serif;
+                    color: var(--text-color);
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+                    max-width: 300px;
+                    animation: fadeIn 0.3s ease-out forwards;
+                `;
+                alertDiv.innerHTML = `
+                    <p>${message}</p>
+                    <button style="
+                        padding: 8px 15px;
+                        background-color: var(--accent-color);
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        font-size: 1em;
+                        transition: transform 0.2s, box-shadow 0.2s;
+                    " onclick="this.parentElement.remove()">OK</button>
+                `;
+                document.body.appendChild(alertDiv);
+            }
+
+            function startTimer() {
+                if (!isRunning && sessionCount <= totalSessionLimit) {
+                    isRunning = true;
+                    pomodoroInterval = setInterval(() => {
+                        if (timeLeft > 0) {
+                            timeLeft--;
+                            updateDisplay();
+                            savePomodoroState();
+                        } else {
+                            clearInterval(pomodoroInterval);
+                            isRunning = false;
+                            playSound();
+                            if (!isBreak && sessionCount >= totalSessionLimit) {
+                                showCustomAlert("All sessions complete!");
+                                resetTimerFull();
+                                return;
+                            }
+                            isBreak = !isBreak;
+                            if (isBreak) {
+                                showCustomAlert("Break time! Relax.");
+                                label.textContent = "Break Time";
+                                timeLeft = defaultBreakMinutes * 60;
+                            } else {
+                                showCustomAlert("Back to work!");
+                                sessionCount++;
+                                updateSession();
+                                label.textContent = "Focus Time";
+                                timeLeft = defaultFocusMinutes * 60;
+                            }
+                            updateDisplay();
+                            savePomodoroState();
+                            startTimer();
+                        }
+                    }, 1000);
+                    startBtn.style.display = "none";
+                    pauseBtn.style.display = "inline";
+                }
+            }
+            
+            function pauseTimer() {
+                clearInterval(pomodoroInterval);
+                isRunning = false;
+                startBtn.style.display = "inline";
+                pauseBtn.style.display = "none";
+                savePomodoroState();
+            }
+            
+            function resetTimer() {
+                clearInterval(pomodoroInterval);
+                timeLeft = (isBreak ? defaultBreakMinutes : defaultFocusMinutes) * 60;
+                label.textContent = isBreak ? "Break Time" : "Focus Time";
+                isRunning = false;
+                updateDisplay();
+                startBtn.style.display = "inline";
+                pauseBtn.style.display = "none";
+                savePomodoroState();
+            }
+
+            function resetTimerFull() {
+                clearInterval(pomodoroInterval);
+                isRunning = false;
+                isBreak = false;
+                sessionCount = 1;
+                timeLeft = defaultFocusMinutes * 60;
+                label.textContent = "Focus Time";
+                updateDisplay();
+                updateSession();
+                startBtn.style.display = "inline";
+                pauseBtn.style.display = "none";
+                savePomodoroState(); // Save initial state
+            }
+            
+            startBtn.addEventListener("click", startTimer);
+            pauseBtn.addEventListener("click", pauseTimer);
+            resetBtn.addEventListener("click", resetTimerFull);
+
+            // Toggle visibility of Pomodoro widget
+            openPomodoroBtn.addEventListener("click", () => {
+                if (pomodoroWidget.style.display === "none") {
+                    pomodoroWidget.style.display = "flex";
+                    pomodoroWidget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    pomodoroWidget.style.display = "none";
+                }
+            });
 
             // ===== EVENT LISTENERS & INITIALIZATION =====
             document.getElementById('sidebarStreakBtn')?.addEventListener('click', showStreakModal);
@@ -2383,145 +3050,25 @@
             searchInput?.addEventListener('input', () => performSearch(searchInput.value));
             searchButton?.addEventListener('click', () => performSearch(searchInput.value));
 
+            // Habit Tracker Event Listeners
+            addHabitBtn.addEventListener('click', addHabit);
+            newHabitInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addHabit();
+                }
+            });
+
             // --- INITIALIZATION SEQUENCE ---
             updateStreak();
             fetchWeather();
             setInterval(checkRemindersForNotification, 60000);
             checkRemindersForNotification();
-            loadData();
+            loadData(); // Load all data including habits
             initializeDragAndDrop();
             loadAvatar();
+            resetDailyHabits(); // Check and reset habits at the start of a new day
+            loadPomodoroState(); // Load Pomodoro state on page load
         });
-
-        //Pomodoro timer widget logic
-        let pomodoroInterval;
-        let isRunning = false;
-        let defaultFocusMinutes = 25;
-        let defaultBreakMinutes = 5;
-        let totalSessionLimit = 4;
-        let isBreak = false;
-        let timeLeft = defaultFocusMinutes * 60;
-        let sessionCount = 1;
-    
-        const widget = document.getElementById("pomodoroWidget");
-        const openBtn = document.getElementById("openPomodoroBtn");
-        const startBtn = document.getElementById("startPomodoroBtn");
-        const pauseBtn = document.getElementById("pausePomodoroBtn");
-        const resetBtn = document.getElementById("resetPomodoroBtn");
-        const display = document.getElementById("pomodoroDisplay");
-        const label = document.getElementById("pomodoroLabel");
-        const customMinutesInput = document.getElementById("customMinutes");
-        const breakMinutesInput = document.getElementById("breakMinutes");
-        const sessionCounter = document.getElementById("sessionCounter");
-        const totalSessionsInput = document.getElementById("totalSessions");
-        const alertSound = document.getElementById("alertSound");
-        const statusBar = document.getElementById("statusBar");
-    
-        function renderStatusBar() {
-          statusBar.innerHTML = "";
-          for (let i = 1; i <= totalSessionLimit; i++) {
-            const dot = document.createElement("div");
-            dot.classList.add("statusDot");
-            if (i < sessionCount) dot.classList.add("active");
-            statusBar.appendChild(dot);
-          }
-        }
-    
-        openBtn.addEventListener("click", () => {
-          widget.style.display = "block";
-        });
-    
-        customMinutesInput.addEventListener("change", () => {
-          defaultFocusMinutes = parseInt(customMinutesInput.value) || 25;
-          if (!isBreak) resetTimer();
-        });
-    
-        breakMinutesInput.addEventListener("change", () => {
-          defaultBreakMinutes = parseInt(breakMinutesInput.value) || 5;
-          if (isBreak) resetTimer();
-        });
-    
-        totalSessionsInput.addEventListener("change", () => {
-          totalSessionLimit = parseInt(totalSessionsInput.value) || 4;
-          renderStatusBar();
-        });
-    
-        function updateDisplay() {
-          const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
-          const seconds = String(timeLeft % 60).padStart(2, "0");
-          display.textContent = `${minutes}:${seconds}`;
-        }
-    
-        function updateSession() {
-          sessionCounter.textContent = `Session: ${sessionCount}`;
-          renderStatusBar();
-        }
-    
-        function playSound() {
-          alertSound.currentTime = 0;
-          alertSound.play();
-        }
-    
-        function startTimer() {
-          if (!isRunning && sessionCount <= totalSessionLimit) {
-            isRunning = true;
-            pomodoroInterval = setInterval(() => {
-              if (timeLeft > 0) {
-                timeLeft--;
-                updateDisplay();
-              } else {
-                clearInterval(pomodoroInterval);
-                isRunning = false;
-                playSound();
-                if (!isBreak && sessionCount >= totalSessionLimit) {
-                  alert("All sessions complete!");
-                  return;
-                }
-                isBreak = !isBreak;
-                if (isBreak) {
-                  alert("Break time! Relax.");
-                  label.textContent = "Break Time";
-                  timeLeft = defaultBreakMinutes * 60;
-                } else {
-                  alert("Back to work!");
-                  sessionCount++;
-                  updateSession();
-                  label.textContent = "Focus Time";
-                  timeLeft = defaultFocusMinutes * 60;
-                }
-                updateDisplay();
-                startTimer();
-              }
-            }, 1000);
-            startBtn.style.display = "none";
-            pauseBtn.style.display = "inline";
-          }
-        }
-    
-        function pauseTimer() {
-          clearInterval(pomodoroInterval);
-          isRunning = false;
-          startBtn.style.display = "inline";
-          pauseBtn.style.display = "none";
-        }
-    
-        function resetTimer() {
-          clearInterval(pomodoroInterval);
-          timeLeft = (isBreak ? defaultBreakMinutes : defaultFocusMinutes) * 60;
-          label.textContent = isBreak ? "Break Time" : "Focus Time";
-          isRunning = false;
-          updateDisplay();
-          startBtn.style.display = "inline";
-          pauseBtn.style.display = "none";
-          renderStatusBar();
-        }
-    
-        startBtn.addEventListener("click", startTimer);
-        pauseBtn.addEventListener("click", pauseTimer);
-        resetBtn.addEventListener("click", resetTimer);
-    
-        updateDisplay();
-        updateSession();
     </script>
 </body>
 </html>
