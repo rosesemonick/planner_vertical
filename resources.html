@@ -4,173 +4,378 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resources - Student Wellness Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* CSS Custom Properties for Theming (replicated from index.html for consistency) */
         :root {
-            --bg-color: #c6e2ff;
-            --header-bg: #a0c4e8;
-            --widget-bg: #ffffff;
-            --widget-border-color: #d8c8ff;
-            --text-color: #333333;
-            --text-light: #555555;
-            --accent-color: #8a63d2;
-            --nav-link-color: #000000;
-            --nav-link-hover-bg: #b0d0f0;
-            --progress-bar-bg: #e0e0e0;
-            --progress-bar-fill-1: #b298dc;
-            --progress-bar-fill-2: #8a63d2;
-            --icon-color: #333333;
-            --button-bg: #e6e6fa;
-            --button-text: #333;
-            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --accent-color-light: #6C63FF;
+            --accent-color-translucent-light: rgba(108, 99, 255, 0.15);
+            --new-todo-btn-shadow-light: 0 4px 15px rgba(108, 99, 255, 0.3);
+            --new-todo-btn-hover-shadow-light: 0 6px 20px rgba(108, 99, 255, 0.4);
+            --bg-image-light: linear-gradient(120deg, #eacdd7 0%, #cdd6e8 100%);
+            --widget-bg-light: rgba(255, 255, 255, 0.45);
+            --widget-border-light: rgba(255, 255, 255, 0.7);
+            --header-bg-light: rgba(255, 255, 255, 0.35);
+            --sidebar-bg-light: rgba(255, 255, 255, 0.25); /* Not used directly here, but kept for consistency */
+            --text-color-light: #2c3e50;
+            --text-light-light: #576574;
+            --shadow-light: 0 8px 32px 0 rgba(108, 99, 255, 0.1);
+            --sidebar-shadow-light: 3px 0px 25px -5px rgba(108, 99, 255, 0.15); /* Not used directly here */
+            --header-shadow-light: 0 3px 25px -5px rgba(108, 99, 255, 0.15);
+            --danger-color-light: #e74c3c;
+            
+            --bg-image: var(--bg-image-light);
+            --widget-bg: var(--widget-bg-light);
+            --widget-border-color: var(--widget-border-light);
+            --header-bg: var(--header-bg-light);
+            --sidebar-bg: var(--sidebar-bg-light); /* Kept for consistency */
+            --text-color: var(--text-color-light);
+            --text-light: var(--text-light-light);
+            --accent-color: var(--accent-color-light);
+            --accent-color-translucent: var(--accent-color-translucent-light);
+            --nav-link-color: var(--text-color-light);
+            --nav-link-hover-bg: rgba(255, 255, 255, 0.2);
+            --progress-bar-bg: rgba(44, 62, 80, 0.1); /* Not used directly here */
+            --progress-bar-fill-1: #8f8aff; /* Not used directly here */
+            --progress-bar-fill-2: var(--accent-color-light); /* Not used directly here */
+            --progress-bar-fill-complete: #2ecc71; /* Not used directly here */
+            --icon-color: var(--text-color-light);
+            --button-bg: rgba(255, 255, 255, 0.3);
+            --button-text: var(--text-color-light);
+            --box-shadow: var(--shadow-light);
+            --sidebar-shadow: var(--sidebar-shadow-light); /* Kept for consistency */
+            --header-shadow: var(--header-shadow-light);
+            --modal-overlay-bg: rgba(0, 0, 0, 0.4); /* Not used directly here */
+            --input-bg: rgba(255, 255, 255, 0.2);
+            --danger-color: var(--danger-color-light);
+            --danger-color-hover: #c0392b;
+            --warning-color: #f1c40f; /* Not used directly here */
+            --new-todo-btn-bg: var(--accent-color-light); /* Not used directly here */
+            --new-todo-btn-text: #ffffff; /* Not used directly here */
+            --new-todo-btn-shadow: var(--new-todo-btn-shadow-light); /* Not used directly here */
+            --new-todo-btn-hover-shadow: var(--new-todo-btn-hover-shadow-light); /* Not used directly here */
         }
 
         body.dark-mode {
-            --bg-color: #232931;
-            --header-bg: #1a1f25;
-            --widget-bg: #393e46;
-            --widget-border-color: #5c5178;
-            --text-color: #eeeeee;
-            --text-light: #cccccc;
-            --accent-color: #b298dc;
-            --nav-link-color: #eeeeee;
-            --nav-link-hover-bg: #4a5058;
-            --progress-bar-bg: #555555;
-            --progress-bar-fill-1: #9370DB;
-            --progress-bar-fill-2: #8a63d2;
-            --icon-color: #eeeeee;
-            --button-bg: #504660;
-            --button-text: #eeeeee;
-            --box-shadow: 0 2px 5px rgba(255,255,255,0.05);
+            --accent-color-dark: #8B84FF;
+            --accent-color-translucent-dark: rgba(139, 132, 255, 0.15);
+            --new-todo-btn-shadow-dark: 0 4px 15px rgba(139, 132, 255, 0.2);
+            --new-todo-btn-hover-shadow-dark: 0 6px 20px rgba(139, 132, 255, 0.3);
+            --bg-image-dark: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            --widget-bg-dark: rgba(20, 25, 30, 0.45);
+            --widget-border-dark: rgba(255, 255, 255, 0.15);
+            --header-bg-dark: rgba(20, 25, 30, 0.35);
+            --sidebar-bg-dark: rgba(20, 25, 30, 0.25); /* Not used directly here */
+            --text-color-dark: #ecf0f1;
+            --text-light-dark: #bdc3c7;
+            --shadow-dark: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --sidebar-shadow-dark: 3px 0px 25px -5px rgba(0, 0, 0, 0.25); /* Not used directly here */
+            --header-shadow-dark: 0 3px 25px -5px rgba(0, 0, 0, 0.25);
+            --danger-color-dark: #e74c3c;
+
+            --bg-image: var(--bg-image-dark);
+            --widget-bg: var(--widget-bg-dark);
+            --widget-border-color: var(--widget-border-dark);
+            --header-bg: var(--header-bg-dark);
+            --sidebar-bg: var(--sidebar-bg-dark); /* Kept for consistency */
+            --text-color: var(--text-color-dark);
+            --text-light: var(--text-light-dark);
+            --accent-color: var(--accent-color-dark);
+            --accent-color-translucent: var(--accent-color-translucent-dark);
+            --nav-link-color: var(--text-color-dark);
+            --nav-link-hover-bg: rgba(0, 0, 0, 0.2);
+            --progress-bar-bg: rgba(236, 240, 241, 0.1); /* Not used directly here */
+            --progress-bar-fill-1: #a099ff; /* Not used directly here */
+            --progress-bar-fill-2: var(--accent-color-dark); /* Not used directly here */
+            --progress-bar-fill-complete: #27ae60; /* Not used directly here */
+            --icon-color: var(--text-color-dark);
+            --button-bg: rgba(0, 0, 0, 0.2);
+            --button-text: var(--text-color-dark);
+            --box-shadow: var(--shadow-dark);
+            --sidebar-shadow: var(--sidebar-shadow-dark); /* Kept for consistency */
+            --header-shadow: var(--header-shadow-dark);
+            --modal-overlay-bg: rgba(0, 0, 0, 0.5); /* Not used directly here */
+            --input-bg: rgba(0, 0, 0, 0.15);
+            --danger-color: var(--danger-color-dark);
+            --danger-color-hover: #c0392b;
+            --warning-color: #f39c12; /* Not used directly here */
+            --new-todo-btn-bg: var(--accent-color-dark); /* Not used directly here */
+            --new-todo-btn-shadow: var(--new-todo-btn-shadow-dark); /* Not used directly here */
+            --new-todo-btn-hover-shadow: var(--new-todo-btn-hover-shadow-dark); /* Not used directly here */
         }
 
         /* Basic Reset and Body Styles (replicated) */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Poppins', 'Segoe UI', 'Roboto', sans-serif;
+            background-image: var(--bg-image);
             color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-            padding-top: 60px;
+            transition: background-image 0.5s, color 0.5s;
+            background-attachment: fixed;
+            padding-top: 80px; /* Adjust for fixed header */
+            padding-left: 20px; /* No left sidebar here, so minimal padding */
+            padding-right: 20px;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
+        .glass {
+            background: var(--widget-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--widget-border-color);
+            box-shadow: var(--box-shadow);
+            border-radius: 16px;
+            transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+        }
+        
         /* Header (replicated) */
         header {
-            background-color: var(--header-bg);
-            color: var(--nav-link-color);
-            padding: 0 20px;
+            padding: 0 10px 0 20px;
             height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 10px;
+            right: 10px;
+            left: 10px; /* Adjusted from 240px for no sidebar */
             z-index: 1000;
-            box-shadow: var(--box-shadow);
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--header-shadow);
+            border-radius: 16px;
+            border: 1px solid var(--widget-border-color);
         }
 
         .logo {
-            width: 40px;
-            height: 40px;
-            background-color: white;
+            width: 45px; /* Adjusted size */
+            height: 45px; /* Adjusted size */
+            position: relative;
+            background-color: white; /* Ensure background for round logo */
             border-radius: 50%;
             border: 2px solid var(--widget-border-color);
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
         }
 
+        header nav {
+            margin: 0 20px;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center; /* Center nav links */
+        }
         header nav a {
             color: var(--nav-link-color);
             text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            padding: 5px 0;
-            border-bottom: 2px solid transparent;
-            transition: border-bottom 0.3s;
+            margin: 0 10px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            transition: background-color 0.3s, color 0.3s;
         }
-
         header nav a:hover {
-            border-bottom: 2px solid var(--accent-color);
+            background-color: var(--nav-link-hover-bg);
+            color: var(--accent-color);
         }
-
         .search-bar {
             display: flex;
             align-items: center;
-        }
-
-        .search-bar input[type="search"] {
-            padding: 8px 12px;
+            background: var(--widget-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--widget-border-color);
-            border-right: none;
-            border-radius: 20px 0 0 20px;
-            background-color: var(--widget-bg);
-            color: var(--text-color);
+            box-shadow: var(--box-shadow);
+            border-radius: 25px;
+            padding: 0 0 0 15px;
+            height: 42px;
+            flex-shrink: 1;
             min-width: 200px;
         }
-
+        .search-bar input[type="search"] {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-color);
+            height: 100%;
+            font-size: 0.9em;
+            font-family: 'Poppins', sans-serif;
+        }
         .search-bar input[type="search"]::placeholder {
             color: var(--text-light);
+            opacity: 0.8;
         }
-
         .search-bar button {
-            padding: 8px 12px;
-            background-color: var(--widget-bg);
-            border: 1px solid var(--widget-border-color);
-            border-left: none;
-            border-radius: 0 20px 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            border-left: 1px solid var(--widget-border-color);
+            color: var(--accent-color);
+            height: 60%;
+            padding: 0 12px;
+            margin: 0 5px;
             cursor: pointer;
-            color: var(--icon-color);
+            font-size: 1.2em;
         }
 
         /* Resources Page Specific Styles */
         .resources-content {
             flex-grow: 1;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: var(--widget-bg);
-            border-radius: 12px;
-            box-shadow: var(--box-shadow);
-            margin-top: 30px;
-            margin-bottom: 30px;
+            padding: 30px; /* Increased padding */
+            max-width: 900px; /* Increased max-width for more content */
+            margin: 20px auto; /* Centered with margin */
+            display: grid; /* Use grid for layout */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+            gap: 20px; /* Gap between grid items */
+            background: var(--widget-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--widget-border-color);
+            box-shadow: var(--box-shadow);
+            border-radius: 16px;
         }
 
         .resources-content h1 {
+            grid-column: 1 / -1; /* Span all columns */
             color: var(--accent-color);
             margin-bottom: 20px;
             text-align: center;
+            font-size: 2.5em; /* Larger title */
+            font-weight: 700;
         }
 
         .resource-category {
-            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--button-bg); /* Lighter background for categories */
+            border-radius: 12px;
+            border: 1px solid var(--widget-border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Subtle shadow */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .resource-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
         }
 
         .resource-category h2 {
             color: var(--text-color);
             border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 5px;
-            margin-bottom: 10px;
+            padding-bottom: 8px; /* Increased padding */
+            margin-bottom: 15px; /* Increased margin */
+            font-size: 1.5em; /* Larger category titles */
+            font-weight: 600;
         }
 
         .resource-link {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px; /* Increased margin */
             color: var(--text-light);
             text-decoration: none;
+            font-size: 1em;
+            padding: 5px 0;
+            transition: color 0.2s, transform 0.2s;
         }
 
         .resource-link:hover {
             color: var(--accent-color);
-            text-decoration: underline;
+            transform: translateX(5px);
+        }
+
+        /* Calculator Styles */
+        .calculator-widget {
+            grid-column: 1 / -1; /* Span all columns */
+            max-width: 400px; /* Fixed width for calculator */
+            margin: 20px auto; /* Center the calculator */
+            padding: 25px;
+            background: var(--widget-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--widget-border-color);
+            box-shadow: var(--box-shadow);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+        .calculator-widget h2 {
+            font-size: 1.8em;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        #calc-display {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--widget-border-color);
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 2.5em;
+            text-align: right;
+            color: var(--text-color);
+            font-family: 'Poppins', monospace;
+            overflow-x: auto;
+            white-space: nowrap;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .calc-buttons button {
+            padding: 15px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .calc-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .calc-buttons button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .calc-buttons button.operator {
+            background-color: var(--accent-color-translucent);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        .calc-buttons button.equals {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 700;
+            grid-column: span 2; /* Make equals button span two columns */
+        }
+        .calc-buttons button.clear {
+            background-color: var(--danger-color);
+            color: white;
+            font-weight: 600;
+        }
+        .calc-buttons button.backspace {
+            background-color: var(--warning-color);
+            color: white;
+            font-weight: 600;
         }
 
         /* Fixed Bottom Left Controls (replicated, but adapted for resources.html) */
@@ -190,11 +395,17 @@
             cursor: pointer;
             font-size: 0.9em;
             color: var(--text-light);
-            background-color: var(--widget-bg);
+            background: var(--button-bg);
             border: 1px solid var(--widget-border-color);
             padding: 8px 12px;
             border-radius: 20px;
             box-shadow: var(--box-shadow);
+            transition: background 0.3s, border 0.3s, box-shadow 0.3s, color 0.3s;
+        }
+        .theme-toggle:hover {
+            background: var(--widget-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
         }
 
         #themeIcon {
@@ -202,6 +413,25 @@
             margin-right: 8px;
             color: var(--icon-color);
         }
+        
+        /* Toast Notifications (replicated from index.html) */
+        #toast-container {
+            position: fixed; bottom: 20px; right: 20px;
+            z-index: 2100; display: flex;
+            flex-direction: column-reverse; gap: 10px;
+        }
+        .toast {
+            padding: 15px 20px; border-radius: 12px;
+            color: #fff; font-size: 1em; font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,.2);
+            transform: translateX(120%); opacity: 0;
+            transition: transform .5s cubic-bezier(.18,.89,.32,1.28),opacity .5s ease;
+            border: 1px solid rgba(255,255,255,.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,.2);
+        }
+        .toast.show { transform: translateX(0); opacity: 1; }
+        .toast.toast-info { background-color: var(--accent-color); }
+        .toast.toast-achievement { background: linear-gradient(45deg,#ffaf07,#f44336); } /* Not used here, but kept for consistency */
 
         /* Responsive Adjustments (replicated and adapted) */
         @media (max-width: 768px) {
@@ -215,6 +445,8 @@
 
             body {
                 padding-top: 120px;
+                padding-left: 10px;
+                padding-right: 10px;
             }
 
             header nav {
@@ -242,11 +474,15 @@
                 align-items: center;
                 width: calc(100% - 20px);
                 justify-content: space-around;
-                background-color: var(--header-bg);
+                background: var(--header-bg);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                box-shadow: var(--header-shadow);
                 padding: 5px;
-                border-radius: 8px;
+                border-radius: 16px;
                 left: 10px;
                 bottom: 10px;
+                border: 1px solid var(--widget-border-color);
             }
 
             .theme-toggle {
@@ -257,13 +493,20 @@
                 margin-top: 20px;
                 margin-bottom: 20px;
                 padding: 20px 15px;
+                grid-template-columns: 1fr; /* Single column on small screens */
+            }
+            .calculator-widget {
+                max-width: 100%; /* Full width on small screens */
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo"></div>
+        <div class="logo">
+            <!-- Placeholder for logo image, consistent with index.html -->
+            <img src="https://cdn.vectorstock.com/i/1000v/66/13/default-avatar-profile-icon-social-media-user-vector-49816613.jpg" alt="Logo">
+        </div>
         <nav>
             <a href="index.html" id="navHome">Home</a>
             <a href="about.html" id="navAbout">About Us</a>
@@ -271,51 +514,95 @@
         </nav>
         <div class="search-bar">
             <input type="search" id="searchInput" placeholder="Search...">
-            <button id="searchButton">&#128269;</button>
+            <button id="searchButton">🔍</button>
         </div>
     </header>
 
     <main class="resources-content">
         <h1>Resources</h1>
 
-        <div class="resource-category">
+        <div class="resource-category glass">
             <h2>AI & Writing</h2>
             <a href="https://chatgpt.com/" class="resource-link">ChatGPT</a>
         </div>
 
-        <div class="resource-category">
+        <div class="resource-category glass">
             <h2>Career & Networking</h2>
             <a href="https://app.joinhandshake.com/login" class="resource-link">Handshake</a>
             <a href="https://www.linkedin.com/" class="resource-link">LinkedIn</a>
         </div>
 
-        <div class="resource-category">
+        <div class="resource-category glass">
             <h2>Math & Academic Support</h2>
-             <a href="https://www.mathway.com/Algebra" class="resource-link">Mathway</a>
+            <a href="https://www.mathway.com/Algebra" class="resource-link">Mathway</a>
             <a href="https://openstax.org/" class="resource-link">OpenStax</a>
             <a href="https://quizlet.com/" class="resource-link">Quizlet</a>
         </div>
 
-          <div class="resource-category">
+        <div class="resource-category glass">
             <h2>Mental Health</h2>
             <a href="https://www.7cups.com/" class="resource-link">7 Cups</a>
         </div>
 
-         <div class="resource-category">
+        <div class="resource-category glass">
             <h2>Miscellaneous</h2>
             <a href="https://www.youtube.com/watch?v=K4YoQHjaziI" class="resource-link">YouTube</a>
         </div>
+
+        <section class="calculator-widget glass">
+            <h2>Calculator</h2>
+            <div id="calc-display">0</div>
+            <div class="calc-buttons">
+                <button class="clear">C</button>
+                <button class="backspace">←</button>
+                <button class="operator">/</button>
+                <button class="operator">*</button>
+                <button>7</button>
+                <button>8</button>
+                <button>9</button>
+                <button class="operator">-</button>
+                <button>4</button>
+                <button>5</button>
+                <button>6</button>
+                <button class="operator">+</button>
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button class="equals">=</button>
+                <button>0</button>
+                <button>.</button>
+            </div>
+        </section>
     </main>
 
     <div class="fixed-bottom-left">
         <div class="theme-toggle" id="themeToggleBtn">
             <span id="themeIcon">☀️</span>
-            <span id="themeToggleText">Light/Dark mode Toggle</span>
+            <span id="themeToggleText">Light/Dark Mode</span>
         </div>
     </div>
 
+    <div id="toast-container"></div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // ===== TOAST NOTIFICATION FUNCTION =====
+            function showToast(message, type = 'info') {
+                const container = document.getElementById('toast-container');
+                if (!container) return;
+                
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.textContent = message;
+                container.appendChild(toast);
+
+                setTimeout(() => toast.classList.add('show'), 100);
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    toast.addEventListener('transitionend', () => toast.remove());
+                }, 4000);
+            }
+
             // --- THEME TOGGLE ---
             const themeToggleBtn = document.getElementById('themeToggleBtn');
             const themeIcon = document.getElementById('themeIcon');
@@ -340,15 +627,141 @@
                 }
             });
 
-            // --- PLACEHOLDER ACTIONS (adapted for resources.html) ---
+            // --- HEADER NAVIGATION & SEARCH ---
             document.getElementById('searchButton').addEventListener('click', () => {
                 const searchTerm = document.getElementById('searchInput').value;
-                if (searchTerm) alert(`Searching for: ${searchTerm} (Search functionality to be implemented)`);
-                else alert('Please enter a search term.');
+                if (searchTerm) showToast(`Searching for: ${searchTerm} (Search functionality to be implemented)`, 'info');
+                else showToast('Please enter a search term.', 'info');
             });
-            document.getElementById('navHome').addEventListener('click', (e) => { /* e.preventDefault(); */ }); // Removed preventDefault
-            document.getElementById('navAbout').addEventListener('click', (e) => { /* e.preventDefault(); */ }); // Removed preventDefault
-            document.getElementById('navResources').addEventListener('click', (e) => { /* e.preventDefault(); */ }); // Removed preventDefault
+            // Navigation links are standard HTML links, no need for JS prevention
+            // document.getElementById('navHome').addEventListener('click', (e) => { /* e.preventDefault(); */ });
+            // document.getElementById('navAbout').addEventListener('click', (e) => { /* e.preventDefault(); */ });
+            // document.getElementById('navResources').addEventListener('click', (e) => { /* e.preventDefault(); */ });
+
+            // ===== CALCULATOR LOGIC =====
+            const display = document.getElementById('calc-display');
+            const buttons = document.querySelector('.calc-buttons');
+            let currentInput = '0';
+            let operator = null;
+            let firstOperand = null;
+            let waitingForSecondOperand = false;
+
+            function updateDisplay() {
+                display.textContent = currentInput;
+            }
+
+            function clearCalculator() {
+                currentInput = '0';
+                operator = null;
+                firstOperand = null;
+                waitingForSecondOperand = false;
+                updateDisplay();
+            }
+
+            function inputDigit(digit) {
+                if (waitingForSecondOperand === true) {
+                    currentInput = digit;
+                    waitingForSecondOperand = false;
+                } else {
+                    currentInput = currentInput === '0' ? digit : currentInput + digit;
+                }
+                updateDisplay();
+            }
+
+            function inputDecimal(dot) {
+                if (waitingForSecondOperand === true) return;
+                if (!currentInput.includes(dot)) {
+                    currentInput += dot;
+                }
+                updateDisplay();
+            }
+
+            function handleOperator(nextOperator) {
+                const inputValue = parseFloat(currentInput);
+
+                if (operator && waitingForSecondOperand) {
+                    operator = nextOperator;
+                    return;
+                }
+
+                if (firstOperand === null) {
+                    firstOperand = inputValue;
+                } else if (operator) {
+                    const result = operate(firstOperand, inputValue, operator);
+                    currentInput = String(result);
+                    firstOperand = result;
+                }
+
+                waitingForSecondOperand = true;
+                operator = nextOperator;
+                updateDisplay();
+            }
+
+            function operate(operand1, operand2, op) {
+                switch (op) {
+                    case '+': return operand1 + operand2;
+                    case '-': return operand1 - operand2;
+                    case '*': return operand1 * operand2;
+                    case '/': 
+                        if (operand2 === 0) {
+                            showToast("Cannot divide by zero!", "info");
+                            return NaN; // Indicate error
+                        }
+                        return operand1 / operand2;
+                    default: return operand2;
+                }
+            }
+
+            function backspace() {
+                if (currentInput.length > 1) {
+                    currentInput = currentInput.slice(0, -1);
+                } else {
+                    currentInput = '0';
+                }
+                updateDisplay();
+            }
+
+            buttons.addEventListener('click', (event) => {
+                const { target } = event;
+                if (!target.matches('button')) return;
+
+                if (target.classList.contains('operator')) {
+                    handleOperator(target.textContent);
+                    return;
+                }
+
+                if (target.classList.contains('equals')) {
+                    if (operator && firstOperand !== null) {
+                        const inputValue = parseFloat(currentInput);
+                        currentInput = String(operate(firstOperand, inputValue, operator));
+                        firstOperand = null;
+                        operator = null;
+                        waitingForSecondOperand = false;
+                        updateDisplay();
+                    }
+                    return;
+                }
+
+                if (target.classList.contains('clear')) {
+                    clearCalculator();
+                    return;
+                }
+
+                if (target.classList.contains('backspace')) {
+                    backspace();
+                    return;
+                }
+
+                if (target.textContent === '.') {
+                    inputDecimal(target.textContent);
+                    return;
+                }
+
+                inputDigit(target.textContent);
+            });
+
+            // Initial display update for calculator
+            updateDisplay();
         });
     </script>
 </body>
